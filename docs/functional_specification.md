@@ -18,9 +18,13 @@ As we envision an interactive visualization tool to be widely applicable, we opt
 Researchers can gain access to the *All of Us Research Program* through the [All of Us Research Hub](https://www.researchallofus.org/). Some limitations of this dataset is that it requires training to gain approval for the controlled-tier dataset, which includes participant-level location data. Also, any analysis and visualization must be performed within the *All of Us Research Hub* workbench. Data cannot be exported locally.
 
 ## Use Cases
-- Data visualization for pattern recognition
-- Preliminary results for grant application
-- Predictive modeling
+**1. What is the distribution of homelessness within the greater Seattle area and is there an association to mental health disorders?**
+- The objective of this user interaction is to have the user create and interact with a geomap, consisting of interactive legends for housing status and various mental health disorders (e.g., major depressive disorder).
+- We expect the user to pan and zoom the geomap, hide and show different levels of housing status with the interactive legends, and draw conclusions based on the various levels of data they choose to hide and show.
+
+**2. Is there a trend in obesity stratified by income and county within the greater Seattle area?**
+- The objective of this user interaction is to have the user create and interact with time series graphs with interactive legends for income and/or a geomap, consisting of a sliding scale for time (in years).
+- We expect the user to hide and show different levels of income on the time-series graphs and interact with the sliding scale on the geomap to draw conclusions based on the various levels of data they choose to hide and show. They may choose to show the time-series graphs and geomap side-by-side.
 
 <a id="1">[1]</a>
 *Chishtie J, Bielska IA, Barrera A, et al.* **Interactive Visualization Applications in Population Health and Health Services Research: Systematic Scoping Review.** J Med Internet Res. 2022;24(2):e27534. Published 2022 Feb 18.
