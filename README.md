@@ -11,4 +11,4 @@ Our goal for this project is to deploy interactive visualizations with a focus o
 
 # References
 <a id="1">[1]</a>
-*Hahn R. A.* (2021). **What is a social determinant of health? Back to basics.** Journal of public health research, 10(4), 2324. [![DOI:10.4081/jphr.2021.2324](https://doi.org/10.4081/jphr.2021.2324)
+*Hahn R. A.* (2021). **What is a social determinant of health? Back to basics.** Journal of public health research, 10(4), 2324. [![DOI:10.4081/jphr.2021.2324](https://zenodo.org/badge/DOI/10.4081/jphr.2021.2324.svg)](https://doi.org/10.4081/jphr.2021.2324)
