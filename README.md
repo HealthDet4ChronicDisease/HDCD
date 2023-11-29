@@ -8,10 +8,13 @@ SDOH have become an increasingly growing area of research for the health communi
 
 To explore and analyze such complex relationships, interactive visualizations can aid researchers and public health experts in "knowledge discovery, hypotheses generation, and decision support." [[3]](#3)[[4]](#4) Interactively visuzliations can play an important role in fostering knowledge generation and help in establishing associations and causality, as they allow for direct data manipulation and analysis.
 
-### Dataset
-
 ## Objective
-Our goal for this project is to deploy interactive visualizations with a focus on social determinants of health (SDOH), which can vary in their distribution across space and time, and their associations with chronic diseases, such as cardiovascular disease. The question we posit is: *"Can we identify emerging trends?"*
+Our goal for this project is to deploy interactive visualizations with a focus on social determinants of health (SDOH), which can vary in their distribution across space and time, and their associations with chronic diseases, such as cardiovascular disease. Specifically, we would like to make this process as easy as possible so that a user with minimal technical experience can utilize the interactive visualizations. From interacting with said visualizations, the question we would like to help users answer is: *"Can we identify emerging trends?"*
+
+## Dataset
+As we envision an interactive visualization tool to be widely applicable, we opted to use the *All of Us Research Program*, an effort by the National Institues of Health (NIH) that consists of a diverse group of at least one million participants across the United States. [[5]](#5) This data consortium includes health questionnaires, electronic health records, digital health technology data, and biospecimens. Importantly, it also includes key SDOH, such as income, education, and housing status.
+
+Researchers can gain access to the *All of Us Research Program* through the [All of Us Research Hub](https://www.researchallofus.org/). Some limitations of this dataset is that it requires training to gain approval for the controlled-tier dataset, which includes participant-level location data. Also, any analysis and visualization must be performed within the *All of Us Research Hub* workbench. Data cannot be exported locally.
 
 # References
 <a id="1">[1]</a>
@@ -29,3 +32,7 @@ Our goal for this project is to deploy interactive visualizations with a focus o
 <a id="4">[4]</a>
 *Zakkar M, Sedig K.* **Interactive visualization of public health indicators to support policymaking: An exploratory study.** Online J Public Health Inform. 2017;9(2):e190. Published 2017 Sep 8.
 [![DOI:10.5210/ojphi.v9i2.8000](https://zenodo.org/badge/DOI/10.5210/ojphi.v9i2.8000.svg)](https://doi:10.5210/ojphi.v9i2.8000)
+
+<a id="5">[5]</a>
+*The “All of Us” Research Program.* New England Journal of Medicine. 2019;381(7):668-676. doi:10.1056/NEJMsr1809937
+[![DOI:10.1056/NEJMsr1809937](https://zenodo.org/badge/DOI/10.1056/NEJMsr1809937.svg)](https://doi:10.1056/NEJMsr1809937)
