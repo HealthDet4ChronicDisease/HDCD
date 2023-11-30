@@ -27,12 +27,12 @@ Researchers can gain access to the *All of Us Research Program* through the [All
 
 <a id="3">[3]</a>
 *Chishtie J, Bielska IA, Barrera A, et al.* **Interactive Visualization Applications in Population Health and Health Services Research: Systematic Scoping Review.** J Med Internet Res. 2022;24(2):e27534. Published 2022 Feb 18.
-[![DOI:10.2196/27534](https://zenodo.org/badge/DOI/10.2196/27534.svg)](https://doi:10.2196/27534)
+[![DOI:10.2196/27534](https://zenodo.org/badge/DOI/10.2196/27534.svg)](https://doi.org/10.2196/27534)
 
 <a id="4">[4]</a>
 *Zakkar M, Sedig K.* **Interactive visualization of public health indicators to support policymaking: An exploratory study.** Online J Public Health Inform. 2017;9(2):e190. Published 2017 Sep 8.
-[![DOI:10.5210/ojphi.v9i2.8000](https://zenodo.org/badge/DOI/10.5210/ojphi.v9i2.8000.svg)](https://doi:10.5210/ojphi.v9i2.8000)
+[![DOI:10.5210/ojphi.v9i2.8000](https://zenodo.org/badge/DOI/10.5210/ojphi.v9i2.8000.svg)](https://doi.org/10.5210/ojphi.v9i2.8000)
 
 <a id="5">[5]</a>
-*The “All of Us” Research Program.* New England Journal of Medicine. 2019;381(7):668-676. doi:10.1056/NEJMsr1809937
-[![DOI:10.1056/NEJMsr1809937](https://zenodo.org/badge/DOI/10.1056/NEJMsr1809937.svg)](https://doi:10.1056/NEJMsr1809937)
+*The “All of Us” Research Program.* New England Journal of Medicine. 2019;381(7):668-676. Published 2019 Aug 5.
+[![DOI:10.1056/NEJMsr1809937](https://zenodo.org/badge/DOI/10.1056/NEJMsr1809937.svg)](https://doi.org/10.1056/NEJMsr1809937)
