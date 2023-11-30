@@ -2,6 +2,8 @@
 
 ## Software Components
 * Describe at least 3 components specifying: what it does, inputs it requires, and outputs it provides
+**1. GeoMap**
+
 
 ## Interactions for Use Cases
 * Describe how the above software components interact to accomplish at least one of your use cases.
