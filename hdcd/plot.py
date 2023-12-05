@@ -15,7 +15,6 @@ warnings.filterwarnings("ignore")
 ### Add __all__ to the import * in __init__
 ### Add print functions in vocab variable defining printing of correlation
 ### Add correlation coefficient selection Parameters
-### Remove "US" from all plots with Locations
 
 __all__ = ['plot_corr',"plot_geomap","plot_longitudinal_change"]
 
@@ -23,7 +22,8 @@ def plot_corr(sod,
              health_outcome,
              location,
              stratification,
-             df):
+             df,
+             print_corr=False):
 
     """
     Function to plot the correlation of two variables in a scatterplot. Implementation based on altair (alt).
@@ -36,6 +36,7 @@ def plot_corr(sod,
     @return: an alt.layer() object
 
     """
+    df = df[df["LocationAbbr"] != "US"]
 
     data_analysis = df[(df["Question"] == sod) & (df["StratificationCategory1"] == stratification)]
     data_analysis["DataValue"] = data_analysis["DataValue"].astype(float)
@@ -66,13 +67,21 @@ def plot_corr(sod,
             tooltip=['LocationAbbr',xvar,yvar]
             )
             chart |= plot
-            #plotlist.append(plot)
+
+            if print_corr:
+                res = sp.stats.spearmanr(dfplot.dropna()[xvar],
+                                   dfplot.dropna()[yvar])
+                print(f'spearmanr correlation coefficient for [{xvar}] and [{yvar}]: {res} \n')
+
     return chart.interactive()
 
 
 def plot_geomap(variable,
                 datatype,
-                df):
+                df,
+                color_scheme = "bluepurple",
+                width = 500,
+                height = 300):
     """
     Plot a longitudinal geomap (of the United States) distribution of @variable, with unit in @datatype, given @df.
 
@@ -119,8 +128,8 @@ def plot_geomap(variable,
         fill='lightgray',
         stroke='white'
     ).project('albersUsa').properties(
-        width=500,
-        height=300
+        width=width,
+        height=height
     )
 
     # the tricky part is that if it is longitudinal, the map should be using the dfplot to lookup states
@@ -129,7 +138,7 @@ def plot_geomap(variable,
 
     foreground = alt.Chart(dfplot).mark_geoshape().encode(
         color=alt.Color(
-                "DataValue:Q", scale=alt.Scale(scheme="bluepurple",
+                "DataValue:Q", scale=alt.Scale(scheme=color_scheme,
                                                #domainMid = 0,
                                                domainMax = dfplot["DataValue"].max(),
                                                domainMin = dfplot["DataValue"].min()),
@@ -149,6 +158,58 @@ def plot_geomap(variable,
         slider_selection,
     )
     return background + foreground
+
+
+def plot_geomap_by_location(variable,
+                            datatype,
+                            df,
+                            longitude = "longitude",
+                            latitude = "latitude",
+                            color_scheme = "bluepurple",
+                            width = 500,
+                            height = 300):
+
+    """
+    Plot a longitudinal geomap (of the United States) distribution of @variable,
+    with unit in @datatype, given @df.
+    This plot is made based on the longitude and latitude of the dataset.
+
+    Parameters
+    @variable: str, a variable to lookup from the [Question] column of data, used to generate the plot,
+    the [DataValue] column of the @df should be numeric.
+    @datatype: str, the unit of the @variable. User can lookup the @datatype from the [DataValueType] column
+    of the @df. Or user are recommended to use the variable_summary() function to check the DataValueType.
+    @df: pd.DataFrame, the dataframe used to generate the plot, must be formatted and contains required columns,
+    including ["YearStart","Question","DataValue","DataValueType"].
+    """
+
+    from vega_datasets import data
+
+    states = alt.topo_feature(data.us_10m.url, feature='states')
+    df = df[df["Question"] == variable]
+
+    background = alt.Chart(states).mark_geoshape(
+        fill='lightgray',
+        stroke='white'
+    ).project('albersUsa').properties(
+        width=width,
+        height=height,
+    )
+
+    points = alt.Chart(df).mark_circle().encode(
+        longitude=longitude+':Q',
+        latitude=latitude+':Q',
+        color=alt.Color(
+               "DataValue:Q", scale=alt.Scale(scheme=color_scheme,
+               #domainMid = 0,
+               domainMax = df["DataValue"].max(),
+               domainMin = df["DataValue"].min()),
+                ),
+            tooltip=['LocationDesc:N', 'YearStart:Q', 'DataValue:Q', "Question:N", "DataValueType:N"],
+        size=alt.value(10),
+    )
+
+    return background + points
 
 
 def plot_longitudinal_change(variable,
