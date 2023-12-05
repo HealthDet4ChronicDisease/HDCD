@@ -1,7 +1,7 @@
 # Functional Specification
 
 ## Background
-Social determinants of health (SDOH) have become an increasingly growing area of research for the health community. A compelling body of work has shown that social factors play important roles in health outcomes. Multiple studies have demonstrated a stepwise gradient pattern in the association between income and health - health improves incrementally as income rises. However, the association between SDOH and health outcomes can be complicated, as there are many complex biopsychosocial and biophysiosocial pathways and processes.
+Health outcomes are influenced by many factors, including genetics, behavior, and social factors. Existing research identified many factors of behavior, such as smoking, drinking, unhealthy diet, and exercises that are associated with health outcomes. Additionally, social determinants of health (SDOH) have become an increasingly growing area of research for the health community. A compelling body of work has shown that social factors play important roles in health outcomes. Multiple studies have demonstrated a stepwise gradient pattern in the association between income and health - health improves incrementally as income rises. However, the association between SDOH and health outcomes can be complicated, as there are many complex biopsychosocial and biophysiosocial pathways and processes.
 
 To explore and analyze such complex relationships, interactive visualizations can aid researchers and public health experts in "knowledge discovery, hypotheses generation, and decision support." [[1]](#1)[[2]](#2) Interactively visuzliations can play an important role in fostering knowledge generation and help in establishing associations and causality, as they allow for direct data manipulation and analysis. However, creating interactive visualizations can be a technically intensive and arduous task, requiring both technical and data visualization experience. We would like to make this process as easy as possible so that a user with minimal technical experience can create and utilize the interactive visualizations.
 
@@ -13,16 +13,27 @@ To explore and analyze such complex relationships, interactive visualizations ca
 3. The user is a medical doctor interested in exploratory analysis of SDOH to identify trends and associated health outcomes longitudinally to form hypotheses for a grant application. The doctor would be using these data as supportive materials for said grant application.
 
 ## Data Sources
+For demonstrating purposes, we collected data from different sources, including publicly available CDC dataset, [chronic disease index (CDI)](https://chronicdata.cdc.gov/Chronic-Disease-Indicators/U-S-Chronic-Disease-Indicators-CDI-/g4ie-h725/data) and [500 PLACES](https://www.cdc.gov/places/about/500-cities-2016-2019/index.html), and also protected data set from *All of Us Research Program*.
+
 As we envision an interactive visualization tool to be widely applicable, we opted to use the *All of Us Research Program*, an effort by the National Institues of Health (NIH) that consists of a diverse group of at least one million participants across the United States. [[3]](#3) This data consortium includes health questionnaires, electronic health records, digital health technology data, and biospecimens. Importantly, it also includes key SDOH, such as income, education, and housing status.
 
 Researchers can gain access to the *All of Us Research Program* through the [All of Us Research Hub](https://www.researchallofus.org/). Some limitations of this dataset is that it requires training to gain approval for the controlled-tier dataset, which includes participant-level location data. Also, any analysis and visualization must be performed within the *All of Us Research Hub* workbench. Data cannot be exported locally.
 
 ## Use Cases
-**1. What is the distribution of homelessness within the greater Seattle area and is there an association to mental health disorders?**
+
+**1.What is the trend of binge drinking actions across the United states? How does that different across each state in the US?**
+- The user is expected to explore the variables in the datasets and take use of the plot_longitudinal_change function to visualize the change of rate or credence. The goal is to identify new patterns and formulate them as questions. When the user does not have a specific region of interest to start, users can try plot_geomap function and select variables of interest to visualize the distributional differences across the US.
+- We expect the user to utilize these interactive visualization tools to explore the dataset and identify their interesting formulating research questions and hypotheses.
+
+**2. What is associated with this [personal behavior], such as binge drinking, and what are some potential outcome of binge drinking?**
+- The user is expected to perform some simple association analysis and utilize the plot_corr function to examine the correlation between variables of interest and outcomes. This step is a great initiation and crucial step to identify the association between variables and outcomes, as one established connection between red meat intake and colorectal cancer risk is revealed in this way.
+- We expect the user to explore variables of interest and potential outcomes using this plot_corr function and taking care of data stratification and units to identify new patterns, and formalize insightful hypotheses.
+
+**3. What is the distribution of homelessness within the greater Seattle area and is there an association to mental health disorders?**
 - The objective of this user interaction is to have the user create and interact with a geomap, consisting of interactive legends for housing status and various mental health disorders (e.g., major depressive disorder).
 - We expect the user to pan and zoom the geomap, hide and show different levels of housing status with the interactive legends, and draw conclusions based on the various levels of data they choose to hide and show.
 
-**2. Is there a trend in obesity stratified by income and county within the greater Seattle area?**
+**4. Is there a trend in obesity stratified by income and county within the greater Seattle area?**
 - The objective of this user interaction is to have the user create and interact with time series graphs with interactive legends for income and/or a geomap, consisting of a sliding scale for time (in years).
 - We expect the user to hide and show different levels of income on the time-series graphs and interact with the sliding scale on the geomap to draw conclusions based on the various levels of data they choose to hide and show. They may choose to show the time-series graphs and geomap side-by-side.
 
