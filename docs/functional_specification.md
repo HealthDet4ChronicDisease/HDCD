@@ -22,11 +22,11 @@ Researchers can gain access to the *All of Us Research Program* through the [All
 ## Use Cases
 
 **1.What is the trend of binge drinking actions across the United states? How does that different across each state in the US?**
-- The user is expected to explore the variables in the datasets and take use of the plot_longitudinal_change function to visualize the change of rate or credence. The goal is to identify new patterns and formulate them as questions. When the user does not have a specific region of interest to start, users can try plot_geomap function and select variables of interest to visualize the distributional differences across the US.
-- We expect the user to utilize these interactive visualization tools to explore the dataset and identify their interesting formulating research questions and hypotheses.
+- The user is expected to explore the variables in the dataset and use the `plot_longitudinal_change` function to visualize the change of rate or credence. The goal is to identify new patterns and formulate questions and/or hypotheses. When the user does not have a specific region of interest to start, users can try the `plot_geomap` function and select variables of interest to visualize the distributional differences across the US.
+- We expect the user to utilize these interactive visualization tools for exploratory analysis and identify key variables of interest to formulate research questions and hypotheses.
 
-**2. What is associated with this [personal behavior], such as binge drinking, and what are some potential outcome of binge drinking?**
-- The user is expected to perform some simple association analysis and utilize the plot_corr function to examine the correlation between variables of interest and outcomes. This step is a great initiation and crucial step to identify the association between variables and outcomes, as one established connection between red meat intake and colorectal cancer risk is revealed in this way.
+**2. What is associated with this [personal behavior], such as binge drinking, and what are some potential outcome of [personal behavior]?**
+- The user is expected to perform simple association analyses and utilize the `plot_corr` function to examine the correlation between variables of interest and outcomes. This is a crucial, first step to establishing association between variables and outcomes. The association between red meat consumption and colorectal cancer risk was revealed in this way.
 - We expect the user to explore variables of interest and potential outcomes using this plot_corr function and taking care of data stratification and units to identify new patterns, and formalize insightful hypotheses.
 
 **3. What is the distribution of homelessness within the greater Seattle area and is there an association to mental health disorders?**
@@ -37,6 +37,7 @@ Researchers can gain access to the *All of Us Research Program* through the [All
 - The objective of this user interaction is to have the user create and interact with time series graphs with interactive legends for income and/or a geomap, consisting of a sliding scale for time (in years).
 - We expect the user to hide and show different levels of income on the time-series graphs and interact with the sliding scale on the geomap to draw conclusions based on the various levels of data they choose to hide and show. They may choose to show the time-series graphs and geomap side-by-side.
 
+# References
 <a id="1">[1]</a>
 *Chishtie J, Bielska IA, Barrera A, et al.* **Interactive Visualization Applications in Population Health and Health Services Research: Systematic Scoping Review.** J Med Internet Res. 2022;24(2):e27534. Published 2022 Feb 18.
 [![DOI:10.2196/27534](https://zenodo.org/badge/DOI/10.2196/27534.svg)](https://doi.org/10.2196/27534)
