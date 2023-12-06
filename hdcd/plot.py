@@ -48,13 +48,30 @@ column
     """
     dataframe = dataframe[dataframe["LocationAbbr"] != "US"]
 
+    # set exceptions
+    if sod not in set(dataframe["Question"]):
+        raise NameError("sod not found in dataframe, check [Question] columns\
+for available sod variable")
+
+    if health_outcome not in set(dataframe["Question"]):
+        raise NameError("health_outcome not found in dataframe, check \
+[Question] columns for available sod variable")
+
+    if location not in set(dataframe["LocationAbbr"]):
+        raise NameError("location not found in dataframe, check [LocationAbbr] \
+columns for available sod variable")
+
+    if stratification not in set(dataframe["StratificationCategory1"]):
+        raise NameError("stratification not found in dataframe, check \
+[LocationAbbr] columns for available sod variable")
+
     data_analysis = dataframe[(dataframe["Question"] == sod) \
     & (dataframe["StratificationCategory1"] == stratification)]
 
     # coerce into numeric
     data_analysis["DataValue"] = data_analysis["DataValue"].astype(float)
 
-        # set exceptions
+    # set exceptions
     if all( not str(x).replace(".","").isdigit() \
         for x in data_analysis["DataValue"].tolist()):
         raise TypeError("All value in the DataValue column can not be coerced \

@@ -100,3 +100,22 @@ class TestCases(unittest.TestCase):
                            stratification,
                            dataframe,
                            print_corr=False)
+
+    def test_edge_test_3_plot_corr(self):
+        """
+        throw NameError if any of the variables given are not found
+        """
+
+        sod = "No such variable"
+        health_outcome = "Life expectancy at birth"
+        location = "United States"
+        stratification = "Overall"
+        dataframe = cdi_dummy.copy()
+
+        with self.assertRaises(NameError):
+            plot.plot_corr(sod,
+                           health_outcome,
+                           location,
+                           stratification,
+                           dataframe,
+                           print_corr=False)
