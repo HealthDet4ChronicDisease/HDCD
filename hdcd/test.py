@@ -10,6 +10,8 @@ import sys
 import plot
 import summary
 
+cdi_dummy = pd.read_csv("../dummy_data/cdi_dummy.csv")
+
 class TestCases(unittest.TestCase):
 
 
@@ -23,7 +25,7 @@ class TestCases(unittest.TestCase):
         health_outcome = "Life expectancy at birth"
         location = "United States"
         stratification = "Overall"
-        data = 
+        dataframe = cdi_dummy
 
         plot.plot_corr(sod,
                        health_outcome,
@@ -38,10 +40,63 @@ class TestCases(unittest.TestCase):
         feed with ideal input and test the correctness of output
         """
 
-        plot.plot_corr()
-
-        query = np.array([5, 4])
+        plot.plot_corr(sod,
+                       health_outcome,
+                       location,
+                       stratification,
+                       dataframe,
+                       print_corr=False)
 
         assert np.isclose(knn_regression(n_neighbors,
                            data,
                            query),773.33)
+
+    def test_edge_test_1_plot_corr(self):
+        """
+        throw TypeError if any of the values are not numerical
+        """
+
+        sod = "Mortality from coronary heart disease"
+        health_outcome = "Life expectancy at birth"
+        location = "United States"
+        stratification = "Overall"
+        dataframe = cdi_dummy.head()
+
+        dataframe["DataValue"] = ["a",
+                                  "d",
+                                  "a",
+                                  "dd",
+                                  "sec"]
+
+        with self.assertRaises(TypeError):
+            plot.plot_corr(sod,
+                           health_outcome,
+                           location,
+                           stratification,
+                           dataframe,
+                           print_corr=False)
+
+    def test_edge_test_2_plot_corr(self):
+        """
+        throw TypeError if all missing
+        """
+
+        sod = "Mortality from coronary heart disease"
+        health_outcome = "Life expectancy at birth"
+        location = "United States"
+        stratification = "Overall"
+        dataframe = cdi_dummy.head()
+
+        dataframe["DataValue"] = [np.nan,
+                                  np.nan,
+                                  np.nan,
+                                  np.nan,
+                                  np.nan,]
+
+        with self.assertRaises(TypeError):
+            plot.plot_corr(sod,
+                           health_outcome,
+                           location,
+                           stratification,
+                           dataframe,
+                           print_corr=False)
