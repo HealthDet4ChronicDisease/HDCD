@@ -12,9 +12,7 @@ it requires, and outputs it provides
 * *Outputs:* Albers projection of US states and counties on a 
 projection of size to be determined by the user
 
-**2. Something Else Here**
-
-**3. Social determinants of health (SDOH) selector**
+**2. Social determinants of health (SDOH) selector**
 * *What it does:* Allows a user to interactively select various SDOH
  to visualize
 * *Inputs:* SDOH - income level, healthcare coverage, occupation status,
@@ -22,13 +20,19 @@ projection of size to be determined by the user
 * *Outputs:* An interactive legend or drop-down menu to select which
  SDOH to display on the visualization
 
+ **3. Sliding Scale for Time**
+* *What it does:* Allows a user to interactively select a time point
+* *Inputs:* datetime stamps for SDOH observations 
+* *Outputs:* An interactive sliding scale that allows the user to click
+and drag to specific time points to display
+
 ## Interactions for Use Cases
 The *GeoMap* and *SDOH selector* interact so that a user can select
- which SDOH to visualize on a map projection for aggregate participant data. For
- example, if a user wanted to look at rates of cardiovascular disease (CVD) by county 
- within the great Seattle area, they could select between income and healthcare 
- coverage to see if there is an association between either SDOH and CVD rates. 
- The selected SDOH would appear on the *GeoMap* as a colored choropleth.
+ which SDOH to visualize on a map projection for aggregate participant 
+ data. For example, if a user wanted to look for associations between 
+ rates of  cardiovascular disease (CVD) by county within the great Seattle 
+ area and SDOH, they could select  one SDOH to display. The selected SDOH 
+ would appear on the *GeoMap* as a colored choropleth.
 
 ## Preliminary Plan
 *  A list of tasks in priority order.
