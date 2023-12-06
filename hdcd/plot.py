@@ -94,8 +94,8 @@ def plot_geomap(variable,
                 datatype,
                 dataframe,
                 color_scheme = "bluepurple",
-                width = 500,
-                height = 300):
+                width = 1280,
+                height = 720):
     """
     Plot a longitudinal geomap (of the United States) distribution of @variable,
 with unit in @datatype, given @dataframe.
