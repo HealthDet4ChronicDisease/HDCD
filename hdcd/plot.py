@@ -1,14 +1,13 @@
 """
 Plotting module
 """
+import warnings
 
 import pandas as pd
 import numpy as np
 import scipy.stats as sp
-import matplotlib.pyplot as plt
 import altair as alt
 
-import warnings
 warnings.filterwarnings("ignore")
 
 ### --- TODO ----###
@@ -22,46 +21,60 @@ def plot_corr(sod,
              health_outcome,
              location,
              stratification,
-             df,
+             dataframe,
              print_corr=False):
 
     """
-    Function to plot the correlation of two variables in a scatterplot. Implementation based on altair (alt).
+    Function to plot the correlation of two variables in a scatterplot.
+Implementation based on altair (alt).
 
     Parameters:
     @sod: string variable drawn from the [Question] column of the dataframe
-    @health_outcome: string variable drawn from the [LocationDesc] column of the dataframe
-    @stratification: string variable drawn from the [StratificationCategory1] column
-    @output: an interactive pointplot of longitudinal change with respect to @variable
+    @health_outcome: string variable drawn from the [LocationDesc] column of
+the dataframe
+    @stratification: string variable drawn from the [StratificationCategory1]
+column
+    @output: an interactive pointplot of longitudinal change with respect to
+@variable
     @return: an alt.layer() object
 
     """
-    df = df[df["LocationAbbr"] != "US"]
+    dataframe = dataframe[dataframe["LocationAbbr"] != "US"]
 
-    data_analysis = df[(df["Question"] == sod) & (df["StratificationCategory1"] == stratification)]
-    data_analysis["DataValue"] = data_analysis["DataValue"].astype(float)
-    #print(data_analysis["DataValueType"].unique())
-
-    v1 = data_analysis.groupby(["LocationAbbr","DataValueType"])["DataValue"].mean()
-    v1 = pd.DataFrame(v1).reset_index().pivot(index = "LocationAbbr", columns = "DataValueType", values = 'DataValue')
-    v1.columns = [sod + " - " + x for x in v1.columns]
-    x_col = list(v1.columns)
-
-    data_analysis = df[(df["Question"] == health_outcome) & (df["StratificationCategory1"] == stratification)]
+    data_analysis = dataframe[(dataframe["Question"] == sod) \
+    & (dataframe["StratificationCategory1"] == stratification)]
     data_analysis["DataValue"] = data_analysis["DataValue"].astype(float)
 
-    v2 = data_analysis.groupby(["LocationAbbr","DataValueType"])["DataValue"].mean()
-    v2 = pd.DataFrame(v2).reset_index().pivot(index = "LocationAbbr", columns = "DataValueType", values = 'DataValue')
-    v2.columns = [health_outcome + " - " + x for x in v2.columns]
-    y_col = list(v2.columns)
+    sod_var = data_analysis.groupby(["LocationAbbr",
+                                "DataValueType"])["DataValue"].mean()
 
-    dfplot = v1.join(v2).reset_index()
+    sod_var = pd.DataFrame(sod_var).reset_index().pivot(index = "LocationAbbr",
+                                              columns = "DataValueType",
+                                              values = 'DataValue')
+
+    sod_var.columns = [sod + " - " + x for x in sod_var.columns]
+    x_col = list(sod_var.columns)
+
+    data_analysis = dataframe[(dataframe["Question"] == health_outcome) \
+    & (dataframe["StratificationCategory1"] == stratification)]
+    data_analysis["DataValue"] = data_analysis["DataValue"].astype(float)
+
+    outcome_var = data_analysis.groupby(["LocationAbbr",
+                                "DataValueType"])["DataValue"].mean()
+
+    outcome_var = pd.DataFrame(outcome_var).reset_index().pivot(index = "LocationAbbr",
+                                              columns = "DataValueType",
+                                              values = 'DataValue')
+    outcome_var.columns = [health_outcome + " - " + x for x in outcome_var.columns]
+    y_col = list(outcome_var.columns)
+
+    dataframeplot = sod_var.join(outcome_var).reset_index()
 
     chart = alt.hconcat()
     #plotlist = []
     for xvar in x_col:
         for yvar in y_col:
-            plot = alt.Chart(dfplot).mark_circle().encode(
+            plot = alt.Chart(dataframeplot).mark_circle().encode(
             alt.X(xvar+":Q",scale=alt.Scale(zero=False)),
             alt.Y(yvar+":Q",scale=alt.Scale(zero=False)),
             tooltip=['LocationAbbr',xvar,yvar]
@@ -69,29 +82,33 @@ def plot_corr(sod,
             chart |= plot
 
             if print_corr:
-                res = sp.stats.spearmanr(dfplot.dropna()[xvar],
-                                   dfplot.dropna()[yvar])
-                print(f'spearmanr correlation coefficient for [{xvar}] and [{yvar}]: {res} \n')
+                res = sp.stats.spearmanr(dataframeplot.dropna()[xvar],
+                                   dataframeplot.dropna()[yvar])
+                print(f'spearmanr correlation coefficient for \
+[{xvar}] and [{yvar}]: {res} \n')
 
     return chart.interactive()
 
 
 def plot_geomap(variable,
                 datatype,
-                df,
+                dataframe,
                 color_scheme = "bluepurple",
                 width = 500,
                 height = 300):
     """
-    Plot a longitudinal geomap (of the United States) distribution of @variable, with unit in @datatype, given @df.
+    Plot a longitudinal geomap (of the United States) distribution of @variable,
+with unit in @datatype, given @dataframe.
 
     Parameters
-    @variable: str, a variable to lookup from the [Question] column of data, used to generate the plot,
-    the [DataValue] column of the @df should be numeric.
-    @datatype: str, the unit of the @variable. User can lookup the @datatype from the [DataValueType] column
-    of the @df. Or user are recommended to use the variable_summary() function to check the DataValueType.
-    @df: pd.DataFrame, the dataframe used to generate the plot, must be formatted and contains required columns,
-    including ["YearStart","Question","DataValue","DataValueType"].
+    @variable: str, a variable to lookup from the [Question] column of data,
+used to generate the plot,the [DataValue] column of the @dataframe should be numeric.
+    @datatype: str, the unit of the @variable. User can lookup the @datatype
+from the [DataValueType] column of the @dataframe. Or user are recommended to use
+the variable_summary() function to check the DataValueType.
+    @dataframe: pd.DataFrame, the dataframe used to generate the plot, must be
+formatted and contains required columns, including
+["YearStart","Question","DataValue","DataValueType"].
     """
     # set up id map
     from vega_datasets import data
@@ -99,30 +116,30 @@ def plot_geomap(variable,
     state2id = dict(zip(pop["state"],
                         pop["id"]))
 
-    dfplot = df[df["Question"] == variable]
-    dfplot["id"] = [int(state2id[x]) if x in state2id else np.nan for x in dfplot["LocationDesc"]]
+    dataframeplot = dataframe[dataframe["Question"] == variable]
+    dataframeplot["id"] = [int(state2id[x]) \
+    if x in state2id else np.nan for x in dataframeplot["LocationDesc"]]
 
     # stratification
     stratification = 'Overall'
-    dfplot = dfplot[dfplot["StratificationCategory1"] == stratification]
+    dataframeplot = dataframeplot[dataframeplot["StratificationCategory1"] == stratification]
 
     # datatype
-    dfplot = dfplot[dfplot["DataValueType"] == datatype]
-    dfplot["DataValue"] = dfplot["DataValue"].astype(float)
+    dataframeplot = dataframeplot[dataframeplot["DataValueType"] == datatype]
+    dataframeplot["DataValue"] = dataframeplot["DataValue"].astype(float)
 
-    dfplot.dropna(subset = ["id"],inplace=True)
-    dfplot["id"] = dfplot["id"].astype(int)
+    dataframeplot.dropna(subset = ["id"],inplace=True)
+    dataframeplot["id"] = dataframeplot["id"].astype(int)
 
     # plot session
     # make slider bar
-    select_year = alt.binding_range(min=dfplot["YearStart"].min(),
-                  max=dfplot["YearStart"].max(),
+    select_year = alt.binding_range(min=dataframeplot["YearStart"].min(),
+                  max=dataframeplot["YearStart"].max(),
                   step=1, name="YearStart")
-    slider_selection = alt.selection_point(bind=select_year, fields=['YearStart'])
+    slider_selection = alt.selection_point(bind=select_year,
+                                           fields=['YearStart'])
 
     states = alt.topo_feature(data.us_10m.url, feature='states')
-
-    variable_list = ['DataValue',"YearStart","LocationDesc","LocationAbbr"]
 
     background = alt.Chart(states).mark_geoshape(
         fill='lightgray',
@@ -132,24 +149,23 @@ def plot_geomap(variable,
         height=height
     )
 
-    # the tricky part is that if it is longitudinal, the map should be using the dfplot to lookup states
-    # not the other way. Since if using states (the map itself) and lookup dfplot, the id would only identify
-    # one specific year's status, and ignores the other years
-
-    foreground = alt.Chart(dfplot).mark_geoshape().encode(
+    foreground = alt.Chart(dataframeplot).mark_geoshape().encode(
         color=alt.Color(
-                "DataValue:Q", scale=alt.Scale(scheme=color_scheme,
-                                               #domainMid = 0,
-                                               domainMax = dfplot["DataValue"].max(),
-                                               domainMin = dfplot["DataValue"].min()),
+                "DataValue:Q",
+                scale=alt.Scale(scheme=color_scheme,
+                                domainMax = dataframeplot["DataValue"].max(),
+                                domainMin = dataframeplot["DataValue"].min()),
             ),
         tooltip=['LocationDesc:N', 'YearStart:Q', 'DataValue:Q']
     ).transform_lookup(
         lookup='id',
-        from_=alt.LookupData(states, 'id', ["id","type","properties","geometry"])
+        from_=alt.LookupData(states, 'id', ["id",
+                                            "type",
+                                            "properties",
+                                            "geometry"])
     ).properties(
-        width=500,
-        height=300
+        width=width,
+        height=height
     ).project(
         type='albersUsa'
     ).add_selection(
@@ -162,7 +178,7 @@ def plot_geomap(variable,
 
 def plot_geomap_by_location(variable,
                             datatype,
-                            df,
+                            dataframe,
                             longitude = "longitude",
                             latitude = "latitude",
                             color_scheme = "bluepurple",
@@ -171,22 +187,24 @@ def plot_geomap_by_location(variable,
 
     """
     Plot a longitudinal geomap (of the United States) distribution of @variable,
-    with unit in @datatype, given @df.
+    with unit in @datatype, given @dataframe.
     This plot is made based on the longitude and latitude of the dataset.
 
     Parameters
-    @variable: str, a variable to lookup from the [Question] column of data, used to generate the plot,
-    the [DataValue] column of the @df should be numeric.
-    @datatype: str, the unit of the @variable. User can lookup the @datatype from the [DataValueType] column
-    of the @df. Or user are recommended to use the variable_summary() function to check the DataValueType.
-    @df: pd.DataFrame, the dataframe used to generate the plot, must be formatted and contains required columns,
+    @variable: str, a variable to lookup from the [Question] column of data, \
+used to generate the plot, the [DataValue] column of the @dataframe should be numeric.
+    @datatype: str, the unit of the @variable. User can lookup the @datatype \
+from the [DataValueType] column of the @dataframe. Or user are recommended to use the \
+variable_summary() function to check the DataValueType.
+    @dataframe: pd.DataFrame, the dataframe used to generate the plot, must be \
+formatted and contains required columns,
     including ["YearStart","Question","DataValue","DataValueType"].
     """
 
     from vega_datasets import data
 
     states = alt.topo_feature(data.us_10m.url, feature='states')
-    df = df[df["Question"] == variable]
+    dataframe = dataframe[dataframe["Question"] == variable]
 
     background = alt.Chart(states).mark_geoshape(
         fill='lightgray',
@@ -196,16 +214,21 @@ def plot_geomap_by_location(variable,
         height=height,
     )
 
-    points = alt.Chart(df).mark_circle().encode(
+    points = alt.Chart(dataframe).mark_circle().encode(
         longitude=longitude+':Q',
         latitude=latitude+':Q',
         color=alt.Color(
                "DataValue:Q", scale=alt.Scale(scheme=color_scheme,
                #domainMid = 0,
-               domainMax = df["DataValue"].max(),
-               domainMin = df["DataValue"].min()),
+               domainMax = dataframe["DataValue"].max(),
+               domainMin = dataframe["DataValue"].min()),
                 ),
-            tooltip=['LocationDesc:N', 'YearStart:Q', 'DataValue:Q', "Question:N", "DataValueType:N"],
+            tooltip=['LocationDesc:N',
+                     'YearStart:Q',
+                     'DataValue:Q',
+                     "Question:N",
+                     "DataValueType:N"],
+
         size=alt.value(10),
     )
 
@@ -215,23 +238,27 @@ def plot_geomap_by_location(variable,
 def plot_longitudinal_change(variable,
                              location,
                              stratification ,
-                             df):
+                             dataframe):
 
     """
-    Plot a longitudinal lineplot of @variable, with unit in @datatype at different panels, given @df.
+    Plot a longitudinal lineplot of @variable, with unit in @datatype at \
+different panels, given @dataframe.
 
     Parameters:
 
     @variable: string variable drawn from the [Question] column of the dataframe
-    @location: string variable drawn from the [LocationDesc] column of the dataframe
-    @stratification: string variable drawn from the [StratificationCategory1] column
-    @output: an interactive pointplot of longitudinal change with respect to @variable
+    @location: string variable drawn from the [LocationDesc] column of the \
+dataframe
+    @stratification: string variable drawn from the [StratificationCategory1] \
+column
+    @output: an interactive pointplot of longitudinal change with respect to \
+@variable
     @return: an alt.layer() object
 
     """
 
-    dfplot = df[(df["LocationDesc"] == location) & (df["Question"] == variable)]
-    tmp = dfplot[dfplot["StratificationCategory1"] == stratification]
+    dataframeplot = dataframe[(dataframe["LocationDesc"] == location) & (dataframe["Question"] == variable)]
+    tmp = dataframeplot[dataframeplot["StratificationCategory1"] == stratification]
 
     domain = list(tmp["Stratification1"].unique())
     colors = alt.Scale(
