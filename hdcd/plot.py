@@ -14,6 +14,13 @@ warnings.filterwarnings("ignore")
 ### Add __all__ to the import * in __init__
 ### Add print functions in vocab variable defining printing of correlation
 ### Add correlation coefficient selection Parameters
+LOC_SHORT = "LocationAbbr"
+LOC_LONG = "LocationDesc"
+D_VALUE = "DataValue"
+STRAT_SHORT = "Stratification1"
+STRAT_LONG = "StratificationCategory1"
+D_TYPE = "DataValueType"
+YEAR = "YearStart"
 
 __all__ = ['plot_corr',"plot_geomap","plot_longitudinal_change"]
 
@@ -41,12 +48,37 @@ column
     """
     dataframe = dataframe[dataframe["LocationAbbr"] != "US"]
 
+    # set exceptions
+    if sod not in set(dataframe["Question"]):
+        raise NameError("sod not found in dataframe, check [Question] columns\
+for available sod variable")
+
+    if health_outcome not in set(dataframe["Question"]):
+        raise NameError("health_outcome not found in dataframe, check \
+[Question] columns for available sod variable")
+
+    if location not in set(dataframe["LocationAbbr"]):
+        raise NameError("location not found in dataframe, check [LocationAbbr] \
+columns for available sod variable")
+
+    if stratification not in set(dataframe["StratificationCategory1"]):
+        raise NameError("stratification not found in dataframe, check \
+[LocationAbbr] columns for available sod variable")
+
     data_analysis = dataframe[(dataframe["Question"] == sod) \
     & (dataframe["StratificationCategory1"] == stratification)]
+
+    # coerce into numeric
     data_analysis["DataValue"] = data_analysis["DataValue"].astype(float)
 
+    # set exceptions
+    if all( not str(x).replace(".","").isdigit() \
+        for x in data_analysis["DataValue"].tolist()):
+        raise TypeError("All value in the DataValue column can not be coerced \
+into numeric or contains NAs, try to clean it before analyzing.")
+
     sod_var = data_analysis.groupby(["LocationAbbr",
-                                "DataValueType"])["DataValue"].mean()
+                                     "DataValueType"])["DataValue"].mean()
 
     sod_var = pd.DataFrame(sod_var).reset_index().pivot(index = "LocationAbbr",
                                               columns = "DataValueType",
@@ -59,8 +91,14 @@ column
     & (dataframe["StratificationCategory1"] == stratification)]
     data_analysis["DataValue"] = data_analysis["DataValue"].astype(float)
 
+    # set exceptions
+    if all( not str(x).replace(".","").isdigit() \
+        for x in data_analysis["DataValue"].tolist()):
+        raise TypeError("All value in the DataValue column can not be coerced \
+into numeric or contains NAs, try to clean it before analyzing.")
+
     outcome_var = data_analysis.groupby(["LocationAbbr",
-                                "DataValueType"])["DataValue"].mean()
+                                         "DataValueType"])["DataValue"].mean()
 
     outcome_var = pd.DataFrame(outcome_var).reset_index().pivot(index = "LocationAbbr",
                                               columns = "DataValueType",
@@ -122,7 +160,8 @@ formatted and contains required columns, including
 
     # stratification
     stratification = 'Overall'
-    dataframeplot = dataframeplot[dataframeplot["StratificationCategory1"] == stratification]
+    dataframeplot = dataframeplot[dataframeplot["StratificationCategory1"] \
+    == stratification]
 
     # datatype
     dataframeplot = dataframeplot[dataframeplot["DataValueType"] == datatype]
@@ -237,7 +276,7 @@ formatted and contains required columns,
 
 def plot_longitudinal_change(variable,
                              location,
-                             stratification ,
+                             stratification,
                              dataframe):
 
     """
@@ -257,8 +296,10 @@ column
 
     """
 
-    dataframeplot = dataframe[(dataframe["LocationDesc"] == location) & (dataframe["Question"] == variable)]
-    tmp = dataframeplot[dataframeplot["StratificationCategory1"] == stratification]
+    dataframeplot = dataframe[(dataframe["LocationDesc"] == location) \
+    & (dataframe["Question"] == variable)]
+    tmp = dataframeplot[dataframeplot["StratificationCategory1"] \
+    == stratification]
 
     domain = list(tmp["Stratification1"].unique())
     colors = alt.Scale(
