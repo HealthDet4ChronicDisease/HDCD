@@ -21,6 +21,9 @@ import numpy as np
 import pandas as pd
 import geopandas as  gpd
 
+geo_df = 'https://gist.githubusercontent.com/sdwfrost/d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb/counties.geojson'
+zip_df = 'https://raw.githubusercontent.com/scpike/us-state-county-zip/master/geo-data.csv'
+
 class AoU():
     """
     This class consists of multiple functions to wrangle and clean
