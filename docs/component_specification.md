@@ -9,7 +9,7 @@ it requires, and outputs it provides
  counties on a projection
 * *Inputs:* Geographic shape data (states and counties) for the
  contiguous US, Alaska, and Hawaii
-* *Outputs:* Albers projection of US states and counties on a 
+* *Outputs:* Albers USA projection of US states and counties on a 
 projection of size to be determined by the user
 
 **2. Social determinants of health (SDOH) selector**
