@@ -13,7 +13,7 @@ The class consists of functions:
     * zip_socioeconomic
     * merge_county_socioeconomic
 
-This script can be imported as a module
+This script can be imported as a module.
 """
 import os
 
@@ -21,21 +21,24 @@ import numpy as np
 import pandas as pd
 import geopandas as  gpd
 
+# recommended geoshapes file and ZIP codes for US counties file
 geo_df = 'https://gist.githubusercontent.com/sdwfrost/d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb/counties.geojson'
 zip_df = 'https://raw.githubusercontent.com/scpike/us-state-county-zip/master/geo-data.csv'
 
 class AoU():
     """
     This class consists of multiple functions to wrangle and clean
-    the All of US dataset to produce interactive visualizations.
+    the All of US dataset to produce interactive visualizations
+    specifically for county level socioeconomic data, as defined by 
+    All of Us.
     """
     def __init__(self, df, geo_df, zip_df):
         """
         This function initializes objects to be passed in the class.
 
         Args:
-            df (Pandas DataFrame): All of US ZIP code and socioeconomic
-                dataset
+            df (DataFrame): All of US ZIP code and socioeconomic
+                DataFrame
             geo_df (str): URL of geoJSON file with US counties geoshape
                 boundaries
             zip_df (str): URL of ZIP codes and US counties by name
@@ -82,7 +85,9 @@ class AoU():
         counties = self.load_geoshapes()
         counties_zip = self.load_counties_zip()
 
-        counties_merge = counties.merge(counties_zip[['state_fips', 'zipcode', 'NAME']],
+        counties_merge = counties.merge(counties_zip[['state_fips', 
+                                                      'zipcode', 
+                                                      'NAME']],
                                         on=['state_fips', 'NAME'],
                                         how='left')
 
@@ -91,13 +96,17 @@ class AoU():
     def zip_socioeconomic(self):
         """
         Load socioeconomic data by ZIP code and prepare to merge to
-            counties_merge
+            counties_merge. Delete person_id and drop duplicates to 
+            get aggregate data for each 3-digit ZIP code.
 
         Return:
-            zip_socioeconomic_agg (DataFrame): contains socioeconmic data by ZIP code
+            zip_socioeconomic_agg (DataFrame): contains socioeconmic data by 
+                3-digit ZIP code
         """
         zip_socioeconomic_df = self.df
-        zip_socioeconomic_agg = zip_socioeconomic_df.drop(columns=['person_id', 'observation_datetime'])
+        zip_socioeconomic_agg = zip_socioeconomic_df.drop(
+                                    columns=['person_id', 
+                                             'observation_datetime'])
         zip_socioeconomic_agg = zip_socioeconomic_agg.drop_duplicates()
 
         return zip_socioeconomic_agg
@@ -115,11 +124,16 @@ class AoU():
         counties_merge = self.merge_geoshapes_counties_zip()
 
         # get 3-digit ZIP codes
-        counties_merge['zip3'] = counties_merge['zipcode'].apply(lambda x: str(x)[0:3])
-        zip_socioeconomic_agg['zip3'] = zip_socioeconomic_agg['zip_code'].apply(lambda x: x[0:3])
+        counties_merge['zip3'] = counties_merge['zipcode'].apply(
+                                    lambda x: str(x)[0:3])
+        zip_socioeconomic_agg['zip3'] = zip_socioeconomic_agg['zip_code'].apply(
+                                            lambda x: x[0:3])
 
         # merge county_merge and zip_socioeconomic_agg
-        counties_socioeconomic = counties_merge.merge(zip_socioeconomic_agg, on='zip3', how='left')
-        counties_socioeconomic = counties_socioeconomic.drop_duplicates(subset='AFFGEOID')
+        counties_socioeconomic = counties_merge.merge(zip_socioeconomic_agg, 
+                                                      on='zip3', 
+                                                      how='left')
+        counties_socioeconomic = counties_socioeconomic.drop_duplicates(
+                                    subset='AFFGEOID')
 
         return counties_socioeconomic
