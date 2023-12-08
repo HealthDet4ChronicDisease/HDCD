@@ -119,3 +119,82 @@ class TestCases(unittest.TestCase):
                            stratification,
                            dataframe,
                            print_corr=False)
+
+    def test_smoke_test_geomap(self):
+        """
+        Smoke test, does it run
+        """
+
+        variable = "Life expectancy at birth"
+        datatype = "Number"
+        stratification = "Overall"
+        dataframe = cdi_dummy.copy()
+
+        plot.plot_geomap(variable,
+                        datatype,
+                        stratification,
+                        dataframe)
+
+    def test_one_shot_test_geomap(self):
+        """
+        Feed with ideal input and test the correctness of output
+        """
+
+        variable = "Life expectancy at birth"
+        datatype = "Number"
+        stratification = "Overall"
+        dataframe = cdi_dummy.copy()
+
+        plot.plot_geomap(variable,
+                        datatype,
+                        stratification,
+                        dataframe)
+
+    def test_edge_test_1_geomap(self):
+        """
+        Feed with ideal input and test the correctness of output
+        """
+
+        variable = "NOT EXIST"
+        datatype = "Number"
+        stratification = "Overall"
+        dataframe = cdi_dummy.copy()
+
+        with self.assertRaises(NameError):
+            plot.plot_geomap(variable,
+                            datatype,
+                            stratification,
+                            dataframe)
+
+    def test_edge_test_2_geomap(self):
+        """
+        Feed with ideal input and test the correctness of output
+        """
+
+        variable = "Life expectancy at birth"
+        datatype = "NOT EXIST"
+        stratification = "Overall"
+        dataframe = cdi_dummy.copy()
+
+        with self.assertRaises(NameError):
+            plot.plot_geomap(variable,
+                            datatype,
+                            stratification,
+                            dataframe)
+
+
+    def test_edge_test_2_geomap(self):
+        """
+        Feed with ideal input and test the correctness of output
+        """
+
+        variable = "Life expectancy at birth"
+        datatype = "NOT EXIST"
+        stratification = "Overall"
+        dataframe = cdi_dummy.copy()
+
+        with self.assertRaises(NameError):
+            plot.plot_geomap(variable,
+                            datatype,
+                            stratification,
+                            dataframe)

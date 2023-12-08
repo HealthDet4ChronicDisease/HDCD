@@ -50,20 +50,20 @@ column
 
     # set exceptions
     if sod not in set(dataframe["Question"]):
-        raise NameError("sod not found in dataframe, check [Question] columns\
-for available sod variable")
+        raise NameError(f"{sod} not found in dataframe, check [Question] \
+columns for available variable")
 
     if health_outcome not in set(dataframe["Question"]):
-        raise NameError("health_outcome not found in dataframe, check \
-[Question] columns for available sod variable")
+        raise NameError(f"{health_outcome} not found in dataframe, check \
+[Question] columns for available variable")
 
     if location not in set(dataframe["LocationAbbr"]):
-        raise NameError("location not found in dataframe, check [LocationAbbr] \
-columns for available sod variable")
+        raise NameError(f"{location} not found in dataframe, check \
+[LocationAbbr] columns for available sod variable")
 
     if stratification not in set(dataframe["StratificationCategory1"]):
-        raise NameError("stratification not found in dataframe, check \
-[LocationAbbr] columns for available sod variable")
+        raise NameError(f"{stratification} not found in dataframe, check \
+[StratificationCategory1] columns for available sod variable")
 
     data_analysis = dataframe[(dataframe["Question"] == sod) \
     & (dataframe["StratificationCategory1"] == stratification)]
@@ -103,7 +103,9 @@ into numeric or contains NAs, try to clean it before analyzing.")
     outcome_var = pd.DataFrame(outcome_var).reset_index().pivot(index = "LocationAbbr",
                                               columns = "DataValueType",
                                               values = 'DataValue')
-    outcome_var.columns = [health_outcome + " - " + x for x in outcome_var.columns]
+    outcome_var.columns = [health_outcome \
+        + " - " + x for x in outcome_var.columns]
+
     y_col = list(outcome_var.columns)
 
     dataframeplot = sod_var.join(outcome_var).reset_index()
@@ -130,6 +132,7 @@ into numeric or contains NAs, try to clean it before analyzing.")
 
 def plot_geomap(variable,
                 datatype,
+                stratification,
                 dataframe,
                 color_scheme = "bluepurple",
                 width = 1280,
@@ -140,10 +143,11 @@ with unit in @datatype, given @dataframe.
 
     Parameters
     @variable: str, a variable to lookup from the [Question] column of data,
-used to generate the plot,the [DataValue] column of the @dataframe should be numeric.
+used to generate the plot,the [DataValue] column of the @dataframe should be \
+numeric.
     @datatype: str, the unit of the @variable. User can lookup the @datatype
-from the [DataValueType] column of the @dataframe. Or user are recommended to use
-the variable_summary() function to check the DataValueType.
+from the [DataValueType] column of the @dataframe. Or user are recommended to \
+use the variable_summary() function to check the DataValueType.
     @dataframe: pd.DataFrame, the dataframe used to generate the plot, must be
 formatted and contains required columns, including
 ["YearStart","Question","DataValue","DataValueType"].
@@ -154,16 +158,33 @@ formatted and contains required columns, including
     state2id = dict(zip(pop["state"],
                         pop["id"]))
 
+    # set exceptions
+    if variable not in set(dataframe["Question"]):
+        raise NameError(f"{variable} not found in dataframe, check [Question] \
+columns for available variable")
+
+    if datatype not in set(dataframe["DataValueType"]):
+        raise NameError(f"{datatype} not found in dataframe, check \
+[DataValueType] columns for available variable")
+
+    if stratification not in set(dataframe["StratificationCategory1"]):
+        raise NameError(f"{stratification} not found in dataframe, check \
+[StratificationCategory1] columns for available variable")
+
     dataframeplot = dataframe[dataframe["Question"] == variable]
     dataframeplot["id"] = [int(state2id[x]) \
     if x in state2id else np.nan for x in dataframeplot["LocationDesc"]]
 
     # stratification
-    stratification = 'Overall'
     dataframeplot = dataframeplot[dataframeplot["StratificationCategory1"] \
     == stratification]
 
     # datatype
+    if all( not str(x).replace(".","").isdigit() \
+        for x in dataframeplot["DataValue"].tolist()):
+        raise TypeError("All value in the DataValue column can not be coerced \
+into numeric or contains NAs, try to clean it before analyzing.")
+
     dataframeplot = dataframeplot[dataframeplot["DataValueType"] == datatype]
     dataframeplot["DataValue"] = dataframeplot["DataValue"].astype(float)
 
@@ -231,10 +252,11 @@ def plot_geomap_by_location(variable,
 
     Parameters
     @variable: str, a variable to lookup from the [Question] column of data, \
-used to generate the plot, the [DataValue] column of the @dataframe should be numeric.
+used to generate the plot, the [DataValue] column of the @dataframe should be \
+numeric.
     @datatype: str, the unit of the @variable. User can lookup the @datatype \
-from the [DataValueType] column of the @dataframe. Or user are recommended to use the \
-variable_summary() function to check the DataValueType.
+from the [DataValueType] column of the @dataframe. Or user are recommended to \
+use the variable_summary() function to check the DataValueType.
     @dataframe: pd.DataFrame, the dataframe used to generate the plot, must be \
 formatted and contains required columns,
     including ["YearStart","Question","DataValue","DataValueType"].
