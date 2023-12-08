@@ -183,7 +183,7 @@ class TestCases(unittest.TestCase):
                             dataframe)
 
 
-    def test_edge_test_2_geomap(self):
+    def test_edge_test_3_geomap(self):
         """
         Feed with ideal input and test the correctness of output
         """

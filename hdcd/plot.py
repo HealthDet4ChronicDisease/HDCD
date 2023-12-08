@@ -46,7 +46,7 @@ column
     @return: an alt.layer() object
 
     """
-    dataframe = dataframe[dataframe["LocationAbbr"] != "US"]
+    dataframe = dataframe[dataframe[LOC_SHORT] != "US"]
 
     # set exceptions
     if sod not in set(dataframe["Question"]):
@@ -57,51 +57,51 @@ columns for available variable")
         raise NameError(f"{health_outcome} not found in dataframe, check \
 [Question] columns for available variable")
 
-    if location not in set(dataframe["LocationAbbr"]):
+    if location not in set(dataframe[LOC_SHORT]):
         raise NameError(f"{location} not found in dataframe, check \
 [LocationAbbr] columns for available sod variable")
 
-    if stratification not in set(dataframe["StratificationCategory1"]):
+    if stratification not in set(dataframe[STRAT_LONG]):
         raise NameError(f"{stratification} not found in dataframe, check \
 [StratificationCategory1] columns for available sod variable")
 
     data_analysis = dataframe[(dataframe["Question"] == sod) \
-    & (dataframe["StratificationCategory1"] == stratification)]
+    & (dataframe[STRAT_LONG] == stratification)]
 
     # coerce into numeric
-    data_analysis["DataValue"] = data_analysis["DataValue"].astype(float)
+    data_analysis[D_VALUE] = data_analysis[D_VALUE].astype(float)
 
     # set exceptions
     if all( not str(x).replace(".","").isdigit() \
-        for x in data_analysis["DataValue"].tolist()):
+        for x in data_analysis[D_VALUE].tolist()):
         raise TypeError("All value in the DataValue column can not be coerced \
 into numeric or contains NAs, try to clean it before analyzing.")
 
-    sod_var = data_analysis.groupby(["LocationAbbr",
-                                     "DataValueType"])["DataValue"].mean()
+    sod_var = data_analysis.groupby([LOC_SHORT,
+                                     D_TYPE])[D_VALUE].mean()
 
-    sod_var = pd.DataFrame(sod_var).reset_index().pivot(index = "LocationAbbr",
-                                              columns = "DataValueType",
+    sod_var = pd.DataFrame(sod_var).reset_index().pivot(index = LOC_SHORT,
+                                              columns = D_TYPE,
                                               values = 'DataValue')
 
     sod_var.columns = [sod + " - " + x for x in sod_var.columns]
     x_col = list(sod_var.columns)
 
     data_analysis = dataframe[(dataframe["Question"] == health_outcome) \
-    & (dataframe["StratificationCategory1"] == stratification)]
-    data_analysis["DataValue"] = data_analysis["DataValue"].astype(float)
+    & (dataframe[STRAT_LONG] == stratification)]
+    data_analysis[D_VALUE] = data_analysis[D_VALUE].astype(float)
 
     # set exceptions
     if all( not str(x).replace(".","").isdigit() \
-        for x in data_analysis["DataValue"].tolist()):
+        for x in data_analysis[D_VALUE].tolist()):
         raise TypeError("All value in the DataValue column can not be coerced \
 into numeric or contains NAs, try to clean it before analyzing.")
 
-    outcome_var = data_analysis.groupby(["LocationAbbr",
-                                         "DataValueType"])["DataValue"].mean()
+    outcome_var = data_analysis.groupby([LOC_SHORT,
+                                         D_TYPE])[D_VALUE].mean()
 
-    outcome_var = pd.DataFrame(outcome_var).reset_index().pivot(index = "LocationAbbr",
-                                              columns = "DataValueType",
+    outcome_var = pd.DataFrame(outcome_var).reset_index().pivot(index = LOC_SHORT,
+                                              columns = D_TYPE,
                                               values = 'DataValue')
     outcome_var.columns = [health_outcome \
         + " - " + x for x in outcome_var.columns]
@@ -163,39 +163,39 @@ formatted and contains required columns, including
         raise NameError(f"{variable} not found in dataframe, check [Question] \
 columns for available variable")
 
-    if datatype not in set(dataframe["DataValueType"]):
+    if datatype not in set(dataframe[D_TYPE]):
         raise NameError(f"{datatype} not found in dataframe, check \
 [DataValueType] columns for available variable")
 
-    if stratification not in set(dataframe["StratificationCategory1"]):
+    if stratification not in set(dataframe[STRAT_LONG]):
         raise NameError(f"{stratification} not found in dataframe, check \
 [StratificationCategory1] columns for available variable")
 
     dataframeplot = dataframe[dataframe["Question"] == variable]
     dataframeplot["id"] = [int(state2id[x]) \
-    if x in state2id else np.nan for x in dataframeplot["LocationDesc"]]
+    if x in state2id else np.nan for x in dataframeplot[LOC_LONG]]
 
     # stratification
-    dataframeplot = dataframeplot[dataframeplot["StratificationCategory1"] \
+    dataframeplot = dataframeplot[dataframeplot[STRAT_LONG] \
     == stratification]
 
     # datatype
     if all( not str(x).replace(".","").isdigit() \
-        for x in dataframeplot["DataValue"].tolist()):
+        for x in dataframeplot[D_VALUE].tolist()):
         raise TypeError("All value in the DataValue column can not be coerced \
 into numeric or contains NAs, try to clean it before analyzing.")
 
-    dataframeplot = dataframeplot[dataframeplot["DataValueType"] == datatype]
-    dataframeplot["DataValue"] = dataframeplot["DataValue"].astype(float)
+    dataframeplot = dataframeplot[dataframeplot[D_TYPE] == datatype]
+    dataframeplot[D_VALUE] = dataframeplot[D_VALUE].astype(float)
 
     dataframeplot.dropna(subset = ["id"],inplace=True)
     dataframeplot["id"] = dataframeplot["id"].astype(int)
 
     # plot session
     # make slider bar
-    select_year = alt.binding_range(min=dataframeplot["YearStart"].min(),
-                  max=dataframeplot["YearStart"].max(),
-                  step=1, name="YearStart")
+    select_year = alt.binding_range(min=dataframeplot[YEAR].min(),
+                  max=dataframeplot[YEAR].max(),
+                  step=1, name=YEAR)
     slider_selection = alt.selection_point(bind=select_year,
                                            fields=['YearStart'])
 
@@ -211,12 +211,12 @@ into numeric or contains NAs, try to clean it before analyzing.")
 
     foreground = alt.Chart(dataframeplot).mark_geoshape().encode(
         color=alt.Color(
-                "DataValue:Q",
+                D_VALUE+":Q",
                 scale=alt.Scale(scheme=color_scheme,
-                                domainMax = dataframeplot["DataValue"].max(),
-                                domainMin = dataframeplot["DataValue"].min()),
+                                domainMax = dataframeplot[D_VALUE].max(),
+                                domainMin = dataframeplot[D_VALUE].min()),
             ),
-        tooltip=['LocationDesc:N', 'YearStart:Q', 'DataValue:Q']
+        tooltip=[LOC_LONG+":N", YEAR+":Q", D_VALUE+":Q"]
     ).transform_lookup(
         lookup='id',
         from_=alt.LookupData(states, 'id', ["id",
@@ -279,14 +279,14 @@ formatted and contains required columns,
         longitude=longitude+':Q',
         latitude=latitude+':Q',
         color=alt.Color(
-               "DataValue:Q", scale=alt.Scale(scheme=color_scheme,
+               D_VALUE+":Q", scale=alt.Scale(scheme=color_scheme,
                #domainMid = 0,
-               domainMax = dataframe["DataValue"].max(),
-               domainMin = dataframe["DataValue"].min()),
+               domainMax = dataframe[D_VALUE].max(),
+               domainMin = dataframe[D_VALUE].min()),
                 ),
-            tooltip=['LocationDesc:N',
-                     'YearStart:Q',
-                     'DataValue:Q',
+            tooltip=[LOC_LONG+":N",
+                     YEAR+":Q",
+                     D_VALUE+":Q",
                      "Question:N",
                      "DataValueType:N"],
 
@@ -318,35 +318,35 @@ column
 
     """
 
-    dataframeplot = dataframe[(dataframe["LocationDesc"] == location) \
+    dataframeplot = dataframe[(dataframe[LOC_LONG] == location) \
     & (dataframe["Question"] == variable)]
-    tmp = dataframeplot[dataframeplot["StratificationCategory1"] \
+    tmp = dataframeplot[dataframeplot[STRAT_LONG] \
     == stratification]
 
-    domain = list(tmp["Stratification1"].unique())
+    domain = list(tmp[STRAT_SHORT].unique())
     colors = alt.Scale(
       domain= domain,
     )
 
     line = alt.Chart().mark_line().encode(
         alt.X("YearStart:O",),
-        alt.Y("DataValue:Q",scale=alt.Scale(zero=False)),
+        alt.Y(D_VALUE+":Q",scale=alt.Scale(zero=False)),
         alt.Color('Stratification1:N', scale=colors),
-        tooltip=["YearStart","DataValue",'Stratification1']
+        tooltip=[YEAR,D_VALUE,'Stratification1']
     )
 
     points = alt.Chart().mark_point().encode(
         alt.X("YearStart:O",),
-        alt.Y("DataValue:Q",scale=alt.Scale(zero=False)),
+        alt.Y(D_VALUE+":Q",scale=alt.Scale(zero=False)),
         alt.Color('Stratification1:N', scale=colors),
-        tooltip=["YearStart","DataValue",'Stratification1'])
+        tooltip=[YEAR,D_VALUE,'Stratification1'])
 
     cis = alt.Chart().mark_line().encode(
         alt.X("YearStart:O",),
         alt.Y("LowConfidenceLimit:Q",scale=alt.Scale(zero=False)),
         alt.Y2("HighConfidenceLimit:Q"),
         alt.Color('Stratification1:N', scale=colors),
-        tooltip=["YearStart","DataValue",'Stratification1'])
+        tooltip=[YEAR,D_VALUE,'Stratification1'])
 
     return alt.layer(points, cis, line).facet(
       data=tmp,
