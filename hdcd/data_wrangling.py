@@ -1,11 +1,11 @@
 """
 This Python script defines a class for data wrangling the
-All of US dataset.
+All of US socioeconomic dataset.
 
 This script requires `numpy`, `pandas`, and `geopandas` within
 the Python environment you are running this in.
 
-The class accepts Pandas DataFrames and zip files of geoJSON.
+The class accepts Pandas DataFrames, csv files, and zip files of geoJSON.
 The class consists of functions:
     * load_geoshapes
     * load_counties_zip
@@ -25,7 +25,7 @@ import geopandas as  gpd
 geo_df = 'https://gist.githubusercontent.com/sdwfrost/d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb/counties.geojson'
 zip_df = 'https://raw.githubusercontent.com/scpike/us-state-county-zip/master/geo-data.csv'
 
-class AoU():
+class AoU_socioeconomic():
     """
     This class consists of multiple functions to wrangle and clean
     the All of US dataset to produce interactive visualizations
@@ -38,7 +38,7 @@ class AoU():
 
         Args:
             df (DataFrame): All of US ZIP code and socioeconomic
-                DataFrame
+                DataFrame to be passed from SQL query
             geo_df (str): URL of geoJSON file with US counties geoshape
                 boundaries
             zip_df (str): URL of ZIP codes and US counties by name
@@ -55,6 +55,11 @@ class AoU():
         Return:
             counties (DataFrame): geoshapes file with added column 'state_fips'
         """
+        # set exceptions
+        if not isinstance(self.geo_df, str):
+            raise ValueError('"self.geo_df" must be of type string \
+                             to a URL for a geoJSON file')
+
         counties = gpd.read_file(self.geo_df)
         counties['state_fips'] = counties['STATEFP'].astype('int')
 
@@ -69,6 +74,11 @@ class AoU():
             counties_zip (DataFrame): ZIP codes and US counties with added
                 column 'NAME'
         """
+        # set exceptions
+        if not isinstance(self.zip_df, str):
+            raise ValueError('"self.zip_df" must be of type string \
+                             to a URL for a county ZIP codes csv')
+        
         counties_zip = pd.read_csv(self.zip_df)
         counties_zip['NAME'] = counties_zip['county']
 
@@ -103,6 +113,10 @@ class AoU():
             zip_socioeconomic_agg (DataFrame): contains socioeconmic data by 
                 3-digit ZIP code
         """
+        # set exceptions
+        if not isinstance(self.df, pd.DataFrame):
+            raise ValueError('"self_df" must be a Pandas DataFrame')
+        
         zip_socioeconomic_df = self.df
         zip_socioeconomic_agg = zip_socioeconomic_df.drop(
                                     columns=['person_id', 
