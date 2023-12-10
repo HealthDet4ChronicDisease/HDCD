@@ -16,6 +16,68 @@ As we envision an interactive visualization tool to be widely applicable, we opt
 
 Researchers can gain access to the *All of Us Research Program* through the [All of Us Research Hub](https://www.researchallofus.org/). Some limitations of this dataset is that it requires extensive training to gain approval for the controlled-tier dataset, which includes participant-level data. Also, any analysis and visualization must be performed within the *All of Us Research Hub* workbench. Data cannot be exported locally.
 
+## Organization of the Project
+``````
+HDCD/
+┣ docs/
+┃ ┣ 2023-11-14.pptx
+┃ ┣ component_specification.md
+┃ ┣ design.md
+┃ ┗ functional_specification.md
+┣ dummy_data/
+┃ ┣ cdi_dummy.csv
+┃ ┣ condition_data.csv
+┃ ┣ observation_data.csv
+┃ ┣ person_data.csv
+┃ ┗ survey_data.csv
+┣ examples/
+┣ hdcd/
+┃ ┣ __pycache__/
+┃ ┃ ┣ data_wrangling.cpython-37.pyc
+┃ ┃ ┣ plot.cpython-310.pyc
+┃ ┃ ┣ plot.cpython-312.pyc
+┃ ┃ ┣ plot.cpython-37.pyc
+┃ ┃ ┣ summary.cpython-310.pyc
+┃ ┃ ┣ summary.cpython-312.pyc
+┃ ┃ ┣ summary.cpython-37.pyc
+┃ ┃ ┣ __init__.cpython-310.pyc
+┃ ┃ ┣ __init__.cpython-312.pyc
+┃ ┃ ┗ __init__.cpython-37.pyc
+┃ ┣ data_wrangling.py
+┃ ┣ plot.py
+┃ ┣ summary.py
+┃ ┣ test.py
+┃ ┗ __init__.py
+┣ notebook/
+┃ ┣ .ipynb_checkpoints/
+┃ ┃ ┣ dummy_data-checkpoint.ipynb
+┃ ┃ ┣ SOD_Project-checkpoint.ipynb
+┃ ┃ ┗ test_geomap-checkpoint.ipynb
+┃ ┣ dummy_data.ipynb
+┃ ┣ SOD_Project.ipynb
+┃ ┣ test_geomap.ipynb
+┃ ┣ visualization.png
+┃ ┣ visualization_correlation_plot.html
+┃ ┣ visualization_geomap.html
+┃ ┗ visualization_longitudinal_plot.html
+┣ .gitignore
+┣ LICENSE
+``````
+## Setup and Installation
+1. Clone this GitHub repository to your local working directory by typing
+the command below into your command line.
+``````
+git clone https://github.com/sliwhu/UWHousingTeam.git
+``````
+2. Create a local conda environment to install necessary packages
+``````
+conda create --name <ENV_NAME> python=3.7
+``````
+3. Run the setup.py file 
+``````
+python setup.py install
+``````
+
 # References
 <a id="1">[1]</a>
 *Hahn RA.* **What is a social determinant of health? Back to basics.** J Public Health Res. 2021;10(4):2324. Published 2021 Jun 23.

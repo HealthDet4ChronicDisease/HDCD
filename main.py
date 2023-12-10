@@ -1,11 +1,16 @@
 """
 This Python script runs the Health Data Analysis modules for interactive
 visualziations within this GitHub repository.
-* Data Wrangling
-* Summary Statistics
-* Plots
+    * Data Wrangling
+    * Summary Statistics
+    * Plots
 
-
+These modules require the following packages within the Python environment
+you are running in:
+    * NumPy
+    * Pandas
+    * GeoPandas
+    * Altair
 """
 import os
 import sys
