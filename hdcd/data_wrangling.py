@@ -97,7 +97,8 @@ class AoU_socioeconomic():
 
         counties_merge = counties.merge(counties_zip[['state_fips', 
                                                       'zipcode', 
-                                                      'NAME']],
+                                                      'NAME', 
+                                                      'state']],
                                         on=['state_fips', 'NAME'],
                                         how='left')
 
