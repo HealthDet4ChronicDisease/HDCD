@@ -67,7 +67,7 @@ HDCD/
 1. Clone this GitHub repository to your local working directory by typing
 the command below into your command line.
 ``````
-git clone https://github.com/sliwhu/UWHousingTeam.git
+git clone https://github.com/HealthDet4ChronicDisease/HDCD.git
 ``````
 2. Create a local conda environment to install necessary packages
 ``````
