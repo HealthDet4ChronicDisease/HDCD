@@ -68,14 +68,14 @@ columns for available variable")
     data_analysis = dataframe[(dataframe["Question"] == sod) \
     & (dataframe[STRAT_LONG] == stratification)]
 
-    # coerce into numeric
-    data_analysis[D_VALUE] = data_analysis[D_VALUE].astype(float)
-
     # set exceptions
     if all( not str(x).replace(".","").isdigit() \
         for x in data_analysis[D_VALUE].tolist()):
         raise TypeError("All value in the DataValue column can not be coerced \
 into numeric or contains NAs, try to clean it before analyzing.")
+    # coerce into numeric
+    data_analysis[D_VALUE] = data_analysis[D_VALUE].astype(float)
+
 
     sod_var = data_analysis.groupby([LOC_SHORT,
                                      D_TYPE])[D_VALUE].mean()
@@ -89,13 +89,14 @@ into numeric or contains NAs, try to clean it before analyzing.")
 
     data_analysis = dataframe[(dataframe["Question"] == health_outcome) \
     & (dataframe[STRAT_LONG] == stratification)]
-    data_analysis[D_VALUE] = data_analysis[D_VALUE].astype(float)
 
     # set exceptions
     if all( not str(x).replace(".","").isdigit() \
         for x in data_analysis[D_VALUE].tolist()):
         raise TypeError("All value in the DataValue column can not be coerced \
 into numeric or contains NAs, try to clean it before analyzing.")
+
+    data_analysis[D_VALUE] = data_analysis[D_VALUE].astype(float)
 
     outcome_var = data_analysis.groupby([LOC_SHORT,
                                          D_TYPE])[D_VALUE].mean()

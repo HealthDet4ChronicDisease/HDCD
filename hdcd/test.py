@@ -2,10 +2,11 @@
 Test functions for hdcd package.
 """
 import unittest
-import numpy as np
 import os
 import sys
 
+import pandas as pd
+import numpy as np
 # directory reach
 import plot
 import summary
@@ -23,7 +24,7 @@ class TestCases(unittest.TestCase):
 
         sod = "Mortality from coronary heart disease"
         health_outcome = "Life expectancy at birth"
-        location = "United States"
+        location = "CA"
         stratification = "Overall"
         dataframe = cdi_dummy
 
@@ -40,16 +41,18 @@ class TestCases(unittest.TestCase):
         feed with ideal input and test the correctness of output
         """
 
+        sod = "Mortality from coronary heart disease"
+        health_outcome = "Life expectancy at birth"
+        location = "CA"
+        stratification = "Overall"
+        dataframe = cdi_dummy
+
         plot.plot_corr(sod,
                        health_outcome,
                        location,
                        stratification,
                        dataframe,
                        print_corr=False)
-
-        assert np.isclose(knn_regression(n_neighbors,
-                           data,
-                           query),773.33)
 
     def test_edge_test_1_plot_corr(self):
         """
@@ -58,15 +61,11 @@ class TestCases(unittest.TestCase):
 
         sod = "Mortality from coronary heart disease"
         health_outcome = "Life expectancy at birth"
-        location = "United States"
+        location = "CA"
         stratification = "Overall"
-        dataframe = cdi_dummy.head()
+        dataframe = cdi_dummy.copy()
 
-        dataframe["DataValue"] = ["a",
-                                  "d",
-                                  "a",
-                                  "dd",
-                                  "sec"]
+        dataframe["DataValue"] = ["a"] * len(dataframe)
 
         with self.assertRaises(TypeError):
             plot.plot_corr(sod,
@@ -83,15 +82,11 @@ class TestCases(unittest.TestCase):
 
         sod = "Mortality from coronary heart disease"
         health_outcome = "Life expectancy at birth"
-        location = "United States"
+        location = "CA"
         stratification = "Overall"
-        dataframe = cdi_dummy.head()
+        dataframe = cdi_dummy.copy()
 
-        dataframe["DataValue"] = [np.nan,
-                                  np.nan,
-                                  np.nan,
-                                  np.nan,
-                                  np.nan,]
+        dataframe["DataValue"] = [np.nan] * len(dataframe)
 
         with self.assertRaises(TypeError):
             plot.plot_corr(sod,
@@ -108,7 +103,7 @@ class TestCases(unittest.TestCase):
 
         sod = "No such variable"
         health_outcome = "Life expectancy at birth"
-        location = "United States"
+        location = "CA"
         stratification = "Overall"
         dataframe = cdi_dummy.copy()
 

@@ -10,6 +10,10 @@ Summary module
 
 __all__ = ['data_summary',"variable_summary"]
 
+def _check_name_error(var,data):
+    return var in set(data.columns)
+
+
 def data_summary(dataframe):
 
     """
@@ -19,6 +23,16 @@ def data_summary(dataframe):
     n_cols = len(dataframe.columns)
     n_rows = len(dataframe)
     print(f'The dataframe contains {n_cols} of columns and {n_rows} of rows \n')
+
+    if _check_name_error("Topic",dataframe):
+        raise NameError("Topic not found in columns of dataframe.")
+
+    if _check_name_error("Question",dataframe):
+        raise NameError("Question not found in columns of dataframe.")
+
+    if _check_name_error("StratificationCategory1",dataframe):
+        raise NameError("StratificationCategory1 not found in columns of \
+dataframe.")
 
     n_topics = dataframe["Topic"].nunique()
     n_questions = dataframe["Question"].nunique()
@@ -47,6 +61,21 @@ def variable_summary(variable, dataframe):
     variable prevalence longitudinally in [YearStart] column,
     variable prevalence across different state in [LocationAbbr] column
     """
+
+    if _check_name_error("DataValue",dataframe):
+        raise NameError("DataValue not found in columns of dataframe.")
+
+    if _check_name_error("Question",dataframe):
+        raise NameError("Question not found in columns of dataframe.")
+
+    if _check_name_error("DataValueType",dataframe):
+        raise NameError("DataValueType not found in columns of dataframe.")
+
+    if _check_name_error("LocationAbbr",dataframe):
+        raise NameError("LocationAbbr not found in columns of dataframe.")
+
+    if _check_name_error("YearStartg",dataframe):
+        raise NameError("YearStart not found in columns of dataframe.")
 
     dataframe = dataframe[dataframe["Question"] == variable]
 
