@@ -74,4 +74,9 @@ def main():
     
 
 if __name__ == "__main__":
-    print("The selected Visualizations are ready.")
+    if not (args.plot_geomap or args.plot_correlation 
+            or args.plot_longitudinal or args.summary_statistics):
+        parser.error('No visualization selected, add one type')
+    else:
+        print("The selected visualizations are ready.")
+    
