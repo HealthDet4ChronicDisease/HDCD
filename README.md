@@ -32,17 +32,6 @@ HDCD/
 ┃ ┗ survey_data.csv
 ┣ examples/
 ┣ hdcd/
-┃ ┣ __pycache__/
-┃ ┃ ┣ data_wrangling.cpython-37.pyc
-┃ ┃ ┣ plot.cpython-310.pyc
-┃ ┃ ┣ plot.cpython-312.pyc
-┃ ┃ ┣ plot.cpython-37.pyc
-┃ ┃ ┣ summary.cpython-310.pyc
-┃ ┃ ┣ summary.cpython-312.pyc
-┃ ┃ ┣ summary.cpython-37.pyc
-┃ ┃ ┣ __init__.cpython-310.pyc
-┃ ┃ ┣ __init__.cpython-312.pyc
-┃ ┃ ┗ __init__.cpython-37.pyc
 ┃ ┣ data_wrangling.py
 ┃ ┣ plot.py
 ┃ ┣ summary.py
@@ -62,6 +51,8 @@ HDCD/
 ┃ ┗ visualization_longitudinal_plot.html
 ┣ .gitignore
 ┣ LICENSE
+┣ main.py
+┗ README.md
 ``````
 ## Setup and Installation
 1. Clone this GitHub repository to your local working directory by typing
@@ -77,10 +68,10 @@ conda activate <ENV_NAME>
 3. Run modules
 ``````
 python main.py
-    [--plot_longitudinal]
-    [--plot_correlation]
-    [--plot_geomap]
-    [--summary_statistics]
+    [--plot_longitudinal] # longitudinal time series graph
+    [--plot_correlation] # scatter plot of two variables
+    [--plot_geomap] # geomap from ['socioeconomic', 'location', 'geomap']
+    [--summary_statistics] # prints summary of dataset or variable
 ``````
 
 # References
