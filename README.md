@@ -71,10 +71,10 @@ conda activate <ENV_NAME>
 * plot_geomap: select type from ['socioeconomic', 'location', 'geomap']
 * summary_statistics: select type from ['data', 'variable'] 
 ``````
-python main.py
-    [--plot_longitudinal] # longitudinal time series graph of two variables
-    [--plot_correlation] # scatterplot of two variables
-    [--plot_geomap] # interactive geomap of selected type
+python main.py \
+    [--plot_longitudinal] # longitudinal time series graph of two variables \
+    [--plot_correlation] # scatterplot of two variables \
+    [--plot_geomap] # interactive geomap of selected type \
     [--summary_statistics] # prints summary of dataset or variable
 ``````
 
