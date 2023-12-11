@@ -136,7 +136,7 @@ def plot_geomap(variable,
                 stratification,
                 dataframe,
                 color_scheme = "bluepurple",
-                width = 'container')
+                width = 'container'):
                 # height = 720):
     """
     Plot a longitudinal geomap (of the United States) distribution of @variable,
@@ -243,7 +243,7 @@ def plot_geomap_by_location(variable,
                             longitude = "longitude",
                             latitude = "latitude",
                             color_scheme = "bluepurple",
-                            width = 'container')
+                            width = 'container'):
                             # height = 720):
 
     """
