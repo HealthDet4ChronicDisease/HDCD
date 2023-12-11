@@ -77,6 +77,10 @@ conda activate <ENV_NAME>
 3. Run modules
 ``````
 python main.py
+    [--plot_longitudinal]
+    [--plot_correlation]
+    [--plot_geomap]
+    [--summary_statistics]
 ``````
 
 # References
