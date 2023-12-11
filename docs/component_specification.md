@@ -1,9 +1,6 @@
 # Component Specification
 
 ## Software Components
-* Describe at least 3 components specifying: what it does, inputs 
-it requires, and outputs it provides
-
 **1. GeoMap**
 * *What it does:* Displays geographic boundaries for US states and
  counties on a projection
