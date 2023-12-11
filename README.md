@@ -55,8 +55,8 @@ HDCD/
 ┗ README.md
 ``````
 ## Setup and Installation
-1. Clone this GitHub repository to your local working directory by typing
-the command below into your command line.
+1. Clone this GitHub repository to your local working directory with
+the command:
 ``````
 git clone https://github.com/HealthDet4ChronicDisease/HDCD.git
 ``````
@@ -66,11 +66,15 @@ conda create --name <ENV_NAME> -f environment.yml
 conda activate <ENV_NAME>
 ``````
 3. Run modules
+* plot_longitudinal (default = False): if called, set to 'True'
+* plot_correlation (default = False): if called, set to 'True'
+* plot_geomap: select type from ['socioeconomic', 'location', 'geomap']
+* summary_statistics: select type from ['data', 'variable'] 
 ``````
 python main.py
-    [--plot_longitudinal] # longitudinal time series graph
-    [--plot_correlation] # scatter plot of two variables
-    [--plot_geomap] # geomap from ['socioeconomic', 'location', 'geomap']
+    [--plot_longitudinal] # longitudinal time series graph of two variables
+    [--plot_correlation] # scatterplot of two variables
+    [--plot_geomap] # interactive geomap of selected type
     [--summary_statistics] # prints summary of dataset or variable
 ``````
 
