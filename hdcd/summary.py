@@ -31,7 +31,7 @@ questions \n')
 
     stratifications = dataframe["StratificationCategory1"].unique()
     print(f'The stratifications of the variables including \
-{list(stratifications)} \n')
+        {list(stratifications)} \n')
 
     print('The set of functions and tools are designed to analyze the chronic \
 disease index (dataframe) data from the CDC. For more information, print out the \

@@ -16,6 +16,68 @@ As we envision an interactive visualization tool to be widely applicable, we opt
 
 Researchers can gain access to the *All of Us Research Program* through the [All of Us Research Hub](https://www.researchallofus.org/). Some limitations of this dataset is that it requires extensive training to gain approval for the controlled-tier dataset, which includes participant-level data. Also, any analysis and visualization must be performed within the *All of Us Research Hub* workbench. Data cannot be exported locally.
 
+## Organization of the Project
+``````
+HDCD/
+┣ docs/
+┃ ┣ 2023-11-14.pptx
+┃ ┣ component_specification.md
+┃ ┣ design.md
+┃ ┗ functional_specification.md
+┣ dummy_data/
+┃ ┣ cdi_dummy.csv
+┃ ┣ condition_data.csv
+┃ ┣ observation_data.csv
+┃ ┣ person_data.csv
+┃ ┗ survey_data.csv
+┣ examples/
+┣ hdcd/
+┃ ┣ data_wrangling.py
+┃ ┣ plot.py
+┃ ┣ summary.py
+┃ ┣ test.py
+┃ ┗ __init__.py
+┣ notebook/
+┃ ┣ .ipynb_checkpoints/
+┃ ┃ ┣ dummy_data-checkpoint.ipynb
+┃ ┃ ┣ SOD_Project-checkpoint.ipynb
+┃ ┃ ┗ test_geomap-checkpoint.ipynb
+┃ ┣ dummy_data.ipynb
+┃ ┣ SOD_Project.ipynb
+┃ ┣ test_geomap.ipynb
+┃ ┣ visualization.png
+┃ ┣ visualization_correlation_plot.html
+┃ ┣ visualization_geomap.html
+┃ ┗ visualization_longitudinal_plot.html
+┣ .gitignore
+┣ LICENSE
+┣ main.py
+┗ README.md
+``````
+## Setup and Installation
+1. Clone this GitHub repository to your local working directory with
+the command:
+``````
+git clone https://github.com/HealthDet4ChronicDisease/HDCD.git
+``````
+2. Create a local conda environment with the necessary Python packages
+``````
+conda create --name <ENV_NAME> -f environment.yml
+conda activate <ENV_NAME>
+``````
+3. Run modules
+* plot_longitudinal (default = False): if called, set to 'True'
+* plot_correlation (default = False): if called, set to 'True'
+* plot_geomap: select type from ['socioeconomic', 'location', 'geomap']
+* summary_statistics: select type from ['data', 'variable'] 
+``````
+python main.py
+    [--plot_longitudinal] # longitudinal time series graph of two variables
+    [--plot_correlation] # scatterplot of two variables
+    [--plot_geomap] # interactive geomap of selected type
+    [--summary_statistics] # prints summary of dataset or variable
+``````
+
 # References
 <a id="1">[1]</a>
 *Hahn RA.* **What is a social determinant of health? Back to basics.** J Public Health Res. 2021;10(4):2324. Published 2021 Jun 23.
