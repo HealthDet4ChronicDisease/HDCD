@@ -206,8 +206,8 @@ into numeric or contains NAs, try to clean it before analyzing.")
         fill='lightgray',
         stroke='white'
     ).project('albersUsa').properties(
-        width=width,
-        height=height
+        width=width
+        # height=height
     )
 
     foreground = alt.Chart(dataframeplot).mark_geoshape().encode(
@@ -225,8 +225,8 @@ into numeric or contains NAs, try to clean it before analyzing.")
                                             "properties",
                                             "geometry"])
     ).properties(
-        width=width,
-        height=height
+        width=width
+        # height=height
     ).project(
         type='albersUsa'
     ).add_selection(
@@ -272,8 +272,8 @@ formatted and contains required columns,
         fill='lightgray',
         stroke='white'
     ).project('albersUsa').properties(
-        width=width,
-        height=height,
+        width=width
+        # height=height,
     )
 
     points = alt.Chart(dataframe).mark_circle().encode(
