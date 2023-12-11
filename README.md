@@ -66,10 +66,10 @@ conda create --name <ENV_NAME> -f environment.yml
 conda activate <ENV_NAME>
 ``````
 3. Run modules
-* plot_longitudinal (default = False): if called, set to 'True'
-* plot_correlation (default = False): if called, set to 'True'
-* plot_geomap: select type from ['socioeconomic', 'location', 'geomap']
-* summary_statistics: select type from ['data', 'variable'] 
+* *plot_longitudinal* (default = False): if called, set to 'True'
+* *plot_correlation* (default = False): if called, set to 'True'
+* *plot_geomap*: select type from ['socioeconomic', 'location', 'geomap']
+* *summary_statistics*: select type from ['data', 'variable'] 
 ``````
 python main.py \
     [--plot_longitudinal] # longitudinal time series graph of two variables \

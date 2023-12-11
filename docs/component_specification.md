@@ -28,7 +28,7 @@ The *GeoMap* and *SDOH selector* interact so that a user can select
  which SDOH to visualize on a map projection for aggregate participant 
  data. For example, if a user wanted to look for associations between 
  rates of  cardiovascular disease (CVD) by county within the great Seattle 
- area and SDOH, they could select  one SDOH to display. The selected SDOH 
+ area and SDOH, they could select one SDOH to display. The selected SDOH 
  would appear on the *GeoMap* as a colored choropleth.
 
 ## Preliminary Plan
