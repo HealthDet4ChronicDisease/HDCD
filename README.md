@@ -69,9 +69,9 @@ the command below into your command line.
 ``````
 git clone https://github.com/HealthDet4ChronicDisease/HDCD.git
 ``````
-2. Create a local conda environment with necessary Python packages
+2. Create a local conda environment with the necessary Python packages
 ``````
-conda create --name <ENV_NAME> python=3.7 -f environment.yml
+conda create --name <ENV_NAME> -f environment.yml
 conda activate <ENV_NAME>
 ``````
 3. Run modules
