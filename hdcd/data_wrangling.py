@@ -1,19 +1,29 @@
 """
-This Python script defines a class for data wrangling the
-All of US socioeconomic dataset.
+This Python script defines clasess for data wrangling the
+All of US dataset.
+    * AoU_socioeconomic: county-level socioeconomic data
+    * AoU_conditions: aggregated county-level conditions counts
 
 This script requires `numpy`, `pandas`, and `geopandas` within
 the Python environment you are running this in.
 
-The class accepts Pandas DataFrames, csv files, and zip files of geoJSON.
-The class consists of functions:
+The AoU_socioeconomic class accepts Pandas DataFrames, csv files, and 
+    zip files of geoJSON. The class consists of functions:
     * load_geoshapes
     * load_counties_zip
     * merge_geoshapes_counties_zip
     * zip_socioeconomic
     * merge_county_socioeconomic
 
-This script can be imported as a module.
+The AoU_conditions class accepts Pandas DataFrames and csv files. 
+    The class consists of functions:
+    * load_counties_zip
+    * threshold_conditions
+    * observation_zip
+    * merge_conditions_observation
+    * groupby_count
+
+The classes can be imported as modules.
 """
 import os
 
@@ -197,11 +207,11 @@ class AoU_conditions():
     def threshold_conditions(self):
         """
         Threshold conditions of interest so that only those with at least
-            a prevalence of 10k are included for visualization.
+            a prevalence of 100k are included for visualization.
 
         Return:
             conditions_df_threshold (DataFrame): conditions with at least
-                a prevalence of 10k
+                a prevalence of 100k
         """
         # threshold at least 10k
         conditions_df_threshold = self.conditions_df[self.conditions_df.groupby('standard_concept_name')['standard_concept_name'].transform('size')>100000]
@@ -270,7 +280,7 @@ class AoU_conditions():
     def groupby_count(self):
         """
         Count total participants for a condition in each ZIP code
-            stratified by datetime
+            stratified by datetime year and month
 
         Return:
             conditions_zip_datetime_counts (DataFrame): total participants

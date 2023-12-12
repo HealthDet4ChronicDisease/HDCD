@@ -19,6 +19,14 @@ Researchers can gain access to the *All of Us Research Program* through the [All
 ## Organization of the Project
 ``````
 HDCD/
+┣ data/
+┃ ┣ filtered_500_cities_2016_renmCols.csv
+┃ ┣ filtered_500_cities_2017_renmCols.csv
+┃ ┣ filtered_500_cities_2018_renmCols.csv
+┃ ┣ filtered_500_cities_2019_renmCols.csv
+┃ ┣ filtered_places_2020_renmCols.csv
+┃ ┣ filtered_places_2021_renmCols.csv
+┃ ┗ filtered_places_2022_renmCols.csv
 ┣ docs/
 ┃ ┣ 2023-11-14.pptx
 ┃ ┣ component_specification.md
@@ -38,10 +46,6 @@ HDCD/
 ┃ ┣ test.py
 ┃ ┗ __init__.py
 ┣ notebook/
-┃ ┣ .ipynb_checkpoints/
-┃ ┃ ┣ dummy_data-checkpoint.ipynb
-┃ ┃ ┣ SOD_Project-checkpoint.ipynb
-┃ ┃ ┗ test_geomap-checkpoint.ipynb
 ┃ ┣ dummy_data.ipynb
 ┃ ┣ SOD_Project.ipynb
 ┃ ┣ test_geomap.ipynb
