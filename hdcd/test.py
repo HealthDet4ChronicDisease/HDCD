@@ -7,6 +7,7 @@ import sys
 
 import pandas as pd
 import numpy as np
+import altair as alt
 # directory reach
 import plot
 import summary
@@ -113,7 +114,8 @@ class TestCases(unittest.TestCase):
                            location,
                            stratification,
                            dataframe,
-                           print_corr=False)
+                           print_corr=False)            
+            
 
     def test_smoke_test_geomap(self):
         """
@@ -193,3 +195,92 @@ class TestCases(unittest.TestCase):
                             datatype,
                             stratification,
                             dataframe)
+    
+    
+    def test_smoke_test_plot_longitudinal_change(self):
+        """
+        Simple call function to test whether the program is able to run given
+        the correct input for plot_longitudinal_change.
+        """
+
+        variable = "Life expectancy at birth"
+        location = "California"
+        stratification = "Overall"
+        dataframe = cdi_dummy
+
+        plot.plot_longitudinal_change(variable,
+                                      location,
+                                      stratification,
+                                      dataframe)
+
+    def test_one_shot_test_1_plot_longitudinal_change(self):
+        """
+        Feed with ideal input and test the correctness of the output for
+        plot_longitudinal_change.
+        """
+
+        variable = "Mortality from coronary heart disease"
+        location = "California"
+        stratification = "Overall"
+        dataframe = cdi_dummy
+
+        chart = plot.plot_longitudinal_change(variable,
+                                              location,
+                                              stratification,
+                                              dataframe)
+
+        # Assertions to verify the correctness of the output
+        self.assertIsInstance(chart, alt.FacetChart)    
+
+    def test_one_shot_test_2_plot_longitudinal_change(self):
+        """
+        Feed with different ideal input and test the correctness of the output for
+        plot_longitudinal_change.
+        """
+
+        variable = "Life expectancy at birth"
+        location = "Illinois"
+        stratification = "Gender"
+        dataframe = cdi_dummy
+
+        chart = plot.plot_longitudinal_change(variable,
+                                              location,
+                                              stratification,
+                                              dataframe)
+
+        # Assertions to verify the correctness of the output
+        self.assertIsInstance(chart, alt.FacetChart)            
+
+    def test_edge_test_1_plot_longitudinal_change(self):
+        """
+        Test plot_longitudinal_change with an empty dataframe.
+        Expect a ValueError or similar exception when an invalid location is provided.
+        """
+
+        variable = "Mortality from coronary heart disease"
+        location = "Calfornia"
+        stratification = "Overall"
+        dataframe = pd.DataFrame()
+
+        with self.assertRaises(KeyError):
+            plot.plot_longitudinal_change(variable,
+                                          location,
+                                          stratification,
+                                          dataframe)
+    def test_edge_invalid_data_type(self):
+        """
+        Expect the function to produce an empty plot if any variables are not found.
+        """
+
+        variable = "No such variable"  # Replace with a valid variable from your dataset
+        location = "Washington"  # Replace with a valid location from your dataset
+        stratification = "Overall"  # Replace with a valid stratification from your dataset
+        dataframe = cdi_dummy.copy()  # Replace with your actual dataframe variable
+
+        chart = plot.plot_longitudinal_change(variable, 
+                                              location, 
+                                              stratification, 
+                                              dataframe)
+
+        self.assertFalse(hasattr(chart, 'mark_line'))
+
