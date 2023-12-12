@@ -330,24 +330,24 @@ column
     )
 
     line = alt.Chart().mark_line().encode(
-        alt.X("YearStart:O",),
+        alt.X(YEAR+":O",),
         alt.Y(D_VALUE+":Q",scale=alt.Scale(zero=False)),
         alt.Color('Stratification1:N', scale=colors),
-        tooltip=[YEAR,D_VALUE,'Stratification1']
+        tooltip=[YEAR,D_VALUE,STRAT_SHORT]
     )
 
     points = alt.Chart().mark_point().encode(
-        alt.X("YearStart:O",),
+        alt.X(YEAR+":O",),
         alt.Y(D_VALUE+":Q",scale=alt.Scale(zero=False)),
         alt.Color('Stratification1:N', scale=colors),
-        tooltip=[YEAR,D_VALUE,'Stratification1'])
+        tooltip=[YEAR,D_VALUE,STRAT_SHORT])
 
     cis = alt.Chart().mark_line().encode(
-        alt.X("YearStart:O",),
+        alt.X(YEAR+":O",),
         alt.Y("LowConfidenceLimit:Q",scale=alt.Scale(zero=False)),
         alt.Y2("HighConfidenceLimit:Q"),
         alt.Color('Stratification1:N', scale=colors),
-        tooltip=[YEAR,D_VALUE,'Stratification1'])
+        tooltip=[YEAR,D_VALUE,STRAT_SHORT])
 
     return alt.layer(points, cis, line).facet(
       data=tmp,
