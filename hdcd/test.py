@@ -229,7 +229,6 @@ class TestCases(unittest.TestCase):
                                               stratification,
                                               dataframe)
 
-        # Assertions to verify the correctness of the output
         self.assertIsInstance(chart, alt.FacetChart)    
 
     def test_one_shot_test_2_plot_longitudinal_change(self):
@@ -248,7 +247,6 @@ class TestCases(unittest.TestCase):
                                               stratification,
                                               dataframe)
 
-        # Assertions to verify the correctness of the output
         self.assertIsInstance(chart, alt.FacetChart)            
 
     def test_edge_test_1_plot_longitudinal_change(self):
@@ -267,7 +265,7 @@ class TestCases(unittest.TestCase):
                                           location,
                                           stratification,
                                           dataframe)
-    def test_edge_invalid_data_type(self):
+    def test_edge_test_1_plot_longitudinal_change(self):
         """
         Expect the function to produce an empty plot if any variables are not found.
         """
