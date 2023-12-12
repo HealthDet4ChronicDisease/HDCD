@@ -28,8 +28,17 @@ The *GeoMap* and *SDOH selector* interact so that a user can select
  which SDOH to visualize on a map projection for aggregate participant 
  data. For example, if a user wanted to look for associations between 
  rates of  cardiovascular disease (CVD) by county within the great Seattle 
- area and SDOH, they could select  one SDOH to display. The selected SDOH 
+ area and SDOH, they could select one SDOH to display. The selected SDOH 
  would appear on the *GeoMap* as a colored choropleth.
 
 ## Preliminary Plan
-*  A list of tasks in priority order.
+1. Get access to *All of Us* dataset.
+2. Decide on interactive visualizations and determine what 
+    data points are necessary.
+3. Perform exploratory analysis and summary statistics of SDOH 
+    data in *All of Us*.
+4. Wrangle and clean *All of Us* datasets for interactive visualizations.
+5. Produce interactive visualizations and iteratively update depending on
+    usability of interactions.
+6. Compile interactive visualizations to functions and classes as needed.
+7. Declare unit tests for each visualization type.
