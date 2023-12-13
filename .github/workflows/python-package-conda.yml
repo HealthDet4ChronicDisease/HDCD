@@ -31,4 +31,5 @@ jobs:
     - name: Test with pytest
       run: |
         conda install pytest
-        pytest /tests/test.py
+        # updated test.py and put into the tests folder
+        pytest tests/test.py
