@@ -1,0 +1,6 @@
+﻿person_id,gender_concept_id,gender,date_of_birth,race_concept_id,race,ethnicity_concept_id,ethnicity,sex_at_birth_concept_id,sex_at_birth
+1,0,No matching concept,1934/6/15 0:00,2100000001,None Indicated,0,No matching concept,0,No matching concept
+2,45880669,Male,1931/6/15 0:00,2100000001,None Indicated,38003563,Hispanic or Latino,45880669,Male
+3,45880669,Male,2002/6/15 0:00,2100000001,None Indicated,38003563,Hispanic or Latino,45880669,Male
+4,45880669,Male,2001/6/15 0:00,8527,White,38003563,Hispanic or Latino,45880669,Male
+5,45878463,Female,2001/6/15 0:00,2100000001,None Indicated,38003563,Hispanic or Latino,45878463,Female
