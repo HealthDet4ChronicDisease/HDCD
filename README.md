@@ -1,6 +1,6 @@
 # Health Data Analysis for Chronic Diseases
-This project is in fulfillment of the final delieverable for the CSE 583 course at University of Washington.
-**Team**: Brian Chang, Peter Kim, Wesley Surento, Su Xian
+This project is in fulfillment of the final deliverable for the CSE 583 course at University of Washington.
+**Team**: Brian Chang, Peter Ju, Wesley Surento, Su Xian
 
 ## Background
 Social determinants of health (SDOH) are "societal systems, their components, and the social resources and hazards for health that societal systems control and distribute, allocate and withhold, such that the demographic distribution or trend of health outcomes is changed." [[1]](#1) These societal systems include governments, institutions, and other organizations, which "control and distribute, allocate and withhold" resources and hazards for health, such as food, income, employment, education, and health information.
