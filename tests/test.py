@@ -28,13 +28,11 @@ class TestCases(unittest.TestCase):
 
         sod = "Mortality from coronary heart disease"
         health_outcome = "Life expectancy at birth"
-        location = "CA"
         stratification = "Overall"
         dataframe = cdi_dummy
 
         hdcd.plot_corr(sod,
                        health_outcome,
-                       location,
                        stratification,
                        dataframe,
                        print_corr=False)
@@ -47,13 +45,11 @@ class TestCases(unittest.TestCase):
 
         sod = "Mortality from coronary heart disease"
         health_outcome = "Life expectancy at birth"
-        location = "CA"
         stratification = "Overall"
         dataframe = cdi_dummy
 
         hdcd.plot_corr(sod,
                        health_outcome,
-                       location,
                        stratification,
                        dataframe,
                        print_corr=False)
@@ -65,7 +61,6 @@ class TestCases(unittest.TestCase):
 
         sod = "Mortality from coronary heart disease"
         health_outcome = "Life expectancy at birth"
-        location = "CA"
         stratification = "Overall"
         dataframe = cdi_dummy.copy()
 
@@ -74,7 +69,6 @@ class TestCases(unittest.TestCase):
         with self.assertRaises(TypeError):
             hdcd.plot_corr(sod,
                            health_outcome,
-                           location,
                            stratification,
                            dataframe,
                            print_corr=False)
@@ -86,7 +80,6 @@ class TestCases(unittest.TestCase):
 
         sod = "Mortality from coronary heart disease"
         health_outcome = "Life expectancy at birth"
-        location = "CA"
         stratification = "Overall"
         dataframe = cdi_dummy.copy()
 
@@ -95,7 +88,6 @@ class TestCases(unittest.TestCase):
         with self.assertRaises(TypeError):
             hdcd.plot_corr(sod,
                            health_outcome,
-                           location,
                            stratification,
                            dataframe,
                            print_corr=False)
@@ -107,14 +99,12 @@ class TestCases(unittest.TestCase):
 
         sod = "No such variable"
         health_outcome = "Life expectancy at birth"
-        location = "CA"
         stratification = "Overall"
         dataframe = cdi_dummy.copy()
 
         with self.assertRaises(NameError):
             hdcd.plot_corr(sod,
                            health_outcome,
-                           location,
                            stratification,
                            dataframe,
                            print_corr=False)
