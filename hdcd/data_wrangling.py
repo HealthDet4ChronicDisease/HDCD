@@ -67,7 +67,7 @@ class AoU_socioeconomic():
         """
         # set exceptions
         if not isinstance(self.geo_df, str):
-            raise ValueError('"self.geo_df" must be of type string \
+            raise ValueError('"geo_df" must be of type string \
                              to a URL for a geoJSON file')
 
         counties = gpd.read_file(self.geo_df)
@@ -86,7 +86,7 @@ class AoU_socioeconomic():
         """
         # set exceptions
         if not isinstance(self.county_df, str):
-            raise ValueError('"self.county_df" must be of type string \
+            raise ValueError('"county_df" must be of type string \
                              to a URL for a county ZIP codes csv')
 
         counties_zip = pd.read_csv(self.county_df)
@@ -126,7 +126,7 @@ class AoU_socioeconomic():
         """
         # set exceptions
         if not isinstance(self.df, pd.DataFrame):
-            raise ValueError('"self_df" must be a Pandas DataFrame')
+            raise ValueError('"df" must be a Pandas DataFrame')
 
         zip_socioeconomic_df = self.df
         zip_socioeconomic_agg = zip_socioeconomic_df.drop(
@@ -196,7 +196,7 @@ class AoU_conditions():
         """
         # set exceptions
         if not isinstance(self.county_df, str):
-            raise ValueError('"self.county_df" must be of type string \
+            raise ValueError('"county_df" must be of type string \
                              to a URL for a county ZIP codes csv')
 
         counties_zip = pd.read_csv(self.county_df)
@@ -230,6 +230,9 @@ class AoU_conditions():
             zip_df (DataFrame): participant level 3-digit zip codes
         """
         # extract 3-digit zip codes to DataFrame
+        if not isinstance(self.observations_df, pd.DataFrame):
+            raise ValueError('"observations_df" must be a Pandas DataFrame')
+
         postal_code = self.observations_df.loc[self.observations_df.standard_concept_name == 'Postal code [Location]']
         postal_code['observation_datetime'] = pd.to_datetime(postal_code['observation_datetime'])
 
