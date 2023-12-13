@@ -32,15 +32,21 @@ HDCD/
 ┃ ┣ person_data.csv
 ┃ ┗ survey_data.csv
 ┣ examples/
+┃ ┣ Lets Get Started....html
+┃ ┣ poverty.html
+┃ ┣ median_income.html
+┃ ┣ health_insurance.html
+┃ ┗ education.html
 ┣ hdcd/
 ┃ ┣ data_wrangling.py
 ┃ ┣ plot.py
 ┃ ┣ summary.py
-┃ ┣ test.py
 ┃ ┗ __init__.py
 ┣ notebook/
 ┃ ┣ dummy_data.ipynb
 ┃ ┣ test_geomap.ipynb
+┣ tests/
+┃ ┣ test.py
 ┣ .gitignore
 ┣ LICENSE
 ┣ main.py
