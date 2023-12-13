@@ -26,7 +26,6 @@ __all__ = ['plot_corr',"plot_geomap","plot_longitudinal_change"]
 
 def plot_corr(sod,
              health_outcome,
-             location,
              stratification,
              dataframe,
              print_corr=False):
@@ -57,9 +56,9 @@ columns for available variable")
         raise NameError(f"{health_outcome} not found in dataframe, check \
 [Question] columns for available variable")
 
-    if location not in set(dataframe[LOC_SHORT]):
-        raise NameError(f"{location} not found in dataframe, check \
-[LocationAbbr] columns for available sod variable")
+#     if location not in set(dataframe[LOC_SHORT]):
+#         raise NameError(f"{location} not found in dataframe, check \
+# [LocationAbbr] columns for available sod variable")
 
     if stratification not in set(dataframe[STRAT_LONG]):
         raise NameError(f"{stratification} not found in dataframe, check \
