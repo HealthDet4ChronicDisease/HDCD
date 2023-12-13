@@ -10,12 +10,12 @@ import numpy as np
 import altair as alt
 # directory reach
 
-parentdir = os.path.dirname(os.getcwd())
+parentdir = os.getcwd()
 sys.path.append(parentdir)
 
 import hdcd
 
-cdi_dummy = pd.read_csv("../dummy_data/cdi_dummy.csv")
+cdi_dummy = pd.read_csv("./dummy_data/cdi_dummy.csv")
 
 class TestCases(unittest.TestCase):
 
