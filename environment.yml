@@ -1,0 +1,15 @@
+name: hdcd_env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - conda
+  - python
+  - matplotlib
+  - pip
+  - pip:
+      - altair==5.1.2
+      - numpy
+      - pandas
+      - scipy
+prefix: /Users/suxian/miniconda3
