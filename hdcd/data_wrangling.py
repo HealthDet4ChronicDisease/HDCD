@@ -170,7 +170,7 @@ class AoU_conditions():
     specifically for county level conditions data, as defined by
     All of Us.
     """
-    def __init__(self, conditions_df, observations_df, county_df):
+    def __init__(self, conditions_df, observations_df, county_df, geo_df):
         """
         This function initializes objects to be passed in the class.
 
@@ -180,10 +180,13 @@ class AoU_conditions():
             observations_df (DataFrame): All of US observations data
                 with ZIP code to be passed from SQL query
             county_df (str): URL of ZIP codes and US counties by name
+            geo_df (str): URL of geoJSON file with US counties geoshape
+                boundaries
          """
         self.conditions_df = conditions_df
         self.observations_df = observations_df
         self.county_df = county_df
+        self.geo_df = geo_df
 
     def load_counties_zip(self):
         """
@@ -297,3 +300,28 @@ class AoU_conditions():
                                                                                   'standard_concept_name'])['person_id'].count()
 
         return pd.DataFrame(conditions_zip_datetime_counts)
+    
+    def merge_counties_groupby(self):
+        """
+        Count total participants for a condition in each county
+            stratified by year.
+
+        Return:
+            conditions_counts (DataFrame): total counts for each condition 
+                stratified by county and year
+        """
+        conditions_zip_datetime_counts = self.groupby_count()
+        counties = gpd.read_file(self.geo_df)
+
+    
+        conditions_zip_datetime_counts["id"] = [countyname2geoid[x] if x in countyname2geoid else np.nan for x in conditions_zip_datetime_counts["county"].tolist()]
+        countyname2geoid = dict(zip(counties["NAME"],
+                                counties["GEOID"].astype(int)))
+        
+        conditions_counts = conditions_zip_datetime_counts.groupby(["standard_concept_name","county","year","state_abbr","id"])["person_id"].nunique().reset_index()
+
+        conditions_counts.rename(columns = {"person_id":"counts"},inplace=True)
+        conditions_counts.dropna(subset = ["id"],inplace=True)
+        conditions_counts["id"] = mentalDisorder_counts["id"].astype(int)
+
+        return conditions_counts

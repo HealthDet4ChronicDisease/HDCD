@@ -31,7 +31,7 @@ parser.add_argument('--plot_correlation', default=False,
                     action='store_true',
                     help='Set argument for correlation plot')
 parser.add_argument('--plot_geomap',
-                    choices=['socioeconomic', 'geomap'],
+                    choices=['socioeconomic', 'conditions', 'geomap'],
                     help='GeoMap type to visualize')
 parser.add_argument('--summary_statistics',
                     choices=['data', 'summary'],
@@ -52,12 +52,20 @@ county_df = 'https://raw.githubusercontent.com/scpike/us-state-county-zip/master
 # file and socioeconomic data
 def main():
     if args.plot_geomap == 'socioeconomic':
-        counties_socioeconomic = AoU_socioeconomic.merge_county_socioeconomic(df=df, geo_df=geo_df, county_df=county_df)
+        counties_socioeconomic = AoU_socioeconomic.merge_county_socioeconomic(df=df, 
+                                                                              geo_df=geo_df, 
+                                                                              county_df=county_df)
         plot_geomap_socioeconomic(dataframe=counties_socioeconomic)
     # elif args.plot_geomap == 'location':
         # plot_geomap_by_location()
     elif args.plot_geomap == 'geomap':
         plot_geomap()
+    elif args.plot_geomap == 'conditions':
+        conditions_counts = AoU_conditions.merge_counties_groupby(conditions_df=conditions_df, 
+                                                                  observations_df=observations_df, 
+                                                                  county_df=county_df, 
+                                                                  geo_df=geo_df)
+        plot_geomap_conditions(conditions_counts)
     else:
         print("Socioeconomic geomap was not selected for visualization.")
 

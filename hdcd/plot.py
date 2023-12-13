@@ -358,13 +358,12 @@ column
 def plot_geomap_socioeconomic(dataframe, 
                               width='container'):
     """
-    Plot a geomap of differetn SDOH given @dataframe.
+    Plot a geomap of selected SDOH given @dataframe.
 
     Parameters:
 
     @dataframe: counties_socioeconomic dataframe from data_wrangling.AoU_socioeconomic
     @return: an alt.Chart() object with geomap and encoded SDOH data 
-
     """
     if not isinstance(dataframe, pd.DataFrame):
         raise ValueError('"dataframe" must be a Pandas DataFrame')
@@ -405,3 +404,62 @@ def plot_geomap_socioeconomic(dataframe,
         sdoh_geomap.save(sdoh + '_geomap.html')
 
     return sdoh_geomap
+
+def plot_geomap_conditions(dataframe, 
+                           width='container'):
+    """
+    Plot a geomap of conditions given @dataframe.
+
+    Parameters:
+
+    @dataframe: conditions dataframe from data_wrangling.AoU_conditions
+    @return: an alt.Chart() object with geomap and encoded SDOH data 
+    """
+    from vega_datasets import data
+
+    alt.data_transformers.disable_max_rows()
+
+    dfplot = dataframe.copy()
+    counties = alt.topo_feature(data.us_10m.url, 'counties')
+
+    background = alt.Chart(counties).mark_geoshape(
+            fill='lightgray',
+            stroke='white'
+        ).project('albersUsa').properties(
+            width=1280,
+            height=760
+        )
+
+    select_year = alt.binding_range(min=dfplot["year"].min(),
+                max=dfplot["year"].max(),
+                step=1, name="year")
+    slider_selection = alt.selection_point(bind=select_year,
+                                        fields=['year'])
+
+    foreground = alt.Chart(dfplot).mark_geoshape().encode(
+        color='counts:Q',
+        tooltip=["standard_concept_name:N",
+                "year:Q",
+                "county:N",
+                "state_abbr:N"
+                "counts:Q"]
+    ).transform_lookup(
+        lookup='id',
+        from_=alt.LookupData(counties, 'id',["id",
+                                             "type",
+                                             "properties",
+                                             "geometry"])
+    ).project(
+        type='albersUsa'
+    ).properties(
+            width=width
+    ).add_selection(
+            selection_dropdown,
+            slider_selection
+                        ).transform_filter(
+            selection_dropdown,
+    ).transform_filter(
+            slider_selection,
+    )
+
+    return background + foreground
