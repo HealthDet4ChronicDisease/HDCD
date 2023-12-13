@@ -15,7 +15,7 @@ sys.path.append(parentdir)
 
 import hdcd
 
-cdi_dummy = pd.read_csv("./dummy_data/cdi_dummy.csv")
+cdi_dummy = pd.read_csv("./data/cdi_dummy.csv")
 
 class TestCases(unittest.TestCase):
 
