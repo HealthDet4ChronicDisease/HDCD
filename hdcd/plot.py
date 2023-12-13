@@ -355,3 +355,54 @@ column
     ).resolve_scale(
         x='independent',
         y='independent')
+
+def plot_geomap_socioeconomic(dataframe, 
+                              width='container'):
+    """
+    Plot a geomap of differetn SDOH given @dataframe.
+
+    Parameters:
+
+    @dataframe: counties_socioeconomic dataframe from data_wrangling.AoU_socioeconomic
+    @return: an alt.Chart() object with geomap and encoded SDOH data 
+
+    """
+    if not isinstance(dataframe, pd.DataFrame):
+        raise ValueError('"dataframe" must be a Pandas DataFrame')
+    
+    alt.data_transformers.disable_max_rows()
+
+    for sdoh in ['high_school_education', 'median_income', 'no_health_insurance', 'poverty']:
+
+        dataframe[sdoh] = dataframe[sdoh].astype('float')
+        if sdoh == 'high_school_education':
+            title = 'High School Education (%)'
+            scheme = 'darkblue'
+        elif sdoh == 'median_income':
+            title = 'Median Income ($)'
+            scheme = 'yelloworangered'
+        elif sdoh == 'no_health_insurance':
+            title = 'No Health Insurance (%)'
+            scheme = 'lightgreyred'
+        elif sdoh == 'poverty':
+            title = 'Poverty (%)'
+            scheme = 'lightmulti'
+
+        sdoh_geomap = alt.Chart(dataframe, title = 'High School Education (%)').mark_geoshape( 
+        stroke='white'
+        ).encode(
+            color=alt.Color(sdoh+':Q', 
+                            scale=alt.Scale(scheme=scheme), 
+                            title=title),
+            tooltip=[alt.Tooltip('county:N', title='County'), 
+                    alt.Tooltip('state_abbr:N', title='State'), 
+                    alt.Tooltip(sdoh+':Q', title=title, format='.2f')]
+        ).project(
+            type='albersUsa'
+        ).properties(
+            width=width
+        )
+
+        sdoh_geomap.save(sdoh + '_geomap.html')
+
+    return sdoh_geomap

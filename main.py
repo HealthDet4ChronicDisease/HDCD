@@ -17,7 +17,7 @@ import os
 import sys
 import argparse
 
-from hdcd.data_wrangling import AoU_socioeconomic
+from hdcd.data_wrangling import AoU_socioeconomic, AoU_conditions
 from hdcd.plot import *
 from hdcd.summary import *
 
@@ -52,10 +52,10 @@ county_df = 'https://raw.githubusercontent.com/scpike/us-state-county-zip/master
 # file and socioeconomic data
 def main():
     if args.plot_geomap == 'socioeconomic':
-        counties_socioeconomic = AoU.merge_county_socioeconomic(df=df, geo_df=geo_df, county_df=county_df)
-        plot_geomap()
-    elif args.plot_geomap == 'location':
-        plot_geomap_by_location()
+        counties_socioeconomic = AoU_socioeconomic.merge_county_socioeconomic(df=df, geo_df=geo_df, county_df=county_df)
+        plot_geomap_socioeconomic(dataframe=counties_socioeconomic)
+    # elif args.plot_geomap == 'location':
+        # plot_geomap_by_location()
     elif args.plot_geomap == 'geomap':
         plot_geomap()
     else:
@@ -76,8 +76,6 @@ if __name__ == "__main__":
     # raise argparse error if no parameters passed
     if not (args.plot_geomap or args.plot_correlation
             or args.plot_longitudinal or args.summary_statistics):
-        parser.error('No visualization or summary statistics selected, \
-                     please specify at least one.')
+        parser.error('No visualization or summary statistics selected, please specify at least one.')
     else:
-        print("The selected visualizations and/or summary statistics \
-              are ready.")
+        print('The selected visualizations and/or summary statistics are ready.\nHTML files were saved to your working directory.')
