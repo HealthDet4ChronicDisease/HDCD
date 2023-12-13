@@ -49,7 +49,7 @@ HDCD/
 ``````
 
 ## Quick Start -- Example using jupyter notebook with Chronic Disease Index (CDI) data
-A step-by-step illustration of hdcd tool use is available [here](https://htmlpreview.github.io/?https://github.com/HealthDet4ChronicDisease/HDCD/blob/main/notebook/Lets%20Get%20Started....html)
+A step-by-step illustration of hdcd tool use is available [here](https://htmlpreview.github.io/?https://github.com/HealthDet4ChronicDisease/HDCD/blob/main/examples/Lets%20Get%20Started....html)
 
 ## Setup and Installation
 1. Clone this GitHub repository to your local working directory with
