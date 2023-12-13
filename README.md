@@ -20,47 +20,42 @@ Researchers can gain access to the *All of Us Research Program* through the [All
 ## Organization of the Project
 ``````
 HDCD/
+┣ .github/
+┃ ┗ workflows/
+┃   ┗ python-package-conda.yml
+┣ data/
+┃ ┣ cdi_dummy.csv
+┃ ┣ condition_data.csv
+┃ ┣ observation_data.csv
+┃ ┣ person_data.csv
+┃ ┣ places_dummy.csv
+┃ ┗ survey_data.csv
 ┣ docs/
 ┃ ┣ 2023-11-14.pptx
 ┃ ┣ component_specification.md
 ┃ ┣ design.md
 ┃ ┗ functional_specification.md
-┣ data/
-┃ ┣ places_dummy.csv
-┃ ┣ cdi_dummy.csv
-┃ ┣ condition_data.csv
-┃ ┣ observation_data.csv
-┃ ┣ person_data.csv
-┃ ┗ survey_data.csv
 ┣ examples/
 ┃ ┣ education.html
 ┃ ┣ health_insurance.html
+┃ ┣ Lets Get Started....html
 ┃ ┣ median_income.html
 ┃ ┗ poverty.html
-┃ ┣ Lets Get Started....html
-┃ ┣ poverty.html
-┃ ┣ median_income.html
-┃ ┣ health_insurance.html
-┃ ┗ education.html
 ┣ hdcd/
-┃ ┣ __pycache__/
-┃ ┃ ┣ data_wrangling.cpython-37.pyc
-┃ ┃ ┣ plot.cpython-37.pyc
-┃ ┃ ┣ summary.cpython-37.pyc
-┃ ┃ ┗ __init__.cpython-37.pyc
 ┃ ┣ data_wrangling.py
 ┃ ┣ plot.py
 ┃ ┣ summary.py
 ┃ ┗ __init__.py
 ┣ notebook/
 ┃ ┣ dummy_data.ipynb
-┃ ┣ test_geomap.ipynb
+┃ ┣ Lets Get Started....ipynb
+┃ ┗ test_geomap.ipynb
 ┣ tests/
-┃ ┣ test.py
+┃ ┗ test.py
 ┣ .gitignore
+┣ environment.yml
 ┣ LICENSE
 ┣ main.py
-┣ environment.yml
 ┗ README.md
 ``````
 
@@ -81,7 +76,7 @@ conda activate <ENV_NAME>
 3. Run modules
 * *plot_longitudinal* (default = False): if called, set to 'True'
 * *plot_correlation* (default = False): if called, set to 'True'
-* *plot_geomap*: select type from ['socioeconomic', 'location', 'geomap']
+* *plot_geomap*: select type from ['socioeconomic', 'geomap']
 * *summary_statistics*: select type from ['data', 'variable']
 ``````
 python main.py \

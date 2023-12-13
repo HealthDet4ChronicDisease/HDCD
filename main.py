@@ -31,7 +31,7 @@ parser.add_argument('--plot_correlation', default=False,
                     action='store_true',
                     help='Set argument for correlation plot')
 parser.add_argument('--plot_geomap',
-                    choices=['socioeconomic', 'location', 'geomap'],
+                    choices=['socioeconomic', 'geomap'],
                     help='GeoMap type to visualize')
 parser.add_argument('--summary_statistics',
                     choices=['data', 'summary'],
