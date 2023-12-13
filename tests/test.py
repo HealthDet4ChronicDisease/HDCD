@@ -258,15 +258,15 @@ class TestCases(unittest.TestCase):
                                           location,
                                           stratification,
                                           dataframe)
-    def test_edge_test_1_plot_longitudinal_change(self):
+    def test_edge_test_2_plot_longitudinal_change(self):
         """
         Expect the function to produce an empty plot if any variables are not found.
         """
 
-        variable = "No such variable"  # Replace with a valid variable from your dataset
-        location = "Washington"  # Replace with a valid location from your dataset
-        stratification = "Overall"  # Replace with a valid stratification from your dataset
-        dataframe = cdi_dummy.copy()  # Replace with your actual dataframe variable
+        variable = "No such variable"  
+        location = "Washington" 
+        stratification = "Overall"  
+        dataframe = cdi_dummy.copy()  
 
         chart = hdcd.plot_longitudinal_change(variable,
                                               location,
