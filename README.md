@@ -85,6 +85,7 @@ conda activate <ENV_NAME>
 ``````
 3. Adjust the parameters in `config.py` for the variables and stratification you want to visualize. These are passed to `main.py` upon running step 4.
 <br/>
+
 4. Run modules
 * *plot_longitudinal* (default = False): if called, set to 'True'
     * output: longitudinal time-series graph of variables in `config.py`
