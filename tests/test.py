@@ -198,7 +198,6 @@ class TestCases(unittest.TestCase):
         conducts a smoke test
         with the right inputs, program should run fine
         '''
-
         dataframe = conditions_csv
         width = 'container'
 
@@ -210,20 +209,8 @@ class TestCases(unittest.TestCase):
         '''
         Provide good input and test to see if output looks good
         '''
-
         dataframe = conditions_csv
-        width='container'
-
-        hdcd.plot_geomap_conditions(dataframe,
-                                    width)
-
-    ### one-shot test 2
-    def test_one_shot_test_2_plot_geomap_conditions(self):
-        '''
-        Provide good input and test to see if output looks good
-        '''
-        dataframe = conditions_csv
-        width='container'
+        width = 'container'
 
         hdcd.plot_geomap_conditions(dataframe,
                                     width)
@@ -236,18 +223,24 @@ class TestCases(unittest.TestCase):
         dataframe = conditions_csv
         width='container'
 
+        dataframe.rename(columns = {"county":"NO_county"},
+                        inplace=True)
         with self.assertRaises(NameError):
-           hdcd.plot_geomap_conditions(dataframe,
-                                    width)
+            hdcd.plot_geomap_conditions(dataframe,
+                                        width)
+
+        #with self.assertRaises(NameError):
+         #  hdcd.plot_geomap_conditions(dataframe,
+          #                          width)
     ### edge test 2
     def test_edge_test_2_plot_geomap_conditions(self):
         '''
         Provide input with mistakes, see if error is raised
         '''
-        dataframe = conditions_csv
+        dataframe = pd.DataFrame()
         width='container'
 
-        with self.assertRaises(NameError):
+        with self.assertRaises(ValueError):
             hdcd.plot_geomap_conditions(dataframe,
                                     width)
 
@@ -338,55 +331,6 @@ class TestCases(unittest.TestCase):
 
         self.assertFalse(hasattr(chart, 'mark_line'))
 
-
-    ### smoke test
-    def test_smoke_test_plot_geomap_conditions(self):
-        '''
-        conducts a smoke test
-        with the right inputs, program should run fine
-        '''
-
-        dataframe = cdi_dummy
-        width = 'container'
-
-        hdcd.plot_geomap_conditions(dataframe,
-                                    width)
-
-    ### one shot test 1
-    def test_smoke_test_plot_geomap_conditions(self):
-        '''
-        conducts a one shot test
-        with the right inputs, program should run fine
-        '''
-
-        dataframe = cdi_dummy.copy()
-        width = 'container'
-
-        hdcd.plot_geomap_conditions(dataframe,
-                                    width)
-
-    ### edge test 1
-    def test_edge_test_1_plot_geomap_conditions(self):
-        '''
-        Provide input with mistakes, see if error is raised
-        '''
-        dataframe = pd.DataFrame()
-        width = 'container'
-
-        with self.assertRaises(ValueError):
-            hdcd.plot_geomap_conditions(dataframe,width)
-
-    ### edge test 2
-    #def test_edge_test_2_plot_geomap_conditions(self):
-        '''
-        Provide input with mistakes, see if error is raised
-        '''
-        #dataframe.rename(columns = {"YearStart":"NA"},
-        #                inplace=True)
-        #width = 'container'
-
-        #with self.assertRaises(NameError):
-        #    hdcd.plot_geomap_conditions(dataframe,width)
 
 
     def test_smoke_test_data_summary(self):
