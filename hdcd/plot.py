@@ -355,7 +355,7 @@ column
         x='independent',
         y='independent')
 
-def plot_geomap_socioeconomic(dataframe, 
+def plot_geomap_socioeconomic(dataframe,
                               width='container'):
     """
     Plot a geomap of selected SDOH given @dataframe at the county level.
@@ -367,11 +367,11 @@ def plot_geomap_socioeconomic(dataframe,
     Parameters:
 
     @dataframe: counties_socioeconomic dataframe from data_wrangling.AoU_socioeconomic
-    @return: an alt.Chart() object with geomap and encoded SDOH data 
+    @return: an alt.Chart() object with geomap and encoded SDOH data
     """
     if not isinstance(dataframe, pd.DataFrame):
         raise ValueError('"dataframe" must be a Pandas DataFrame')
-    
+
     alt.data_transformers.disable_max_rows()
 
     for sdoh in ['high_school_education', 'median_income', 'no_health_insurance', 'poverty']:
@@ -390,14 +390,18 @@ def plot_geomap_socioeconomic(dataframe,
             title = 'Poverty (%)'
             scheme = 'lightmulti'
 
+<<<<<<< HEAD
         sdoh_geomap = alt.Chart(dataframe, title=title).mark_geoshape( 
+=======
+        sdoh_geomap = alt.Chart(dataframe, title = 'High School Education (%)').mark_geoshape(
+>>>>>>> c417acbeb50e3263b3ab3642c7b4b896da49ded8
         stroke='white'
         ).encode(
-            color=alt.Color(sdoh+':Q', 
-                            scale=alt.Scale(scheme=scheme), 
+            color=alt.Color(sdoh+':Q',
+                            scale=alt.Scale(scheme=scheme),
                             title=title),
-            tooltip=[alt.Tooltip('county:N', title='County'), 
-                    alt.Tooltip('state_abbr:N', title='State'), 
+            tooltip=[alt.Tooltip('county:N', title='County'),
+                    alt.Tooltip('state_abbr:N', title='State'),
                     alt.Tooltip(sdoh+':Q', title=title, format='.2f')]
         ).project(
             type='albersUsa'
@@ -409,7 +413,7 @@ def plot_geomap_socioeconomic(dataframe,
 
     return sdoh_geomap
 
-def plot_geomap_conditions(dataframe, 
+def plot_geomap_conditions(dataframe,
                            width='container'):
     """
     Plot a geomap of conditions given @dataframe.
@@ -417,11 +421,18 @@ def plot_geomap_conditions(dataframe,
     Parameters:
 
     @dataframe: conditions dataframe from data_wrangling.AoU_conditions
+<<<<<<< HEAD
     @return: an alt.Chart() object with geomap and encoded conditions counts 
+=======
+    @return: an alt.Chart() object with geomap and encoded SDOH data
+>>>>>>> c417acbeb50e3263b3ab3642c7b4b896da49ded8
     """
     from vega_datasets import data
 
     alt.data_transformers.disable_max_rows()
+    counties = gpd.read_file('https://gist.githubusercontent.com/sdwfrost/d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb/counties.geojson')
+    countyname2geoid = dict(zip(counties["NAME"],
+                            counties["GEOID"].astype(int)))
 
     dfplot = dataframe.copy()
     counties = alt.topo_feature(data.us_10m.url, 'counties')
@@ -444,6 +455,11 @@ def plot_geomap_conditions(dataframe,
                 step=1, name="year")
     slider_selection = alt.selection_point(bind=select_year,
                                         fields=['year'])
+
+    input_dropdown = alt.binding_select(options=list(mentalDisorder_counts["standard_concept_name"].unique()),
+                                    name='Conditions')
+    selection_dropdown = alt.selection_single(fields=['standard_concept_name'],
+                            bind=input_dropdown)
 
     foreground = alt.Chart(dfplot).mark_geoshape().encode(
         color='counts:Q',
@@ -471,7 +487,11 @@ def plot_geomap_conditions(dataframe,
             slider_selection,
     )
 
+<<<<<<< HEAD
     conditions_geomap = background + foreground
     conditions_geomap.save('conditions_geomap.html')
 
     return conditions_geomap
+=======
+    return background + foreground
+>>>>>>> c417acbeb50e3263b3ab3642c7b4b896da49ded8
