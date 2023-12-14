@@ -7,7 +7,7 @@ All of US dataset.
 This script requires `numpy`, `pandas`, and `geopandas` within
 the Python environment you are running this in.
 
-The AoU_socioeconomic class accepts Pandas DataFrames, csv files, and 
+The AoU_socioeconomic class accepts Pandas DataFrames, csv files, and
     zip files of geoJSON. The class consists of functions:
     * load_geoshapes
     * load_counties_zip
@@ -15,7 +15,7 @@ The AoU_socioeconomic class accepts Pandas DataFrames, csv files, and
     * zip_socioeconomic
     * merge_county_socioeconomic
 
-The AoU_conditions class accepts Pandas DataFrames and csv files. 
+The AoU_conditions class accepts Pandas DataFrames and csv files.
     The class consists of functions:
     * load_counties_zip
     * threshold_conditions
@@ -300,24 +300,23 @@ class AoU_conditions():
                                                                                   'standard_concept_name'])['person_id'].count()
 
         return pd.DataFrame(conditions_zip_datetime_counts)
-    
+
     def merge_counties_groupby(self):
         """
         Count total participants for a condition in each county
             stratified by year.
 
         Return:
-            conditions_counts (DataFrame): total counts for each condition 
+            conditions_counts (DataFrame): total counts for each condition
                 stratified by county and year
         """
         conditions_zip_datetime_counts = self.groupby_count()
         counties = gpd.read_file(self.geo_df)
 
-    
-        conditions_zip_datetime_counts["id"] = [countyname2geoid[x] if x in countyname2geoid else np.nan for x in conditions_zip_datetime_counts["county"].tolist()]
         countyname2geoid = dict(zip(counties["NAME"],
                                 counties["GEOID"].astype(int)))
-        
+        conditions_zip_datetime_counts["id"] = [countyname2geoid[x] if x in countyname2geoid else np.nan for x in conditions_zip_datetime_counts["county"].tolist()]
+
         conditions_counts = conditions_zip_datetime_counts.groupby(["standard_concept_name","county","year","state_abbr","id"])["person_id"].nunique().reset_index()
 
         conditions_counts.rename(columns = {"person_id":"counts"},inplace=True)
