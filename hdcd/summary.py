@@ -1,5 +1,9 @@
 """
-Summary module
+This Python script contains summary functions for investigating the DataFrame
+and facilitates downstream anlysis.
+
+The data variables and data dictionaries are illustrated in the example folder,
+you can find the a html file called "Lets Get Started....html"
 """
 
 ### --- TODO ----###
@@ -17,7 +21,14 @@ def _check_name_error(var,data):
 def data_summary(dataframe):
 
     """
-    print out summary of data
+    print out summary of data, given the @DataFrame
+    The function prints out the numbers of cols and rows of the dataframe;
+    All unique "Topics" and number sof "Questions"; and stratification.
+    These variables are important in the plottting function (hdcd.plot).
+
+    Parameters:
+    @dataframe: a pandas dataframe.
+    @return: None
     """
 
     n_cols = len(dataframe.columns)
@@ -56,10 +67,15 @@ variable')
 def variable_summary(variable, dataframe):
 
     """
-    give description of the variable, including:
+    This function gives description of the variable, including:
     variable unit in [DataValueType] column,
     variable prevalence longitudinally in [YearStart] column,
     variable prevalence across different state in [LocationAbbr] column
+
+    Parameters:
+    @variable: str type of variable, should be presented in the ["Question"]
+    column of the @dataframe.
+    @dataframe: a pandas dataframe.
     """
 
     if not _check_name_error("DataValue",dataframe):

@@ -55,10 +55,15 @@ def main():
     if args.plot_geomap == 'socioeconomic':
         # df = <obtain from All of US SQL query 'zip_socioeconomic'>
         # THIS WILL NOT RUN LOCALLY
-        geo_df = 'https://gist.githubusercontent.com/sdwfrost/d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb/counties.geojson'
-        county_df = 'https://raw.githubusercontent.com/scpike/us-state-county-zip/master/geo-data.csv'
+        geo_df = 'https://gist.githubusercontent.com/sdwfrost/\
+d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb/\
+counties.geojson'
+        county_df = 'https://raw.githubusercontent.com/\
+scpike/us-state-county-zip/master/geo-data.csv'
 
-        AoU_socioeconomic_wrangler = AoU_socioeconomic(df=df, geo_df=geo_df, county_df=county_df)
+        AoU_socioeconomic_wrangler = AoU_socioeconomic(df=df,
+                                                       geo_df=geo_df,
+                                                       county_df=county_df)
         counties_socioeconomic = AoU_socioeconomic_wrangler.merge_county_socioeconomic()
         plot_geomap_socioeconomic(dataframe=counties_socioeconomic)
     elif args.plot_geomap == 'geomap':
@@ -72,11 +77,13 @@ def main():
     elif args.plot_geomap == 'conditions':
         conditions_df = pd.read_csv(CONDITIONS)
         observations_df = pd.read_csv(OBSERVATIONS)
-        geo_df = 'https://gist.githubusercontent.com/sdwfrost/d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb/counties.geojson'
-        county_df = 'https://raw.githubusercontent.com/scpike/us-state-county-zip/master/geo-data.csv' 
-        AoU_conditions_wrangler = AoU_conditions(conditions_df=conditions_df, 
-                                                 observations_df=observations_df, 
-                                                 county_df=county_df, 
+        geo_df = 'https://gist.githubusercontent.com/sdwfrost/d1c73f91dd9d1759\
+98ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb/counties.geojson'
+        county_df = 'https://raw.githubusercontent.com/scpike/us-state-county\
+-zip/master/geo-data.csv'
+        AoU_conditions_wrangler = AoU_conditions(conditions_df=conditions_df,
+                                                 observations_df=observations_df,
+                                                 county_df=county_df,
                                                  geo_df=geo_df)
         conditions_counts = AoU_conditions_wrangler.counties_groupby_count()
         plot_geomap_conditions(conditions_counts)
@@ -109,7 +116,8 @@ if __name__ == "__main__":
     # raise argparse error if no parameters passed
     if not (args.plot_geomap or args.plot_correlation
             or args.plot_longitudinal or args.summary_statistics):
-        parser.error('No visualization or summary statistics selected, please specify at least one.')
+        parser.error('No visualization or summary statistics selected, \
+please specify at least one.')
     else:
         main()
         # print('The selected visualizations and/or summary statistics are ready.\nHTML files were saved to your working directory.')

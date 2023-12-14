@@ -4,7 +4,7 @@ This Python script defines functions for interactive visualizations
     * plot_corr: scatterplot of two variables
     * plot_geomap: CDI geomap of variable of interest
     * plot_longitudinal_change: interactive time series with respect to a variable
-    * plot_geomap_socioeconomic: geomap of defined SDOH per All of Us 
+    * plot_geomap_socioeconomic: geomap of defined SDOH per All of Us
     * plot_geomap_conditions: geomap of conditions passed from All of Us
 
 This module require the following packages within the Python environment
@@ -39,7 +39,11 @@ STRAT_LONG = "StratificationCategory1"
 D_TYPE = "DataValueType"
 YEAR = "YearStart"
 
-__all__ = ['plot_corr',"plot_geomap","plot_longitudinal_change", "plot_geomap_socioeconomic", "plot_geomap_conditions"]
+__all__ = ['plot_corr',
+            "plot_geomap",
+            "plot_longitudinal_change",
+            "plot_geomap_socioeconomic",
+            "plot_geomap_conditions"]
 
 def plot_corr(sod,
              health_outcome,
@@ -463,7 +467,9 @@ def plot_geomap_conditions(dataframe, width='container'):
     #    raise TypeError(f"{dataframe} has None as type, load a dataframe that is not None.")
 
     alt.data_transformers.disable_max_rows()
-    counties = gpd.read_file('https://gist.githubusercontent.com/sdwfrost/d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb/counties.geojson')
+    counties = gpd.read_file('https://gist.githubusercontent.com/\
+sdwfrost/d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d\
+3afc5d449e9e4bb/counties.geojson')
 
     countyname2geoid = dict(zip(counties["NAME"],
                             counties["GEOID"].astype(int)))

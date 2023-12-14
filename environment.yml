@@ -1,4 +1,4 @@
-name: hdcd_env
+name: test
 channels:
   - conda-forge
   - defaults
