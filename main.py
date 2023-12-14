@@ -13,15 +13,14 @@ you are running in:
     * Altair
     * SciPy
 """
-import os
-import sys
+
 import argparse
 
 import pandas as pd
-import geopandas as gpd
 
 from hdcd.data_wrangling import AoU_socioeconomic, AoU_conditions
-from hdcd.plot import plot_corr, plot_geomap, plot_longitudinal_change, plot_geomap_socioeconomic, plot_geomap_conditions
+from hdcd.plot import plot_corr, plot_geomap, plot_longitudinal_change, \
+plot_geomap_socioeconomic, plot_geomap_conditions
 from hdcd.summary import data_summary, variable_summary
 from config import *
 
@@ -52,6 +51,19 @@ Required arguments for AoU_socioeconomic class
 # run AoU_socioeconomic data wrangling to get merged counties geoshapes \
 # file and socioeconomic data
 def main():
+    """
+    The main function. Call python main.py with arguments --argument to work.
+    This function mainly served as a test for All of Us data and is integrated
+    with CDI and 500 places data.
+
+    For more information, check the four arguments:
+
+    --plot_longitudinal
+    --plot_correlation
+    --plot_geomap
+    --summary_statistics
+
+    """
     if args.plot_geomap == 'socioeconomic':
         # df = <obtain from All of US SQL query 'zip_socioeconomic'>
         # THIS WILL NOT RUN LOCALLY
@@ -120,4 +132,3 @@ if __name__ == "__main__":
 please specify at least one.')
     else:
         main()
-        # print('The selected visualizations and/or summary statistics are ready.\nHTML files were saved to your working directory.')
