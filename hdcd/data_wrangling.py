@@ -32,8 +32,10 @@ import pandas as pd
 import geopandas as  gpd
 
 # recommended geoshapes file and ZIP codes for US counties file
-geo_df = 'https://gist.githubusercontent.com/sdwfrost/d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb/counties.geojson'
-county_df = 'https://raw.githubusercontent.com/scpike/us-state-county-zip/master/geo-data.csv'
+geo_df = 'https://gist.githubusercontent.com/sdwfrost/d1c73f91dd9d175998ed166eb\
+216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb/counties.geojson'
+county_df = 'https://raw.githubusercontent.com/scpike/us-state-county-zip/\
+master/geo-data.csv'
 
 class AoU_socioeconomic():
     """
@@ -199,16 +201,20 @@ class AoU_conditions():
         """
         # set exceptions
         if not isinstance(self.county_df, str):
-            raise ValueError('"county_df" must be of type string to a URL for a county ZIP codes csv')
-        
+            raise ValueError('"county_df" must be of type string to a URL for a \
+county ZIP codes csv')
+
         if not isinstance(self.geo_df, str):
-            raise ValueError('"geo_df" must be of type string to a URL for a county ZIP codes csv')
-        
+            raise ValueError('"geo_df" must be of type string to a URL for a \
+county ZIP codes csv')
+
         if not isinstance(self.observations_df, pd.DataFrame):
-            raise ValueError('"observations_df" must be a Pandas DataFrame passed from the All of US workbench')
-        
+            raise ValueError('"observations_df" must be a Pandas DataFrame \
+passed from the All of US workbench')
+
         if not isinstance(self.conditions_df, pd.DataFrame):
-            raise ValueError('"conditions_df" must be a Pandas DataFrame passed from the All of US workbench')
+            raise ValueError('"conditions_df" must be a Pandas DataFrame \
+passed from the All of US workbench')
 
         counties_zip = pd.read_csv(self.county_df)
         counties_zip['zip3'] = counties_zip['zipcode'].apply(lambda x: str(x)[0:3]).astype('int')
@@ -225,11 +231,15 @@ class AoU_conditions():
                 a prevalence of 100k
         """
         # threshold at least 10k
-        conditions_df_threshold = self.conditions_df[self.conditions_df.groupby('standard_concept_name')['standard_concept_name'].transform('size')>100000]
+        conditions_df_threshold = \
+        self.conditions_df[self.conditions_df.groupby('standard_concept_name')['standard_concept_name'].transform('size')>100000]
 
         # keep columns for merging to counties_zip
-        conditions_df_threshold = conditions_df_threshold[['person_id', 'standard_concept_name', 'condition_start_datetime']]
-        conditions_df_threshold['condition_start_datetime'] = pd.to_datetime(conditions_df_threshold['condition_start_datetime'])
+        conditions_df_threshold = conditions_df_threshold[['person_id',
+                                                'standard_concept_name',
+                                                'condition_start_datetime']]
+        conditions_df_threshold['condition_start_datetime'] = \
+        pd.to_datetime(conditions_df_threshold['condition_start_datetime'])
 
         return conditions_df_threshold
 
@@ -244,7 +254,8 @@ class AoU_conditions():
         if not isinstance(self.observations_df, pd.DataFrame):
             raise ValueError('"observations_df" must be a Pandas DataFrame')
 
-        postal_code = self.observations_df.loc[self.observations_df.standard_concept_name == 'Postal code [Location]']
+        postal_code = \
+        self.observations_df.loc[self.observations_df.standard_concept_name == 'Postal code [Location]']
         postal_code['observation_datetime'] = pd.to_datetime(postal_code['observation_datetime'])
 
         zip_list = []
@@ -274,7 +285,9 @@ class AoU_conditions():
         counties_zip = self.load_counties_zip()
 
         # merge conditions to participants on person_id keeping first match
-        conditions_zip_unique = zip_df.merge(conditions_df_threshold.drop_duplicates(['person_id', 'standard_concept_name']),
+        conditions_zip_unique = \
+        zip_df.merge(conditions_df_threshold.drop_duplicates(['person_id',
+                                            'standard_concept_name']),
                                              on='person_id',
                                              how='inner')
 
@@ -282,12 +295,16 @@ class AoU_conditions():
         counties_zip['zip3'] = counties_zip['zipcode'].apply(lambda x: str(x)[0:3]).astype('int')
 
         # merge conditions_zip_unique to counties_zip on 3-digit ZIP code
-        conditions_zip_unique['zip3'] = conditions_zip_unique['zip'].apply(lambda x: x[0:3]).astype('int')
-        conditions_zip_unique_county = conditions_zip_unique.merge(counties_zip, on='zip3', how='inner')
+        conditions_zip_unique['zip3'] = \
+        conditions_zip_unique['zip'].apply(lambda x: x[0:3]).astype('int')
+        conditions_zip_unique_county = \
+        conditions_zip_unique.merge(counties_zip, on='zip3', how='inner')
 
         # extract year and month for condition_start_datetime
-        conditions_zip_unique_county['year'] = pd.DatetimeIndex(conditions_zip_unique_county['condition_start_datetime']).year
-        conditions_zip_unique_county['month'] = pd.DatetimeIndex(conditions_zip_unique_county['condition_start_datetime']).month
+        conditions_zip_unique_county['year'] = \
+        pd.DatetimeIndex(conditions_zip_unique_county['condition_start_datetime']).year
+        conditions_zip_unique_county['month'] = \
+        pd.DatetimeIndex(conditions_zip_unique_county['condition_start_datetime']).month
 
         return conditions_zip_unique_county
 
@@ -305,9 +322,15 @@ class AoU_conditions():
 
         countyname2geoid = dict(zip(counties["NAME"],
                                 counties["GEOID"].astype(int)))
-        conditions_zip_unique_county["id"] = [countyname2geoid[x] if x in countyname2geoid else np.nan for x in conditions_zip_unique_county["county"].tolist()]
+        conditions_zip_unique_county["id"] = \
+        [countyname2geoid[x] if x in countyname2geoid else np.nan for x in conditions_zip_unique_county["county"].tolist()]
 
-        conditions_counts = conditions_zip_unique_county.groupby(["standard_concept_name","county","year","state_abbr","id"])["person_id"].nunique().reset_index()
+        conditions_counts = \
+        conditions_zip_unique_county.groupby(["standard_concept_name",
+                                                                 "county",
+                                                                 "year",
+                                                                 "state_abbr",
+                                                                 "id"])["person_id"].nunique().reset_index()
 
         conditions_counts.rename(columns = {"person_id":"counts"},inplace=True)
         conditions_counts.dropna(subset = ["id"],inplace=True)

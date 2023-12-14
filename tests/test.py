@@ -24,8 +24,11 @@ conditions_csv = pd.read_csv("./data/conditions.csv")
 
 
 # recommended geoshapes file and ZIP codes for US counties file
-geo_df = 'https://gist.githubusercontent.com/sdwfrost/d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb/counties.geojson'
-county_df = 'https://raw.githubusercontent.com/scpike/us-state-county-zip/master/geo-data.csv'
+geo_df = 'https://gist.githubusercontent.com/sdwfrost/\
+d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb/\
+counties.geojson'
+county_df = 'https://raw.githubusercontent.com/scpike/us-state-county-zip/\
+master/geo-data.csv'
 observations_df = pd.read_csv("./data/observation_data.csv")
 conditions_df = pd.read_csv("./data/condition_data.csv")
 
@@ -410,7 +413,7 @@ class TestCases(unittest.TestCase):
         """
         dataframe = cdi_dummy.copy()
         dataframe.rename(columns = {"DataValue":"NODATA"},inplace=True)
-        
+
         variable = "Mortality from coronary heart disease"
         with self.assertRaises(NameError):
             hdcd.variable_summary(variable,
@@ -473,23 +476,23 @@ class TestCases(unittest.TestCase):
         Smoke test, does it run
         """
         aou = AoU_socioeconomic(df=pd.DataFrame(), geo_df=geo_df, county_df=county_df)
-        
+
         aou.load_geoshapes()
-    
+
     def test_one_shot_load_geoshapes(self):
        """
        One-shot test, getting expected outcome
        """
-       aou = AoU_socioeconomic(df=pd.DataFrame(), 
-                               geo_df=geo_df, 
+       aou = AoU_socioeconomic(df=pd.DataFrame(),
+                               geo_df=geo_df,
                                county_df=county_df)
-       
+
        result = aou.load_geoshapes()
-       
+
        self.assertIsInstance(result, gpd.GeoDataFrame)
        self.assertIn('state_fips', result.columns)
        self.assertEqual(result['state_fips'].dtype, 'int64')
-       
+
        original_counties = gpd.read_file(geo_df)
        self.assertEqual(len(result), len(original_counties))
 
@@ -497,8 +500,8 @@ class TestCases(unittest.TestCase):
         """
         Edge test for load_geoshapes with non-string geo_df
         """
-        aou = AoU_socioeconomic(df=pd.DataFrame(), 
-                                geo_df=123, 
+        aou = AoU_socioeconomic(df=pd.DataFrame(),
+                                geo_df=123,
                                 county_df=county_df)
         with self.assertRaises(ValueError):
             aou.load_geoshapes()
@@ -507,8 +510,8 @@ class TestCases(unittest.TestCase):
         """
         Edge test for load_geoshapes with empty string geo_df
         """
-        aou = AoU_socioeconomic(df=pd.DataFrame(), 
-                                geo_df='', 
+        aou = AoU_socioeconomic(df=pd.DataFrame(),
+                                geo_df='',
                                 county_df=county_df)
         with self.assertRaises(ValueError):
             aou.load_geoshapes()
@@ -519,7 +522,7 @@ class TestCases(unittest.TestCase):
         """
         aou = AoU_socioeconomic(df=pd.DataFrame(),
                                 geo_df='https://invalid-url.com',
-                                county_df=county_df)   
+                                county_df=county_df)
         with self.assertRaises(ValueError):
             aou.load_geoshapes()
 
@@ -531,7 +534,7 @@ class TestCases(unittest.TestCase):
             df=pd.DataFrame(),
             geo_df=geo_df,
             county_df=county_df)
-        
+
         aou.load_counties_zip()
 
     def test_one_shot_test_load_counties_zip(self):
@@ -542,12 +545,12 @@ class TestCases(unittest.TestCase):
             df=pd.DataFrame(),
             geo_df=geo_df,
             county_df=county_df)
-        
+
         result = aou.load_counties_zip()
-        
+
         self.assertIsInstance(result, pd.DataFrame)
         self.assertIn('NAME', result.columns)
-    
+
     def test_edge_test_1_load_counties_zip(self):
         """
         Edge test for load_counties_zip with invalid URL
@@ -556,7 +559,7 @@ class TestCases(unittest.TestCase):
             df=pd.DataFrame(),
             geo_df=geo_df,
             county_df='https://invalid-url.com')
-        
+
         with self.assertRaises(ValueError):
             aou.load_counties_zip()
 
@@ -570,8 +573,8 @@ class TestCases(unittest.TestCase):
             geo_df=geo_df,
             county_df=county_df)
 
-        aou.merge_geoshapes_counties_zip()    
-    
+        aou.merge_geoshapes_counties_zip()
+
     def test_one_shot_merge_geoshapes_counties_zip(self):
         """
         One shot test, getting expected outcome
@@ -603,9 +606,9 @@ class TestCases(unittest.TestCase):
             df=sample_df,
             geo_df=geo_df,
             county_df=county_df)
-        
+
         aou.zip_socioeconomic()
-    
+
     def test_one_shot_test_zip_socioeconomic(self):
         """
         One-shot test, getting expected outcome
@@ -629,7 +632,7 @@ class TestCases(unittest.TestCase):
         self.assertIsInstance(result, pd.DataFrame)
         self.assertTrue(set(['ZIP_code', 'some_other_column']).issubset(set(result.columns)))
         self.assertEqual(len(result), 3)
-    
+
     def test_edge_test_1_zip_socioeconomic(self):
         """
         Edge test: Empty Pandas DataFrame input for zip_socioeconomic
@@ -680,7 +683,7 @@ class TestCases(unittest.TestCase):
             aou_lcz.load_counties_zip()
         except Exception as e:
             self.fail(f"load_counties_zip raised an exception: {e}")
-      
+
 
 
 
@@ -748,7 +751,7 @@ class TestCases(unittest.TestCase):
             aou_tc.threshold_conditions()
         except Exception as e:
             self.fail(f"load_counties_zip raised an exception: {e}")
-      
+
 
     ### one-shot test 1
     def test_one_shot_test_1_threshold_conditions(self):
@@ -869,11 +872,3 @@ class TestCases(unittest.TestCase):
             aou_tc.counties_groupby_count()
         except Exception as e:
             self.fail(f"load_counties_zip raised an exception: {e}")
-
-
-
-
-
-
-
-
