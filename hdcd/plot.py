@@ -451,11 +451,16 @@ def plot_geomap_conditions(dataframe, width='container'):
     """
     from vega_datasets import data
 
+    # set exceptions
     if dataframe.empty:
         raise ValueError(f"{dataframe} is empty, load a dataframe that is not empty.")
 
-    if dataframe is None:
-        raise TypeError(f"{dataframe} has None as type, load a dataframe that is not None.")
+    if dataframe.columns[2] != "county":
+    #if county not in set(dataframe["county"]):
+       raise NameError("County column name is wrong. Fix column name.")
+
+    #if dataframe is None:
+    #    raise TypeError(f"{dataframe} has None as type, load a dataframe that is not None.")
 
     alt.data_transformers.disable_max_rows()
     counties = gpd.read_file('https://gist.githubusercontent.com/sdwfrost/d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb/counties.geojson')
