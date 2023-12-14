@@ -284,6 +284,14 @@ formatted and contains required columns,
     states = alt.topo_feature(data.us_10m.url, feature='states')
     dataframe = dataframe[dataframe["Question"] == variable]
 
+    # set exceptions
+    if variable not in set(dataframe["Question"]):
+        raise NameError(f"{variable} not found in dataframe, check [Question] \
+columns for available variable")
+
+    if dataframe.empty:
+        raise ValueError(f"{dataframe} is empty, load a dataframe that is not empty.")
+
     background = alt.Chart(states).mark_geoshape(
         fill='lightgray',
         stroke='white'
