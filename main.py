@@ -17,9 +17,13 @@ import os
 import sys
 import argparse
 
+import pandas as pd
+import geopandas as gpd
+
 from hdcd.data_wrangling import AoU_socioeconomic, AoU_conditions
 from hdcd.plot import *
 from hdcd.summary import *
+from config import *
 
 # define arguments
 parser = argparse.ArgumentParser(description="Options for visualizations")
@@ -34,7 +38,7 @@ parser.add_argument('--plot_geomap',
                     choices=['socioeconomic', 'conditions', 'geomap'],
                     help='GeoMap type to visualize')
 parser.add_argument('--summary_statistics',
-                    choices=['data', 'summary'],
+                    choices=['data', 'variable'],
                     help='Summary statistics to run')
 args = parser.parse_args()
 
@@ -44,14 +48,15 @@ Required arguments for AoU_socioeconomic class
     geo_df (str): recommended URL below for geoshapes file of US counties
     zip_df (str): recommended URL for US counties by name and ZIP code
 """
-# df = <obtain from All of US SQL query 'zip_socioeconomic'>
-geo_df = 'https://gist.githubusercontent.com/sdwfrost/d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb/counties.geojson'
-county_df = 'https://raw.githubusercontent.com/scpike/us-state-county-zip/master/geo-data.csv'
 
 # run AoU_socioeconomic data wrangling to get merged counties geoshapes \
 # file and socioeconomic data
 def main():
     if args.plot_geomap == 'socioeconomic':
+        # df = <obtain from All of US SQL query 'zip_socioeconomic'>
+        geo_df = 'https://gist.githubusercontent.com/sdwfrost/d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb/counties.geojson'
+        county_df = 'https://raw.githubusercontent.com/scpike/us-state-county-zip/master/geo-data.csv'
+
         counties_socioeconomic = AoU_socioeconomic.merge_county_socioeconomic(df=df, 
                                                                               geo_df=geo_df, 
                                                                               county_df=county_df)
@@ -70,15 +75,26 @@ def main():
         print("Socioeconomic geomap was not selected for visualization.")
 
     if args.plot_correlation:
-        plot_corr()
+        dataframe = pd.read_csv("./data/cdi_dummy.csv")
+        plot_corr(sod=CORR_SOD,
+                  health_outcome=CORR_HEALTH_OUTCOME,
+                  stratification=CORR_STRATIFICATION,
+                  dataframe=dataframe,
+                  print_corr=True)
 
     if args.plot_longitudinal:
-        plot_longitudinal_change()
+        dataframe = pd.read_csv("./data/cdi_dummy.csv")
+        plot_longitudinal_change(variable=LONG_VAR,
+                                location=LONG_LOCATION,
+                                stratification=LONG_STRATIFICATION,
+                                dataframe=dataframe)
 
     if args.summary_statistics == 'data':
-        data_summary()
+        dataframe = pd.read_csv("./data/cdi_dummy.csv")
+        data_summary(dataframe=dataframe)
     elif args.summary_statistics == 'variable':
-        variable_summary()
+        dataframe = pd.read_csv("./data/cdi_dummy.csv")
+        variable_summary(dataframe=dataframe, variable=SUMMARY_VAR)
 
 if __name__ == "__main__":
     # raise argparse error if no parameters passed
@@ -86,4 +102,5 @@ if __name__ == "__main__":
             or args.plot_longitudinal or args.summary_statistics):
         parser.error('No visualization or summary statistics selected, please specify at least one.')
     else:
-        print('The selected visualizations and/or summary statistics are ready.\nHTML files were saved to your working directory.')
+        main()
+        # print('The selected visualizations and/or summary statistics are ready.\nHTML files were saved to your working directory.')

@@ -13,4 +13,5 @@ dependencies:
       - numpy
       - pandas
       - scipy
+      - geopandas
 prefix: /Users/suxian/miniconda3

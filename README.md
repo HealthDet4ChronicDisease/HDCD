@@ -60,10 +60,15 @@ HDCD/
 ┗ README.md
 ``````
 
-## Quick Start -- Example using jupyter notebook with Chronic Disease Index (CDI) data
-A step-by-step illustration of HDCD tool use is available [here](https://htmlpreview.github.io/?https://github.com/HealthDet4ChronicDisease/HDCD/blob/main/examples/Lets%20Get%20Started....html)
+## Quick Start -- Example using Jupyter notebook with Chronic Disease Index (CDI) data
+A step-by-step illustration of HDCD tool use is available [here](https://htmlpreview.github.io/?https://github.com/HealthDet4ChronicDisease/HDCD/blob/main/examples/Lets%20Get%20Started....html).
 
 ## Setup and Installation
+* *Note:* The modules will only produce visualizations within the 
+    *All of Us Research Workbench* with queried data. When working locally,
+    please refer to the dummy data in `data`. We recommend starting 
+    with summary statistics for the CDI data, as shown in the notebook.
+
 1. Clone this GitHub repository to your local working directory with
 the command:
 ``````
@@ -74,11 +79,20 @@ git clone https://github.com/HealthDet4ChronicDisease/HDCD.git
 conda create --name <ENV_NAME> -f environment.yml
 conda activate <ENV_NAME>
 ``````
-3. Run modules
+3. Adjust the parameters in `config.py` for the variables and stratification
+    you want to visualize. These are passed to `main.py` upon running step 4.
+<br/>
+4. Run modules
 * *plot_longitudinal* (default = False): if called, set to 'True'
+    * output: longitudinal time-series graph
 * *plot_correlation* (default = False): if called, set to 'True'
+    * output: scatterplot of two variables
 * *plot_geomap*: select type from ['socioeconomic', 'conditions', 'geomap']
+    * socioeconomic: income, education, health insurance, and poverty geomaps
+    * conditions: geomap of queried conditions data
+    * geomap: CDI data geomap
 * *summary_statistics*: select type from ['data', 'variable']
+    * output: prints number and type of data or variables for a dataset
 ``````
 python main.py \
     [--plot_longitudinal] # longitudinal time series graph of two variables \
