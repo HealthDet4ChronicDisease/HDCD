@@ -287,7 +287,7 @@ class TestCases(unittest.TestCase):
         dataframe = cdi_dummy
         width = 'container'
 
-        plot.plot_geomap_conditions(dataframe,
+        hdcd.plot_geomap_conditions(dataframe,
                                     width)
 
     ### one shot test 1
@@ -300,7 +300,7 @@ class TestCases(unittest.TestCase):
         dataframe = cdi_dummy
         width = 'container'
 
-        plot.plot_geomap_conditions(dataframe,
+        hdcd.plot_geomap_conditions(dataframe,
                                     width)
 
     ### edge test 1
@@ -324,6 +324,7 @@ class TestCases(unittest.TestCase):
 
         with self.assertRaises(ValueError):
             hdcd.plot_geomap_conditions(dataframe,width)
+
 
     def test_smoke_test_data_summary(self):
         """
