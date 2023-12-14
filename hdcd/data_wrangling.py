@@ -321,6 +321,6 @@ class AoU_conditions():
 
         conditions_counts.rename(columns = {"person_id":"counts"},inplace=True)
         conditions_counts.dropna(subset = ["id"],inplace=True)
-        conditions_counts["id"] = mentalDisorder_counts["id"].astype(int)
+        conditions_counts["id"] = conditions_counts["id"].astype(int)
 
         return conditions_counts
