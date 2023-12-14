@@ -80,7 +80,6 @@ conda activate <ENV_NAME>
 ``````
 3. Adjust the parameters in `config.py` for the variables and stratification you want to visualize. These are passed to `main.py` upon running step 4.
 <br/>
-
 4. Run modules
 * *plot_longitudinal* (default = False): if called, set to 'True'
     * output: longitudinal time-series graph of variables in `config.py`
@@ -99,6 +98,18 @@ python main.py \
     [--plot_geomap] # interactive geomap of selected type \
     [--summary_statistics] # prints summary of dataset or variable
 ``````
+
+5. **Note:** The following module will not run locally:
+``````
+python main.py --plot_geomap=socioeconomic
+``````
+as the county-level socioeconomic data requires data directly from *All of Us*.
+
+The following module:
+``````
+python main.py --plot_geomap=conditions
+``````
+will run locally for testing as there are dummy csv files in `data`.
 
 # References
 <a id="1">[1]</a>
