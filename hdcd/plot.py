@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as np
 import scipy.stats as sp
 import altair as alt
+import geopandas as gpd
 
 warnings.filterwarnings("ignore")
 
