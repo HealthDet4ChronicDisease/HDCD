@@ -427,8 +427,9 @@ def plot_geomap_conditions(dataframe,
 
     alt.data_transformers.disable_max_rows()
     counties = gpd.read_file('https://gist.githubusercontent.com/sdwfrost/\
-d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb\
-/counties.geojson')
+    d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb\
+    /counties.geojson')
+
     countyname2geoid = dict(zip(counties["NAME"],
                             counties["GEOID"].astype(int)))
 
@@ -444,8 +445,8 @@ d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb\
             fill='lightgray',
             stroke='white'
         ).project('albersUsa').properties(
-            width=1280,
-            height=760
+            width=width,
+            #height=760
         )
 
     select_year = alt.binding_range(min=dfplot["year"].min(),
@@ -464,7 +465,7 @@ d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb\
         tooltip=["standard_concept_name:N",
                 "year:Q",
                 "county:N",
-                "state_abbr:N"
+                "state_abbr:N",
                 "counts:Q"]
     ).transform_lookup(
         lookup='id',
@@ -475,7 +476,8 @@ d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb\
     ).project(
         type='albersUsa'
     ).properties(
-            width=width
+            width=width,
+            #height=760
     ).add_selection(
             selection_dropdown,
             slider_selection
@@ -486,6 +488,6 @@ d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb\
     )
 
     conditions_geomap = background + foreground
-    conditions_geomap.save('conditions_geomap.html')
+    #conditions_geomap.save('conditions_geomap.html')
 
     return conditions_geomap
