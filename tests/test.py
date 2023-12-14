@@ -258,15 +258,16 @@ class TestCases(unittest.TestCase):
                                           location,
                                           stratification,
                                           dataframe)
+
     def test_edge_test_2_plot_longitudinal_change(self):
         """
         Expect the function to produce an empty plot if any variables are not found.
         """
 
-        variable = "No such variable"  
-        location = "Washington" 
-        stratification = "Overall"  
-        dataframe = cdi_dummy.copy()  
+        variable = "No such variable"
+        location = "Washington"
+        stratification = "Overall"
+        dataframe = cdi_dummy.copy()
 
         chart = hdcd.plot_longitudinal_change(variable,
                                               location,
@@ -274,3 +275,129 @@ class TestCases(unittest.TestCase):
                                               dataframe)
 
         self.assertFalse(hasattr(chart, 'mark_line'))
+
+    def test_smoke_test_data_summary(self):
+        """
+        Smoke test, does it run
+        """
+        dataframe = cdi_dummy.head()
+
+        hdcd.data_summary(dataframe)
+
+    def test_one_shot_data_summary(self):
+        """
+        One shot test, getting expected outcome
+        """
+        dataframe = cdi_dummy.copy()
+
+        hdcd.data_summary(dataframe)
+
+    def test_edge_test_data_summary(self):
+        """
+        Edge test, no Topic presented in data throw exception
+        """
+        dataframe = cdi_dummy.copy()
+        dataframe.rename(columns = {"Topic":"NOTOPIC"},inplace=True)
+        with self.assertRaises(NameError):
+            hdcd.data_summary(dataframe)
+
+    def test_edge_test_2_data_summary(self):
+        """
+        Edge test, no Question presented in data throw exception
+        """
+        dataframe = cdi_dummy.copy()
+        dataframe.rename(columns = {"Question":"NOQUESTION"},inplace=True)
+        with self.assertRaises(NameError):
+            hdcd.data_summary(dataframe)
+
+    def test_edge_test_3_data_summary(self):
+        """
+        Edge test, no Stratification presented in data throw exception
+        """
+        dataframe = cdi_dummy.copy()
+        dataframe.rename(columns = {"StratificationCategory1":"NOTOPIC"},
+                        inplace=True)
+        with self.assertRaises(NameError):
+            hdcd.data_summary(dataframe)
+
+
+    def test_smoke_test_variable_summary(self):
+        """
+        Smoke test, does it run
+        """
+        dataframe = cdi_dummy.head()
+        variable = "Mortality from coronary heart disease"
+        hdcd.variable_summary(variable,
+                              dataframe)
+
+    def test_one_shot_variable_summary(self):
+        """
+        One shot test, getting expected outcome
+        """
+        dataframe = cdi_dummy.copy()
+        variable = "Mortality from coronary heart disease"
+        hdcd.variable_summary(variable,
+                              dataframe)
+
+    def test_edge_test_variable_summary(self):
+        """
+        Edge test, no DataValue presented in data throw exception
+        """
+        dataframe = cdi_dummy.copy()
+        dataframe.rename(columns = {"DataValue":"NODATA"},inplace=True)
+        
+        variable = "Mortality from coronary heart disease"
+        with self.assertRaises(NameError):
+            hdcd.variable_summary(variable,
+                                  dataframe)
+
+    def test_edge_test_2_variable_summary(self):
+        """
+        Edge test, no Question presented in data throw exception
+        """
+        dataframe = cdi_dummy.copy()
+        dataframe.rename(columns = {"Question":"NOQUESTION"},inplace=True)
+        variable = "Mortality from coronary heart disease"
+
+        with self.assertRaises(NameError):
+            hdcd.variable_summary(variable,
+                                  dataframe)
+
+    def test_edge_test_3_variable_summary(self):
+        """
+        Edge test, no DataValueType presented in data throw exception
+        """
+        dataframe = cdi_dummy.copy()
+        dataframe.rename(columns = {"DataValueType":"NOTYPE"},
+                        inplace=True)
+        variable = "Mortality from coronary heart disease"
+
+        with self.assertRaises(NameError):
+            hdcd.variable_summary(variable,
+                                  dataframe)
+
+    def test_edge_test_4_variable_summary(self):
+        """
+        Edge test, no YearStart presented in data throw exception
+        """
+        dataframe = cdi_dummy.copy()
+        dataframe.rename(columns = {"YearStart":"NOYEAR"},
+                        inplace=True)
+
+        variable = "Mortality from coronary heart disease"
+        with self.assertRaises(NameError):
+            hdcd.variable_summary(variable,
+                                  dataframe)
+
+    def test_edge_test_5_variable_summary(self):
+        """
+        Edge test, no LocationAbbr presented in data throw exception
+        """
+        dataframe = cdi_dummy.copy()
+        dataframe.rename(columns = {"LocationAbbr":"NOLOC"},
+                        inplace=True)
+
+        variable = "Mortality from coronary heart disease"
+        with self.assertRaises(NameError):
+            hdcd.variable_summary(variable,
+                                  dataframe)
