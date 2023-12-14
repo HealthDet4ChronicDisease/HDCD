@@ -1,4 +1,4 @@
-# Health Data Analysis for Chronic Diseases
+# Health Determinants for Chronic Diseases
 This project is in fulfillment of the final delieverable for the Fall 2023 CSE 583 course at University of Washington.
 
 **Team**: Brian Chang, Peter Kim, Wesley Surento, Su Xian
@@ -62,7 +62,7 @@ HDCD/
 ┗ README.md
 ``````
 
-## Quick Start -- Example using Jupyter notebook with Chronic Disease Index (CDI) data
+## Quick Start -- Example using Jupyter notebook with Chronic Disease Index (CDI) Data
 A step-by-step illustration of HDCD tool use is available [here](https://htmlpreview.github.io/?https://github.com/HealthDet4ChronicDisease/HDCD/blob/main/examples/Lets%20Get%20Started....html).
 
 ## Setup and Installation
