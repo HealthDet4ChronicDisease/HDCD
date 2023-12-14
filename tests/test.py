@@ -8,6 +8,7 @@ import sys
 import pandas as pd
 import numpy as np
 import altair as alt
+import geopandas as gpd
 # directory reach
 
 parentdir = os.getcwd()
@@ -15,6 +16,7 @@ sys.path.append(parentdir)
 sys.path.append('../hdcd')
 
 import hdcd
+from hdcd.data_wrangling import AoU_socioeconomic
 from hdcd.data_wrangling import AoU_conditions
 
 cdi_dummy = pd.read_csv("./data/cdi_dummy.csv")
@@ -466,6 +468,199 @@ class TestCases(unittest.TestCase):
                                   dataframe)
 
 
+    def test_smoke_test_load_geoshapes(self):
+        """
+        Smoke test, does it run
+        """
+        aou = AoU_socioeconomic(df=pd.DataFrame(), geo_df=geo_df, county_df=county_df)
+        
+        aou.load_geoshapes()
+    
+    def test_one_shot_load_geoshapes(self):
+       """
+       One-shot test, getting expected outcome
+       """
+       aou = AoU_socioeconomic(df=pd.DataFrame(), 
+                               geo_df=geo_df, 
+                               county_df=county_df)
+       
+       result = aou.load_geoshapes()
+       
+       self.assertIsInstance(result, gpd.GeoDataFrame)
+       self.assertIn('state_fips', result.columns)
+       self.assertEqual(result['state_fips'].dtype, 'int64')
+       
+       original_counties = gpd.read_file(geo_df)
+       self.assertEqual(len(result), len(original_counties))
+
+    def test_edge_test_load_geoshapes(self):
+        """
+        Edge test for load_geoshapes with non-string geo_df
+        """
+        aou = AoU_socioeconomic(df=pd.DataFrame(), 
+                                geo_df=123, 
+                                county_df=county_df)
+        with self.assertRaises(ValueError):
+            aou.load_geoshapes()
+
+    def test_edge_test_2_load_geoshapes(self):
+        """
+        Edge test for load_geoshapes with empty string geo_df
+        """
+        aou = AoU_socioeconomic(df=pd.DataFrame(), 
+                                geo_df='', 
+                                county_df=county_df)
+        with self.assertRaises(ValueError):
+            aou.load_geoshapes()
+
+    def test_edge_test_3_load_geoshapes(self):
+        """
+        Edge test for load_geoshapes with empty string geo_df
+        """
+        aou = AoU_socioeconomic(df=pd.DataFrame(),
+                                geo_df='https://invalid-url.com',
+                                county_df=county_df)   
+        with self.assertRaises(ValueError):
+            aou.load_geoshapes()
+
+    def test_smoke_test_load_counties_zip(self):
+        """
+        Smoke test, does it run
+        """
+        aou = AoU_socioeconomic(
+            df=pd.DataFrame(),
+            geo_df=geo_df,
+            county_df=county_df)
+        
+        aou.load_counties_zip()
+
+    def test_one_shot_test_load_counties_zip(self):
+        """
+        One-shot test, getting expected outcome
+        """
+        aou = AoU_socioeconomic(
+            df=pd.DataFrame(),
+            geo_df=geo_df,
+            county_df=county_df)
+        
+        result = aou.load_counties_zip()
+        
+        self.assertIsInstance(result, pd.DataFrame)
+        self.assertIn('NAME', result.columns)
+    
+    def test_edge_test_1_load_counties_zip(self):
+        """
+        Edge test for load_counties_zip with invalid URL
+        """
+        aou = AoU_socioeconomic(
+            df=pd.DataFrame(),
+            geo_df=geo_df,
+            county_df='https://invalid-url.com')
+        
+        with self.assertRaises(ValueError):
+            aou.load_counties_zip()
+
+    def test_smoke_test_merge_geoshapes_counties_zip(self):
+        """
+        Smoke test, does it run
+        """
+        # Instance of AoU_socioeconomic class
+        aou = AoU_socioeconomic(
+            df=pd.DataFrame(),
+            geo_df=geo_df,
+            county_df=county_df)
+
+        aou.merge_geoshapes_counties_zip()    
+    
+    def test_one_shot_merge_geoshapes_counties_zip(self):
+        """
+        One shot test, getting expected outcome
+        """
+        aou = AoU_socioeconomic(
+            df=pd.DataFrame(),
+            geo_df=geo_df,
+            county_df=county_df)
+
+        result = aou.merge_geoshapes_counties_zip()
+
+        self.assertIsInstance(result, pd.DataFrame)
+        self.assertTrue(set(['state_fips', 'STATEFP', 'zipcode', 'NAME', 'state']).issubset(set(result.columns)))
+
+    def test_smoke_test_zip_socioeconomic(self):
+        """
+        Smoke test, does it run
+        """
+        # Sample socioeconomic dataframe with required columns
+        data = {
+            'person_id': [1, 2, 3],
+            'observation_datetime': ['2023-01-01', '2023-01-02', '2023-01-03'],
+            'ZIP_code': [12345, 67890, 54321],
+            'some_other_column': ['value1', 'value2', 'value3']
+        }
+        sample_df = pd.DataFrame(data)
+
+        aou = AoU_socioeconomic(
+            df=sample_df,
+            geo_df=geo_df,
+            county_df=county_df)
+        
+        aou.zip_socioeconomic()
+    
+    def test_one_shot_test_zip_socioeconomic(self):
+        """
+        One-shot test, getting expected outcome
+        """
+        # Sample socioeconomic dataframe with required columns
+        data = {
+            'person_id': [1, 2, 3],
+            'observation_datetime': ['2023-01-01', '2023-01-02', '2023-01-03'],
+            'ZIP_code': [12345, 67890, 54321],
+            'some_other_column': ['value1', 'value2', 'value3']
+        }
+        sample_df = pd.DataFrame(data)
+
+        aou = AoU_socioeconomic(
+            df=sample_df,
+            geo_df=geo_df,
+            county_df=county_df)
+
+        result = aou.zip_socioeconomic()
+
+        self.assertIsInstance(result, pd.DataFrame)
+        self.assertTrue(set(['ZIP_code', 'some_other_column']).issubset(set(result.columns)))
+        self.assertEqual(len(result), 3)
+    
+    def test_edge_test_1_zip_socioeconomic(self):
+        """
+        Edge test: Empty Pandas DataFrame input for zip_socioeconomic
+        """
+
+        aou = AoU_socioeconomic(df=pd.DataFrame,
+                                geo_df= geo_df,
+                                county_df=county_df)
+
+        with self.assertRaises(ValueError):
+            result = aou.zip_socioeconomic()
+
+    def test_edge_test_2_zip_socioeconomic(self):
+        """
+        Edge test for missing columns (person_id or observation_datetime)
+        in Pandas DataFrame input for zip_socioeconomic
+        """
+        # Create a sample DataFrame without person_id or observation_datetime columns
+        data = {
+            'ZIP_code': [12345, 67890],
+            'column_without_id': ['value1', 'value2']
+        }
+        missing_columns_df = pd.DataFrame(data)
+
+        aou = AoU_socioeconomic(
+            df=missing_columns_df,
+            geo_df=geo_df,
+            county_df=county_df)
+
+        with self.assertRaises(KeyError):
+            result = aou.zip_socioeconomic()
 
     # For load_counties_zip
     ### smoke test
