@@ -80,7 +80,7 @@ def main():
                                                  observations_df=observations_df, 
                                                  county_df=county_df, 
                                                  geo_df=geo_df)
-        conditions_counts = AoU_conditions_wrangler.merge_counties_groupby()
+        conditions_counts = AoU_conditions_wrangler.counties_groupby_count()
         plot_geomap_conditions(conditions_counts)
     else:
         print("Socioeconomic geomap was not selected for visualization.")

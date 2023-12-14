@@ -291,7 +291,7 @@ class AoU_conditions():
 
         return conditions_zip_unique_county
 
-    def merge_counties_groupby(self):
+    def counties_groupby_count(self):
         """
         Count total participants for a condition in each county
             stratified by year.
