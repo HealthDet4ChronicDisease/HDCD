@@ -276,6 +276,18 @@ class TestCases(unittest.TestCase):
 
         self.assertFalse(hasattr(chart, 'mark_line'))
 
+
+    ### edge test 1
+    def test_edge_test_1_plot_geomap_conditions(self):
+        '''
+        Provide input with mistakes, see if error is raised
+        '''
+        dataframe = pd.DataFrame()
+        width = 'container'
+
+        with self.assertRaises(ValueError):
+            plot.plot_geomap_conditions(dataframe,width)
+
     def test_smoke_test_data_summary(self):
         """
         Smoke test, does it run
@@ -401,3 +413,7 @@ class TestCases(unittest.TestCase):
         with self.assertRaises(NameError):
             hdcd.variable_summary(variable,
                                   dataframe)
+
+
+
+
