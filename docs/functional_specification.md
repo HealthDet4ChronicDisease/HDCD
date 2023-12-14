@@ -13,7 +13,7 @@ To explore and analyze such complex relationships, interactive visualizations ca
 3. The user is a medical doctor interested in exploratory analysis of SDOH to identify trends and associated health outcomes longitudinally to form hypotheses for a grant application. The doctor would be using these data as supportive materials for said grant application.
 
 ## Data Sources
-For demonstration purposes, we collected data from different sources, including a publicly available Centers for Disease Control and Prevention (CDC) dataset, [Chronic Disease Index (CDI)](https://chronicdata.cdc.gov/Chronic-Disease-Indicators/U-S-Chronic-Disease-Indicators-CDI-/g4ie-h725/data) and [500 PLACES](https://www.cdc.gov/places/about/500-cities-2016-2019/index.html), and also protected data from the *All of Us Research Program*.
+For demonstration purposes, we collected data from different sources, including publicly available Centers for Disease Control and Prevention (CDC) datasets, [Chronic Disease Index (CDI)](https://chronicdata.cdc.gov/Chronic-Disease-Indicators/U-S-Chronic-Disease-Indicators-CDI-/g4ie-h725/data) and [500 PLACES](https://www.cdc.gov/places/about/500-cities-2016-2019/index.html), and also protected data from the *All of Us Research Program*.
 
 As we envision an interactive visualization tool to be widely applicable, we opted to use the *All of Us Research Program*, an effort by the National Institues of Health (NIH) that consists of a diverse group of at least one million participants across the United States. [[3]](#3) This data consortium includes health questionnaires, electronic health records, digital health technology data, and biospecimens. Importantly, it also includes key SDOH, such as income, education, and housing status.
 
