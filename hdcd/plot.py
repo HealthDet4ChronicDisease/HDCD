@@ -394,22 +394,40 @@ def plot_geomap_socioeconomic(dataframe,
             title = 'Poverty (%)'
             scheme = 'lightmulti'
 
-        sdoh_geomap = alt.Chart(dataframe, title=title).mark_geoshape(
-        stroke='white'
-        ).encode(
-            color=alt.Color(sdoh+':Q',
-                            scale=alt.Scale(scheme=scheme),
-                            title=title),
-            tooltip=[alt.Tooltip('county:N', title='County'),
-                    alt.Tooltip('state_abbr:N', title='State'),
-                    alt.Tooltip(sdoh+':Q', title=title, format='.2f')]
+        counties = alt.topo_feature(data.us_10m.url, 'counties')
+
+        background = alt.Chart(counties).mark_geoshape(
+                fill='lightgray',
+                stroke='white'
+            ).project('albersUsa').properties(
+                width=width,
+                #height=760
+            )
+
+        sdoh_geomap = alt.Chart(sodh_dummy, title=title).mark_geoshape(
+                    stroke='white'
+                    ).encode(
+                color=alt.Color(sdoh+':Q',
+                                scale=alt.Scale(scheme=scheme),
+                                title=title),
+                tooltip=[alt.Tooltip('county:N', title='County'),
+                        alt.Tooltip('state_abbr:N', title='State'),
+                        alt.Tooltip(sdoh+':Q', title=title, format='.2f')]
+                    ).transform_lookup(
+            lookup='id',
+            from_=alt.LookupData(counties, 'id',["id",
+                                                 "type",
+                                                 "properties",
+                                                 "geometry"])
         ).project(
-            type='albersUsa'
-        ).properties(
-            width=width
+                        type='albersUsa'
+                    ).properties(
+                        width=width
         )
 
-        sdoh_geomap.save(sdoh + '_geomap.html')
+        sdoh_geomap = background + sdoh_geomap
+
+        #sdoh_geomap.save(sdoh + '_geomap.html')
 
     return sdoh_geomap
 
