@@ -86,15 +86,15 @@ conda activate <ENV_NAME>
 
 4. Run modules
 * *plot_longitudinal* (default = False): if called, set to 'True'
-    * output: longitudinal time-series graph
+    * output: longitudinal time-series graph of variables in `config.py`
 * *plot_correlation* (default = False): if called, set to 'True'
-    * output: scatterplot of two variables
+    * output: scatterplot of two SDOH and outcome in `config.py`
 * *plot_geomap*: select type from ['socioeconomic', 'conditions', 'geomap']
-    * socioeconomic **(Aou)**: income, education, health insurance, and poverty geomaps
-    * conditions **(Aou)**: geomap of queried conditions data
+    * socioeconomic **(AoU)**: income, education, health insurance, and poverty geomaps
+    * conditions **(AoU)**: geomap of queried conditions data
     * geomap: CDI data geomap of variables in `config.py`
 * *summary_statistics*: select type from ['data', 'variable']
-    * output: prints number and type of data or variables for a dataset
+    * output: prints number and type of data or variables for a dataset in `config.py`
 ``````
 python main.py \
     [--plot_longitudinal] # longitudinal time series graph of two variables \
