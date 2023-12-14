@@ -19,14 +19,13 @@ from hdcd.data_wrangling import AoU_conditions
 
 cdi_dummy = pd.read_csv("./data/cdi_dummy.csv")
 conditions_csv = pd.read_csv("./data/conditions.csv")
- 
 
 
 # recommended geoshapes file and ZIP codes for US counties file
 geo_df = 'https://gist.githubusercontent.com/sdwfrost/d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb/counties.geojson'
 county_df = 'https://raw.githubusercontent.com/scpike/us-state-county-zip/master/geo-data.csv'
 observations_df = pd.read_csv("./data/observation_data.csv")
-conditions_df = pd.read_csv("./data/conditions.csv")
+conditions_df = pd.read_csv("./data/condition_data.csv")
 
 class TestCases(unittest.TestCase):
 
@@ -534,6 +533,152 @@ class TestCases(unittest.TestCase):
                                     observations_df = observations_df)
         with self.assertRaises(ValueError):
             aou_lcz.load_counties_zip()
+
+
+
+
+
+    ### For threshold_conditions
+    ### smoke test
+    def test_smoke_test_threshold_conditions(self):
+        '''
+        conducts a smoke test
+        with the right inputs, program should run fine
+        '''
+        aou_tc = AoU_conditions(conditions_df = conditions_df,
+                                observations_df = observations_df,
+                                county_df = county_df,
+                                geo_df = geo_df)
+        try:
+            aou_tc.threshold_conditions()
+        except Exception as e:
+            self.fail(f"load_counties_zip raised an exception: {e}")
+      
+
+    ### one-shot test 1
+    def test_one_shot_test_1_threshold_conditions(self):
+        '''
+        Provide good input and test to see if output looks good
+        '''
+        aou_tc = AoU_conditions(conditions_df = conditions_df,
+                                observations_df = observations_df,
+                                county_df = county_df,
+                                geo_df = geo_df)
+        try:
+            aou_tc.threshold_conditions()
+        except Exception as e:
+            self.fail(f"load_counties_zip raised an exception: {e}")
+
+
+    ### For observation zip
+    ### smoke test ###
+    def test_smoke_test_observation_zip(self):
+        '''
+        conducts a smoke test
+        with the right inputs, program should run fine
+        '''
+        aou_tc = AoU_conditions(conditions_df = conditions_df,
+                                observations_df = observations_df,
+                                county_df = county_df,
+                                geo_df = geo_df
+                                )
+        try:
+            aou_tc.observation_zip()
+        except Exception as e:
+            self.fail(f"load_counties_zip raised an exception: {e}")
+
+    ### one shot test 1 ###
+    def test_one_shot_test_1_observation_zip(self):
+        '''
+        conducts a one shot test
+        with the right inputs, program should run fine
+        '''
+        aou_tc = AoU_conditions(conditions_df = conditions_df,
+                                observations_df = observations_df,
+                                county_df = county_df,
+                                geo_df = geo_df
+                                )
+        try:
+            aou_tc.observation_zip()
+        except Exception as e:
+            self.fail(f"load_counties_zip raised an exception: {e}")
+
+
+
+
+
+    ### For merge conditions observation
+    ### smoke test ###
+    def test_smoke_test_merge_conditions_observation(self):
+        '''
+        conducts a smoke test
+        with the right inputs, program should run fine
+        '''
+        aou_tc = AoU_conditions(conditions_df = conditions_df,
+                                observations_df = observations_df,
+                                county_df = county_df,
+                                geo_df = geo_df
+                                )
+        try:
+            aou_tc.merge_conditions_observation()
+        except Exception as e:
+            self.fail(f"load_counties_zip raised an exception: {e}")
+
+    ### one shot test 1 ###
+    def test_one_shot_test_1_merge_conditions_observation(self):
+        '''
+        conducts a one shot test
+        with the right inputs, program should run fine
+        '''
+        aou_tc = AoU_conditions(conditions_df = conditions_df,
+                                observations_df = observations_df,
+                                county_df = county_df,
+                                geo_df = geo_df
+                                )
+        try:
+            aou_tc.merge_conditions_observation()
+        except Exception as e:
+            self.fail(f"load_counties_zip raised an exception: {e}")
+
+
+
+    ### For merge conditions observation
+    ### smoke test ###
+    def test_smoke_test_counties_groupby_count(self):
+        '''
+        conducts a smoke test
+        with the right inputs, program should run fine
+        '''
+        aou_tc = AoU_conditions(conditions_df = conditions_df,
+                                observations_df = observations_df,
+                                county_df = county_df,
+                                geo_df = geo_df
+                                )
+        try:
+            aou_tc.counties_groupby_count()
+        except Exception as e:
+            self.fail(f"load_counties_zip raised an exception: {e}")
+
+    ### one shot test 1 ###
+    def test_one_shot_test_1_counties_groupby_count(self):
+        '''
+        conducts a one shot test
+        with the right inputs, program should run fine
+        '''
+        aou_tc = AoU_conditions(conditions_df = conditions_df,
+                                observations_df = observations_df,
+                                county_df = county_df,
+                                geo_df = geo_df
+                                )
+        try:
+            aou_tc.counties_groupby_count()
+        except Exception as e:
+            self.fail(f"load_counties_zip raised an exception: {e}")
+
+
+
+
+
 
 
 
