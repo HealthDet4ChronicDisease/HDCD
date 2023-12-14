@@ -358,7 +358,11 @@ column
 def plot_geomap_socioeconomic(dataframe,
                               width='container'):
     """
-    Plot a geomap of selected SDOH given @dataframe.
+    Plot a geomap of selected SDOH given @dataframe at the county level.
+        * High school education (%)
+        * Median income ($)
+        * No health insurance (%)
+        * Poverty (%)
 
     Parameters:
 
@@ -386,7 +390,11 @@ def plot_geomap_socioeconomic(dataframe,
             title = 'Poverty (%)'
             scheme = 'lightmulti'
 
+<<<<<<< HEAD
+        sdoh_geomap = alt.Chart(dataframe, title=title).mark_geoshape( 
+=======
         sdoh_geomap = alt.Chart(dataframe, title = 'High School Education (%)').mark_geoshape(
+>>>>>>> c417acbeb50e3263b3ab3642c7b4b896da49ded8
         stroke='white'
         ).encode(
             color=alt.Color(sdoh+':Q',
@@ -413,7 +421,11 @@ def plot_geomap_conditions(dataframe,
     Parameters:
 
     @dataframe: conditions dataframe from data_wrangling.AoU_conditions
+<<<<<<< HEAD
+    @return: an alt.Chart() object with geomap and encoded conditions counts 
+=======
     @return: an alt.Chart() object with geomap and encoded SDOH data
+>>>>>>> c417acbeb50e3263b3ab3642c7b4b896da49ded8
     """
     from vega_datasets import data
 
@@ -424,6 +436,11 @@ def plot_geomap_conditions(dataframe,
 
     dfplot = dataframe.copy()
     counties = alt.topo_feature(data.us_10m.url, 'counties')
+
+    input_dropdown = alt.binding_select(options=list(dataframe["standard_concept_name"].unique()), 
+                                    name='Conditions')
+    selection_dropdown = alt.selection_single(fields=['standard_concept_name'], 
+                                              bind=input_dropdown)
 
     background = alt.Chart(counties).mark_geoshape(
             fill='lightgray',
@@ -470,4 +487,11 @@ def plot_geomap_conditions(dataframe,
             slider_selection,
     )
 
+<<<<<<< HEAD
+    conditions_geomap = background + foreground
+    conditions_geomap.save('conditions_geomap.html')
+
+    return conditions_geomap
+=======
     return background + foreground
+>>>>>>> c417acbeb50e3263b3ab3642c7b4b896da49ded8

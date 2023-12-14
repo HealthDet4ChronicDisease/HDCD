@@ -1,6 +1,7 @@
 # Health Data Analysis for Chronic Diseases
-This project is in fulfillment of the final deliverable for the CSE 583 course at University of Washington.
-**Team**: Brian Chang, Peter Ju, Wesley Surento, Su Xian
+This project is in fulfillment of the final delieverable for the CSE 583 course at University of Washington.
+
+**Team**: Brian Chang, Peter Kim, Wesley Surento, Su Xian
 
 ## Background
 Social determinants of health (SDOH) are "societal systems, their components, and the social resources and hazards for health that societal systems control and distribute, allocate and withhold, such that the demographic distribution or trend of health outcomes is changed." [[1]](#1) These societal systems include governments, institutions, and other organizations, which "control and distribute, allocate and withhold" resources and hazards for health, such as food, income, employment, education, and health information.
@@ -60,7 +61,7 @@ HDCD/
 ``````
 
 ## Quick Start -- Example using jupyter notebook with Chronic Disease Index (CDI) data
-A step-by-step illustration of hdcd tool use is available [here](https://htmlpreview.github.io/?https://github.com/HealthDet4ChronicDisease/HDCD/blob/main/examples/Lets%20Get%20Started....html)
+A step-by-step illustration of HDCD tool use is available [here](https://htmlpreview.github.io/?https://github.com/HealthDet4ChronicDisease/HDCD/blob/main/examples/Lets%20Get%20Started....html)
 
 ## Setup and Installation
 1. Clone this GitHub repository to your local working directory with
@@ -76,7 +77,7 @@ conda activate <ENV_NAME>
 3. Run modules
 * *plot_longitudinal* (default = False): if called, set to 'True'
 * *plot_correlation* (default = False): if called, set to 'True'
-* *plot_geomap*: select type from ['socioeconomic', 'geomap']
+* *plot_geomap*: select type from ['socioeconomic', 'conditions', 'geomap']
 * *summary_statistics*: select type from ['data', 'variable']
 ``````
 python main.py \
