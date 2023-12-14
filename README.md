@@ -66,11 +66,7 @@ HDCD/
 A step-by-step illustration of HDCD tool use is available [here](https://htmlpreview.github.io/?https://github.com/HealthDet4ChronicDisease/HDCD/blob/main/examples/Lets%20Get%20Started....html).
 
 ## Setup and Installation
-* *Note:* Some modules will only produce visualizations within the 
-    *All of Us Research Workbench* with queried data. These are marked 
-    by **AoU** below. When working locally, please refer to the 
-    dummy data in `data`. We recommend starting with summary statistics 
-    for the CDI data, as shown in the notebook.
+* *Note:* Some modules will only produce visualizations within the *All of Us Research Workbench* with queried data. These are marked by **AoU** below. When working locally, please refer to the dummy data in `data`, which has been set in `config.py`. We recommend starting with summary statistics for the CDI data, as shown in the notebook. 
 
 1. Clone this GitHub repository to your local working directory with
 the command:
@@ -82,10 +78,8 @@ git clone https://github.com/HealthDet4ChronicDisease/HDCD.git
 conda create --name <ENV_NAME> -f environment.yml
 conda activate <ENV_NAME>
 ``````
-3. Adjust the parameters in `config.py` for the variables and stratification
-    you want to visualize. These are passed to `main.py` upon running step 4.
+3. Adjust the parameters in `config.py` for the variables and stratification you want to visualize. These are passed to `main.py` upon running step 4.
 <br/>
-
 4. Run modules
 * *plot_longitudinal* (default = False): if called, set to 'True'
     * output: longitudinal time-series graph of variables in `config.py`
