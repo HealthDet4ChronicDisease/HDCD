@@ -28,6 +28,8 @@ HDCD/
 ┃   ┗ python-package-conda.yml
 ┣ data/
 ┃ ┣ cdi_dummy.csv
+┃ ┣ conditions.csv
+┃ ┣ conditions.xlsx
 ┃ ┣ condition_data.csv
 ┃ ┣ observation_data.csv
 ┃ ┣ person_data.csv
@@ -37,8 +39,10 @@ HDCD/
 ┃ ┣ 2023-11-14.pptx
 ┃ ┣ component_specification.md
 ┃ ┣ design.md
-┃ ┗ functional_specification.md
+┃ ┣ functional_specification.md
+┃ ┗ HDCD_Presentation_slides.pptx
 ┣ examples/
+┃ ┣ Depression_condition_visual_example.html
 ┃ ┣ education.html
 ┃ ┣ health_insurance.html
 ┃ ┣ Lets Get Started....html
@@ -56,6 +60,7 @@ HDCD/
 ┣ tests/
 ┃ ┗ test.py
 ┣ .gitignore
+┣ config.py
 ┣ environment.yml
 ┣ LICENSE
 ┣ main.py
