@@ -16,6 +16,7 @@ SUMMARY_VAR = 'Binge drinking frequency among adults aged >= 18 years who binge 
 
 """
 Correlation Plot
+plot_corr
 """
 CORR_SOD = 'Binge drinking frequency among adults aged >= 18 years who binge drink'
 CORR_HEALTH_OUTCOME = 'Life expectancy at birth'

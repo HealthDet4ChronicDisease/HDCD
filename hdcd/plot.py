@@ -1,5 +1,21 @@
 """
-Plotting module
+This Python script defines functions for interactive visualizations
+    in this project.
+    * plot_corr: scatterplot of two variables
+    * plot_geomap: CDI geomap of variable of interest
+    * plot_longitudinal_change: interactive time series with respect to a variable
+    * plot_geomap_socioeconomic: geomap of defined SDOH per All of Us 
+    * plot_geomap_conditions: geomap of conditions passed from All of Us
+
+This module require the following packages within the Python environment
+you are running in:
+    * NumPy
+    * Pandas
+    * GeoPandas
+    * Altair
+    * SciPy
+
+This script can be imported as a module for the functions listed above.
 """
 import warnings
 

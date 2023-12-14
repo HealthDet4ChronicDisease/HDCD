@@ -23,7 +23,7 @@ The AoU_conditions class accepts Pandas DataFrames and csv files.
     * merge_conditions_observation
     * groupby_count
 
-The classes can be imported as modules.
+This script can be imported as a module for the classes listed above.
 """
 import os
 

@@ -5,7 +5,7 @@ visualziations within this GitHub repository.
     * Summary Statistics
     * Plots
 
-These modules require the following packages within the Python environment
+This script requires the following packages within the Python environment
 you are running in:
     * NumPy
     * Pandas
