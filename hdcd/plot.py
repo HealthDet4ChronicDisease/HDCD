@@ -39,7 +39,7 @@ STRAT_LONG = "StratificationCategory1"
 D_TYPE = "DataValueType"
 YEAR = "YearStart"
 
-__all__ = ['plot_corr',"plot_geomap","plot_longitudinal_change"]
+__all__ = ['plot_corr',"plot_geomap","plot_longitudinal_change", "plot_geomap_socioeconomic", "plot_geomap_conditions"]
 
 def plot_corr(sod,
              health_outcome,
