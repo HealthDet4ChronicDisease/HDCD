@@ -373,6 +373,7 @@ def plot_geomap_socioeconomic(dataframe,
     if not isinstance(dataframe, pd.DataFrame):
         raise ValueError('"dataframe" must be a Pandas DataFrame')
 
+    from vega_datasets import data
     alt.data_transformers.disable_max_rows()
 
     for sdoh in ['high_school_education',
@@ -404,7 +405,7 @@ def plot_geomap_socioeconomic(dataframe,
                 #height=760
             )
 
-        sdoh_geomap = alt.Chart(sodh_dummy, title=title).mark_geoshape(
+        sdoh_geomap = alt.Chart(dataframe, title=title).mark_geoshape(
                     stroke='white'
                     ).encode(
                 color=alt.Color(sdoh+':Q',
