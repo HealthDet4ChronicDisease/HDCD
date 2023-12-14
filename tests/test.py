@@ -190,6 +190,113 @@ class TestCases(unittest.TestCase):
                             dataframe)
 
 
+    ### smoke test
+    def test_smoke_test_plot_geomap_conditions(self):
+        '''
+        conducts a smoke test
+        with the right inputs, program should run fine
+        '''
+
+        dataframe = cdi_dummy
+        width = 'container'
+
+        hdcd.plot_geomap_conditions(dataframe,
+                                    width)
+        
+    ### one-shot test 1
+    def test_one_shot_test_1_plot_geomap_conditions(self):
+        '''
+        Provide good input and test to see if output looks good
+        '''
+        variable = "Current Smoking"
+        datatype = "Crude prevalence"
+        dataframe = cdi_dummy
+        longitude = "longitude"
+        latitude = "latitude"
+        color_scheme = "redpurple"
+        width = 1280
+        height = 720
+
+        hdcd.plot_geomap_conditions(variable,
+                                    datatype,
+                                    dataframe,
+                                    longitude,
+                                    latitude,
+                                    color_scheme,
+                                    width,
+                                    height)
+
+    ### one-shot test 2
+    def test_one_shot_test_2_plot_geomap_conditions(self):
+        '''
+        Provide good input and test to see if output looks good
+        '''
+        variable = "Sleep <7 hours"
+        datatype = "Crude prevalence"
+        dataframe = cdi_dummy
+        longitude = "longitude"
+        latitude = "latitude"
+        color_scheme = "redpurple"
+        width = 1280
+        height = 720
+
+        hdcd.plot_geomap_by_location(variable,
+                                    datatype,
+                                    dataframe,
+                                    longitude,
+                                    latitude,
+                                    color_scheme,
+                                    width,
+                                    height)
+
+    ### edge test 1
+    def test_edge_test_1_plot_geomap_conditions(self):
+        '''
+        Provide input with mistakes, see if error is raised
+        '''
+        variable = "SOMETHING NEW"
+        datatype = "Crude prevalence"
+        dataframe = cdi_dummy
+        longitude = "longitude"
+        latitude = "latitude"
+        color_scheme = "redpurple"
+        width = 1280
+        height = 720
+
+        with self.assertRaises(NameError):
+            hdcd.plot_geomap_by_location(variable,
+                                    datatype,
+                                    dataframe,
+                                    longitude,
+                                    latitude,
+                                    color_scheme,
+                                    width,
+                                    height)
+    ### edge test 2
+    def test_edge_test_2_plot_geomap_conditions(self):
+        '''
+        Provide input with mistakes, see if error is raised
+        '''
+        variable = "Current Smoking"
+        datatype = "Crude prevalence" 
+        dataframe = pd.DataFrame() # feed empty dataframe into it
+        longitude = "longitude"
+        latitude = "latitude"
+        color_scheme = "redpurple"
+        width = 1280
+        height = 720
+
+        with self.assertRaises(NameError):
+            hdcd.plot_geomap_by_location(variable,
+                                    datatype,
+                                    dataframe,
+                                    longitude,
+                                    latitude,
+                                    color_scheme,
+                                    width,
+                                    height)
+
+
     def test_smoke_test_plot_longitudinal_change(self):
         """
         Simple call function to test whether the program is able to run given
