@@ -198,29 +198,27 @@ class TestCases(unittest.TestCase):
         conducts a smoke test
         with the right inputs, program should run fine
         '''
-        dataframe = conditions_csv
+        dataframe = conditions_csv.copy()
         width = 'container'
 
-        hdcd.plot_geomap_conditions(dataframe,
-                                    width)
+        hdcd.plot_geomap_conditions(dataframe,width)
 
     ### one-shot test 1
     def test_one_shot_test_1_plot_geomap_conditions(self):
         '''
         Provide good input and test to see if output looks good
         '''
-        dataframe = conditions_csv
+        dataframe = conditions_csv.copy()
         width = 'container'
 
-        hdcd.plot_geomap_conditions(dataframe,
-                                    width)
+        hdcd.plot_geomap_conditions(dataframe,width)
 
     ### edge test 1
     def test_edge_test_1_plot_geomap_conditions(self):
         '''
         Provide input with mistakes, see if error is raised
         '''
-        dataframe = conditions_csv
+        dataframe = conditions_csv.copy()
         width='container'
 
         dataframe.rename(columns = {"county":"NO_county"},
