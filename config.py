@@ -38,3 +38,11 @@ plot_longitudinal_change
 LONG_VAR = "Binge drinking frequency among adults aged >= 18 years who binge drink"
 LONG_LOCATION = "Arkansas"
 LONG_STRATIFICATION = "Gender"
+
+"""
+Conditions GeoMap
+plot_geomap_conditions
+    * links to dummy data csv
+"""
+CONDITIONS = './data/condition_data.csv'
+OBSERVATIONS = './data/observation_data.csv'
