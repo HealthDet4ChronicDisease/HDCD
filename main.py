@@ -21,8 +21,8 @@ import pandas as pd
 import geopandas as gpd
 
 from hdcd.data_wrangling import AoU_socioeconomic, AoU_conditions
-from hdcd.plot import *
-from hdcd.summary import *
+from hdcd.plot import plot_corr, plot_geomap, plot_longitudinal_change, plot_geomap_socioeconomic, plot_geomap_conditions
+from hdcd.summary import data_summary, variable_summary
 from config import *
 
 # define arguments
@@ -72,10 +72,15 @@ def main():
                     color_scheme=GEOMAP_COLOR,
                     width = 'container')
     elif args.plot_geomap == 'conditions':
-        conditions_counts = AoU_conditions.merge_counties_groupby(conditions_df=conditions_df, 
-                                                                  observations_df=observations_df, 
-                                                                  county_df=county_df, 
-                                                                  geo_df=geo_df)
+        conditions_df = pd.read_csv('./data/condition_data.csv')
+        observations_df = pd.read_csv('./data/observation_data.csv')
+        geo_df = 'https://gist.githubusercontent.com/sdwfrost/d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb/counties.geojson'
+        county_df = 'https://raw.githubusercontent.com/scpike/us-state-county-zip/master/geo-data.csv' 
+        AoU_conditions_wrangler = AoU_conditions(conditions_df=conditions_df, 
+                                                 observations_df=observations_df, 
+                                                 county_df=county_df, 
+                                                 geo_df=geo_df)
+        conditions_counts = AoU_conditions_wrangler.merge_counties_groupby()
         plot_geomap_conditions(conditions_counts)
     else:
         print("Socioeconomic geomap was not selected for visualization.")

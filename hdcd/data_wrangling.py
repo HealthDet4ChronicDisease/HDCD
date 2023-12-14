@@ -199,8 +199,16 @@ class AoU_conditions():
         """
         # set exceptions
         if not isinstance(self.county_df, str):
-            raise ValueError('"county_df" must be of type string \
-                             to a URL for a county ZIP codes csv')
+            raise ValueError('"county_df" must be of type string to a URL for a county ZIP codes csv')
+        
+        if not isinstance(self.geo_df, str):
+            raise ValueError('"geo_df" must be of type string to a URL for a county ZIP codes csv')
+        
+        if not isinstance(self.observations_df, pd.DataFrame):
+            raise ValueError('"observations_df" must be a Pandas DataFrame passed from the All of US workbench')
+        
+        if not isinstance(self.conditions_df, pd.DataFrame):
+            raise ValueError('"conditions_df" must be a Pandas DataFrame passed from the All of US workbench')
 
         counties_zip = pd.read_csv(self.county_df)
         counties_zip['zip3'] = counties_zip['zipcode'].apply(lambda x: str(x)[0:3]).astype('int')
@@ -283,24 +291,6 @@ class AoU_conditions():
 
         return conditions_zip_unique_county
 
-    def groupby_count(self):
-        """
-        Count total participants for a condition in each ZIP code
-            stratified by datetime year and month
-
-        Return:
-            conditions_zip_datetime_counts (DataFrame): total participants
-                with conditions in ZIP code by year and month
-        """
-        conditions_zip_unique_county = self.merge_conditions_observation()
-
-        conditions_zip_datetime_counts = conditions_zip_unique_county.groupby(by=['zipcode',
-                                                                                  'year',
-                                                                                  'month',
-                                                                                  'standard_concept_name'])['person_id'].count()
-
-        return pd.DataFrame(conditions_zip_datetime_counts)
-
     def merge_counties_groupby(self):
         """
         Count total participants for a condition in each county
@@ -310,14 +300,14 @@ class AoU_conditions():
             conditions_counts (DataFrame): total counts for each condition
                 stratified by county and year
         """
-        conditions_zip_datetime_counts = self.groupby_count()
+        conditions_zip_unique_county = self.merge_conditions_observation()
         counties = gpd.read_file(self.geo_df)
 
         countyname2geoid = dict(zip(counties["NAME"],
                                 counties["GEOID"].astype(int)))
-        conditions_zip_datetime_counts["id"] = [countyname2geoid[x] if x in countyname2geoid else np.nan for x in conditions_zip_datetime_counts["county"].tolist()]
+        conditions_zip_unique_county["id"] = [countyname2geoid[x] if x in countyname2geoid else np.nan for x in conditions_zip_unique_county["county"].tolist()]
 
-        conditions_counts = conditions_zip_datetime_counts.groupby(["standard_concept_name","county","year","state_abbr","id"])["person_id"].nunique().reset_index()
+        conditions_counts = conditions_zip_unique_county.groupby(["standard_concept_name","county","year","state_abbr","id"])["person_id"].nunique().reset_index()
 
         conditions_counts.rename(columns = {"person_id":"counts"},inplace=True)
         conditions_counts.dropna(subset = ["id"],inplace=True)

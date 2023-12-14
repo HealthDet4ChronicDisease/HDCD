@@ -413,8 +413,7 @@ def plot_geomap_socioeconomic(dataframe,
 
     return sdoh_geomap
 
-def plot_geomap_conditions(dataframe,
-                           width='container'):
+def plot_geomap_conditions(dataframe, width='container'):
     """
     Plot a geomap of conditions given @dataframe.
 
@@ -426,9 +425,7 @@ def plot_geomap_conditions(dataframe,
     from vega_datasets import data
 
     alt.data_transformers.disable_max_rows()
-    counties = gpd.read_file('https://gist.githubusercontent.com/sdwfrost/\
-    d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb\
-    /counties.geojson')
+    counties = gpd.read_file('https://gist.githubusercontent.com/sdwfrost/d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb/counties.geojson')
 
     countyname2geoid = dict(zip(counties["NAME"],
                             counties["GEOID"].astype(int)))
