@@ -54,13 +54,13 @@ Required arguments for AoU_socioeconomic class
 def main():
     if args.plot_geomap == 'socioeconomic':
         # df = <obtain from All of US SQL query 'zip_socioeconomic'>
+        # df = pd.read_csv('./data/median_income_dummy.csv')
         geo_df = 'https://gist.githubusercontent.com/sdwfrost/d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb/counties.geojson'
         county_df = 'https://raw.githubusercontent.com/scpike/us-state-county-zip/master/geo-data.csv'
 
-        counties_socioeconomic = AoU_socioeconomic.merge_county_socioeconomic(df=df, 
-                                                                              geo_df=geo_df, 
-                                                                              county_df=county_df)
-        plot_geomap_socioeconomic(dataframe=counties_socioeconomic)
+        AoU_socioeconomic_wrangler = AoU_socioeconomic(df=df, geo_df=geo_df, county_df=county_df)
+        counties_socioeconomic = AoU_socioeconomic_wrangler.merge_county_socioeconomic()
+        plot_geomap_socioeconomic(dataframe=df)
     # elif args.plot_geomap == 'location':
         # plot_geomap_by_location()
     elif args.plot_geomap == 'geomap':
