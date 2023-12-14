@@ -12,12 +12,21 @@ import altair as alt
 
 parentdir = os.getcwd()
 sys.path.append(parentdir)
-#sys.path.append('../hdcd')
+sys.path.append('../hdcd')
 
 import hdcd
+from hdcd.data_wrangling import AoU_conditions
 
 cdi_dummy = pd.read_csv("./data/cdi_dummy.csv")
 conditions_csv = pd.read_csv("./data/conditions.csv")
+ 
+
+
+# recommended geoshapes file and ZIP codes for US counties file
+geo_df = 'https://gist.githubusercontent.com/sdwfrost/d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb/counties.geojson'
+county_df = 'https://raw.githubusercontent.com/scpike/us-state-county-zip/master/geo-data.csv'
+observations_df = pd.read_csv("./data/observation_data.csv")
+conditions_df = pd.read_csv("./data/conditions.csv")
 
 class TestCases(unittest.TestCase):
 
@@ -457,6 +466,74 @@ class TestCases(unittest.TestCase):
             hdcd.variable_summary(variable,
                                   dataframe)
 
+
+
+    # For load_counties_zip
+    ### smoke test
+    def test_smoke_test_load_counties_zip(self):
+        '''
+        conducts a smoke test
+        with the right inputs, program should run fine
+        '''
+        aou_lcz = AoU_conditions(pd.DataFrame(),
+                                    geo_df = geo_df,
+                                    county_df = county_df,
+                                    observations_df = observations_df)
+
+
+        #data_wrangling.load_counties_zip(self.county_df)
+        try:
+            aou_lcz.load_counties_zip()
+        except Exception as e:
+            self.fail(f"load_counties_zip raised an exception: {e}")
+      
+
+
+
+    ### one-shot test 1
+    def test_one_shot_test_1_load_counties_zip(self):
+        '''
+        Provide good input and test to see if output looks good
+        '''
+        aou_lcz = AoU_conditions(pd.DataFrame(),
+                                    geo_df = geo_df,
+                                    county_df = county_df,
+                                    observations_df = observations_df)
+
+
+        #data_wrangling.load_counties_zip(self.county_df)
+        try:
+            aou_lcz.load_counties_zip()
+        except Exception as e:
+            self.fail(f"load_counties_zip raised an exception: {e}")
+
+
+
+
+    ### edge test 1
+    def test_edge_test_1_load_counties_zip(self):
+        '''
+        Provide input with mistakes, see if error is raised
+        '''
+        aou_lcz = AoU_conditions(pd.DataFrame(),
+                                    geo_df = geo_df,
+                                    county_df = 1234567,
+                                    observations_df = observations_df)
+        with self.assertRaises(ValueError):
+            aou_lcz.load_counties_zip()
+
+
+    ### edge test 2
+    def test_edge_test_2_load_counties_zip(self):
+        '''
+        Provide input with mistakes, see if error is raised
+        '''
+        aou_lcz = AoU_conditions(pd.DataFrame(),
+                                    geo_df = 123321,
+                                    county_df = county_df,
+                                    observations_df = observations_df)
+        with self.assertRaises(ValueError):
+            aou_lcz.load_counties_zip()
 
 
 
