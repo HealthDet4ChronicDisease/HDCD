@@ -1,5 +1,5 @@
 # Health Data Analysis for Chronic Diseases
-This project is in fulfillment of the final delieverable for the CSE 583 course at University of Washington.
+This project is in fulfillment of the final delieverable for the Fall 2023 CSE 583 course at University of Washington.
 
 **Team**: Brian Chang, Peter Kim, Wesley Surento, Su Xian
 
@@ -14,9 +14,11 @@ To explore and analyze such complex relationships, interactive visualizations ca
 Our goal for this project is to deploy interactive visualizations with a focus on SDOH, which can vary in their distribution across space and time, and their associations with chronic diseases, such as cardiovascular disease. Specifically, we would like to make this process as easy as possible so that a user with minimal technical experience can utilize the interactive visualizations. From interacting with said visualizations, the question we would like to help users answer is: *"Can we identify emerging trends and establish associatons between SDOH and health outcomes?"*
 
 ## Dataset
-As we envision an interactive visualization tool to be widely applicable, we opted to use the [*All of Us Research Program*](https://allofus.nih.gov/), an effort by the National Institues of Health (NIH) that consists of a diverse group of at least one million participants across the United States. [[5]](#5) This data consortium includes health questionnaires, electronic health records, digital health technology data, and biospecimens. Importantly, it includes key SDOH, such as income, education, and housing status. The dataset also uses the [Observational Medical Outcomes Partnership Common Data Model](https://www.ohdsi.org/data-standardization/) to standardize all data.
+For demonstration purposes, we collected data from different sources, including a publicly available Centers for Disease Control and Prevention (CDC) dataset, [Chronic Disease Index (CDI)](https://chronicdata.cdc.gov/Chronic-Disease-Indicators/U-S-Chronic-Disease-Indicators-CDI-/g4ie-h725/data) and [500 PLACES](https://www.cdc.gov/places/about/500-cities-2016-2019/index.html), and also protected data from the *All of Us Research Program*.
 
-Researchers can gain access to the *All of Us Research Program* through the [All of Us Research Hub](https://www.researchallofus.org/). Some limitations of this dataset is that it requires extensive training to gain approval for the controlled-tier dataset, which includes participant-level data. Also, any analysis and visualization must be performed within the *All of Us Research Hub* workbench. Data cannot be exported locally.
+As we envision an interactive visualization tool to be widely applicable, we opted to use the [*All of Us Research Program*](https://allofus.nih.gov/), an effort by the National Institues of Health (NIH) that consists of a diverse group of at least one million participants across the United States. [[5]](#5) This data consortium includes health questionnaires, electronic health records, digital health technology data, and biospecimens. Importantly, it includes key SDOH, such as income, education, and housing status. The dataset also uses the [Observational Medical Outcomes Partnership Common Data Model](https://www.ohdsi.org/data-standardization/) to standardize all data. As multiple data repositories currently use *OMOP*, our project will be applicable to these as well and scalable.
+
+Researchers can gain access to the *All of Us Research Program* through the [All of Us Research Hub](https://www.researchallofus.org/). Some limitations of this dataset is that it requires extensive training to gain approval for the controlled-tier dataset, which includes participant-level data. Also, any analysis and visualization must be performed within the *All of Us Research Hub* workbench. Participant-level data cannot be exported locally.
 
 ## Organization of the Project
 ``````
@@ -86,15 +88,15 @@ conda activate <ENV_NAME>
 
 4. Run modules
 * *plot_longitudinal* (default = False): if called, set to 'True'
-    * output: longitudinal time-series graph
+    * output: longitudinal time-series graph of variables in `config.py`
 * *plot_correlation* (default = False): if called, set to 'True'
-    * output: scatterplot of two variables
+    * output: scatterplot of two SDOH and outcome in `config.py`
 * *plot_geomap*: select type from ['socioeconomic', 'conditions', 'geomap']
-    * socioeconomic **(Aou)**: income, education, health insurance, and poverty geomaps
-    * conditions **(Aou)**: geomap of queried conditions data
+    * socioeconomic **(AoU)**: income, education, health insurance, and poverty geomaps
+    * conditions **(AoU)**: geomap of queried conditions data
     * geomap: CDI data geomap of variables in `config.py`
 * *summary_statistics*: select type from ['data', 'variable']
-    * output: prints number and type of data or variables for a dataset
+    * output: prints number and type of data or variables for a dataset in `config.py`
 ``````
 python main.py \
     [--plot_longitudinal] # longitudinal time series graph of two variables \

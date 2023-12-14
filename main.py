@@ -64,7 +64,13 @@ def main():
     # elif args.plot_geomap == 'location':
         # plot_geomap_by_location()
     elif args.plot_geomap == 'geomap':
-        plot_geomap()
+        dataframe = pd.read_csv("./data/cdi_dummy.csv")
+        plot_geomap(variable=GEOMAP_VAR,
+                    datatype=GEOMAP_DATATYPE,
+                    stratification=GEOMAP_STRATIFICATION,
+                    dataframe=dataframe,
+                    color_scheme=GEOMAP_COLOR,
+                    width = 'container')
     elif args.plot_geomap == 'conditions':
         conditions_counts = AoU_conditions.merge_counties_groupby(conditions_df=conditions_df, 
                                                                   observations_df=observations_df, 
