@@ -375,7 +375,10 @@ def plot_geomap_socioeconomic(dataframe,
 
     alt.data_transformers.disable_max_rows()
 
-    for sdoh in ['high_school_education', 'median_income', 'no_health_insurance', 'poverty']:
+    for sdoh in ['high_school_education',
+                'median_income',
+                'no_health_insurance',
+                'poverty']:
 
         dataframe[sdoh] = dataframe[sdoh].astype('float')
         if sdoh == 'high_school_education':
@@ -391,7 +394,7 @@ def plot_geomap_socioeconomic(dataframe,
             title = 'Poverty (%)'
             scheme = 'lightmulti'
 
-        sdoh_geomap = alt.Chart(dataframe, title=title).mark_geoshape( 
+        sdoh_geomap = alt.Chart(dataframe, title=title).mark_geoshape(
         stroke='white'
         ).encode(
             color=alt.Color(sdoh+':Q',
@@ -418,21 +421,23 @@ def plot_geomap_conditions(dataframe,
     Parameters:
 
     @dataframe: conditions dataframe from data_wrangling.AoU_conditions
-    @return: an alt.Chart() object with geomap and encoded conditions counts 
+    @return: an alt.Chart() object with geomap and encoded conditions counts
     """
     from vega_datasets import data
 
     alt.data_transformers.disable_max_rows()
-    counties = gpd.read_file('https://gist.githubusercontent.com/sdwfrost/d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb/counties.geojson')
+    counties = gpd.read_file('https://gist.githubusercontent.com/sdwfrost/\
+d1c73f91dd9d175998ed166eb216994a/raw/e89c35f308cee7e2e5a784e1d3afc5d449e9e4bb\
+/counties.geojson')
     countyname2geoid = dict(zip(counties["NAME"],
                             counties["GEOID"].astype(int)))
 
     dfplot = dataframe.copy()
     counties = alt.topo_feature(data.us_10m.url, 'counties')
 
-    input_dropdown = alt.binding_select(options=list(dataframe["standard_concept_name"].unique()), 
+    input_dropdown = alt.binding_select(options=list(dataframe["standard_concept_name"].unique()),
                                     name='Conditions')
-    selection_dropdown = alt.selection_single(fields=['standard_concept_name'], 
+    selection_dropdown = alt.selection_single(fields=['standard_concept_name'],
                                               bind=input_dropdown)
 
     background = alt.Chart(counties).mark_geoshape(
