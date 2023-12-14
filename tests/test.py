@@ -642,7 +642,7 @@ class TestCases(unittest.TestCase):
 
 
 
-    ### For merge conditions observation
+    ### For counties_groupby_count
     ### smoke test ###
     def test_smoke_test_counties_groupby_count(self):
         '''
