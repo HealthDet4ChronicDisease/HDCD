@@ -286,7 +286,7 @@ class TestCases(unittest.TestCase):
         width = 'container'
 
         with self.assertRaises(ValueError):
-            plot.plot_geomap_conditions(dataframe,width)
+            hdcd.plot_geomap_conditions(dataframe,width)
 
     def test_smoke_test_data_summary(self):
         """
